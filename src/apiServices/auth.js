@@ -16,7 +16,7 @@ export class AuthServices {
 
             if (!responce) throw new Error("responce is null");
             
-            return this.login({identifier:email,password});
+            return await this.login({identifier:email,password});
 
         } catch (error) {
             console.log("authServices.createUser error: ", error);
