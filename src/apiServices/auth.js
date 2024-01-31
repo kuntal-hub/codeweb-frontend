@@ -260,7 +260,7 @@ export class AuthServices {
         }
     }
 
-    async getPinedItems({page,limit}){
+    async getPinedItems({page=1,limit=4}){
         try {
             const responce = await axios.get(`/api/v1/users/pined?page=${page}&limit=${limit}`);
 
@@ -268,7 +268,69 @@ export class AuthServices {
 
             return responce.data;
         } catch (error) {
-            
+            console.log("authServices.getPinedItems error: ", error);
+            return null;
+        }
+    }
+
+    async addToPinedItems({webId}){
+        try {
+            if(!webId) throw new Error("webId is null");
+
+            const responce = await axios.patch(`/api/v1/users/add-to-pined/${webId}`);
+
+            if (!responce) throw new Error("responce is null");
+
+            return true;
+        } catch (error) {
+            console.log("authServices.addToPinedItems error: ", error);
+            return false;
+        }
+    
+    }
+
+    async removePinedItem({webId}){
+        try {
+            if(!webId) throw new Error("webId is null");
+
+            const responce = await axios.patch(`/api/v1/users/remove-pined/${webId}`);
+
+            if (!responce) throw new Error("responce is null");
+
+            return true;
+        } catch (error) {
+            console.log("authServices.removePinedItem error: ", error);
+            return false;
+        }
+    }
+
+    async updateShowcase({showcase}){
+        try {
+            if(!showcase) throw new Error("showcase is null");
+
+            const responce = await axios.patch("/api/v1/users/update-showcase",{showcase});
+
+            if (!responce) throw new Error("responce is null");
+
+            return responce.data;
+        } catch (error) {
+            console.log("authServices.updateShowcase error: ", error);
+            return null;
+        }
+    }
+
+    async checkUsernameAvailablity({username}){
+        try {
+            if(!username) throw new Error("username is null");
+
+            const responce = await axios.get(`/api/v1/users/check-username-availability/${username}`);
+
+            if (!responce) throw new Error("responce is null");
+
+            return true;
+        } catch (error) {
+            console.log("authServices.checkUsernameAvailablity error: ", error);
+            return false;
         }
     }
 }
