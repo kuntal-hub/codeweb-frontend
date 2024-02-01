@@ -115,11 +115,9 @@ export class WebService {
         }
     }
 
-    async getTrendingWebs({queryParameters="page=1&limit=4"}){
+    async getTrendingWebs({page=1,limit=4}){
         try {
-            // queryParameters = string contains all querys of url
-            // valid querys are page, limit;
-            const response = await axios.get(`/api/v1/webs/trending?${queryParameters}`)
+            const response = await axios.get(`/api/v1/webs/trending?page=${page}&limit=${limit}`)
 
             if (!response) throw new Error("Response is null");
 
@@ -145,13 +143,11 @@ export class WebService {
         }
     }
 
-    async searchFromMyWebs({queryParameters="page=1&limit=4",search}){
+    async searchFromMyWebs({page=1,limit=4,search}){
         try {
-            // queryParameters = string contains all querys of url
-            // valid querys are page, limit search;
             if (!search) throw new Error("search is null");
 
-            const response = await axios.get(`/api/v1/webs/search/my-webs?search=${search}&${queryParameters}`)
+            const response = await axios.get(`/api/v1/webs/search/my-webs?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}`)
 
             if (!response) throw new Error("Response is null");
 
@@ -162,11 +158,9 @@ export class WebService {
         }
     }
 
-    async showRecomendedPeople({queryParameters="page=1&limit=10"}){
+    async showRecomendedPeople({page=1,limit=10}){
         try {
-            // queryParameters = string contains all querys of url
-            // valid querys are page, limit;
-            const response = await axios.get(`/api/v1/webs/recomended-people?${queryParameters}`)
+            const response = await axios.get(`/api/v1/webs/recomended-people?page=${page}&limit=${limit}`)
 
             if (!response) throw new Error("Response is null");
 
@@ -253,13 +247,11 @@ export class WebService {
     }
 
 
-    async searchFromAllWebs({queryParameters="page=1&limit=4",search}){
+    async searchFromAllWebs({page=1,limit=4,search}){
         try {
-            // queryParameters = string contains all querys of url
-            // valid querys are page, limit, search;
             if (!search) throw new Error("search is null");
 
-            const response = await axios.get(`/api/v1/webs/search/all-webs?search=${search}&${queryParameters}`)
+            const response = await axios.get(`/api/v1/webs/search/all-webs?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}`)
 
             if (!response) throw new Error("Response is null");
 

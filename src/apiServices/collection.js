@@ -201,7 +201,7 @@ export class CollectionService {
         try {
             if(!search) throw new Error("Search is undefined");
 
-            const response = await axios.get(`/api/v1/collections/search/all-collections?search=${search}&page=${page}&limit=${limit}`);
+            const response = await axios.get(`/api/v1/collections/search/all-collections?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}`);
 
             if(!response) throw new Error("Response is null");
 
@@ -217,7 +217,7 @@ export class CollectionService {
         try {
             if(!search) throw new Error("Search is undefined");
 
-            const response = await axios.get(`/api/v1/collections/search/my-collections?search=${search}&page=${page}&limit=${limit}`);
+            const response = await axios.get(`/api/v1/collections/search/my-collections?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}`);
 
             if(!response) throw new Error("Response is null");
 
@@ -233,7 +233,7 @@ export class CollectionService {
         try {
             if(!name) throw new Error("Name is undefined");
 
-            const response = await axios.get(`/api/v1/collections/check-name-availability/${name.replaceAll(" ","-")}`);
+            const response = await axios.get(`/api/v1/collections/check-name-availability/${name.trim().replaceAll(" ","-")}`);
 
             if(!response) throw new Error("Response is null");
 
