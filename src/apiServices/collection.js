@@ -144,14 +144,14 @@ export class CollectionService {
     
     }
 
-    async getCollectionsByUserId({userId,queryParameters="page=1&limit=4&collectionType=public"}) {
+    async getCollectionsByUsername({username,queryParameters="page=1&limit=4&collectionType=public"}) {
         try {
             // queryParameters = string contains all querys of url
             // valid querys are page, limit , sortBy, sortOrder, collectionType;
             // collectionType can be public, private
-            if(!userId) throw new Error("UserId is undefined");
+            if(!username) throw new Error("UserId is undefined");
 
-            const response = await axios.get(`/api/v1/collections/user-collection/${userId}?${queryParameters}`);
+            const response = await axios.get(`/api/v1/collections/user-collection/${username}?${queryParameters}`);
 
             if(!response) throw new Error("Response is null");
 
@@ -179,14 +179,14 @@ export class CollectionService {
         }
     }
 
-    async getLikedCollectionsByUserId({userId,queryParameters="page=1&limit=4"}) {
+    async getLikedCollectionsByUsername({username,queryParameters="page=1&limit=4"}) {
         try {
             // queryParameters = string contains all querys of url
             // valid querys are page, limit , sortBy, sortOrder;
             // sortBy = views,likesCount,websCount,createdAt;
-            if(!userId) throw new Error("UserId is undefined");
+            if(!username) throw new Error("UserId is undefined");
 
-            const response = await axios.get(`/api/v1/collections/liked/${userId}?${queryParameters}`);
+            const response = await axios.get(`/api/v1/collections/liked/${username}?${queryParameters}`);
 
             if(!response) throw new Error("Response is null");
 

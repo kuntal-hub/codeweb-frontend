@@ -62,15 +62,15 @@ export class WebService {
         }
     }
 
-    async getWebsByUserID({userId,queryParameters="page=1&limit=4&webType=public"}) {
+    async getWebsByUsername({username,queryParameters="page=1&limit=4&webType=public"}) {
         try {
         // queryParameters = string contains all querys of url
         // valid querys are  webType , sortBy, sortOrder, page, limit;
         // sortBy = views, createdAt, likesCount, commentsCount
         // webType = public, private, forked
-            if (!userId) throw new Error("userId is null");
+            if (!username) throw new Error("username is null");
 
-            const response = await axios.get(`/api/v1/webs/user/${userId}?${queryParameters}`)
+            const response = await axios.get(`/api/v1/webs/user/${username}?${queryParameters}`)
 
             if (!response) throw new Error("Response is null");
 
@@ -81,14 +81,14 @@ export class WebService {
         }
     }
 
-    async getLikedWebsByUserID({userId,queryParameters="page=1&limit=4"}) {
+    async getLikedWebsByUsername({username,queryParameters="page=1&limit=4"}) {
         try {
             // queryParameters = string contains all querys of url
             // valid querys are sortBy, sortOrder, page, limit;
             // sortBy = views, createdAt, likesCount, commentsCount
-            if (!userId) throw new Error("userId is null");
+            if (!username) throw new Error("username is null");
 
-            const response = await axios.get(`/api/v1/webs/liked/${userId}?${queryParameters}`)
+            const response = await axios.get(`/api/v1/webs/liked/${username}?${queryParameters}`)
 
             if (!response) throw new Error("Response is null");
 
