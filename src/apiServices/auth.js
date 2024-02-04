@@ -260,6 +260,21 @@ export class AuthServices {
         }
     }
 
+    async getShowcaseItems({username}) {
+        try {
+            if(!username) throw new Error("username is null");
+
+            const responce = await axios.get(`/api/v1/users/showcase/${username}`);
+
+            if (!responce) throw new Error("responce is null");
+
+            return responce.data;
+        } catch (error) {
+            console.log("authServices.getShowcaseItems error: ", error);
+            return null;
+        }
+    }
+
     async getPinedItems({page=1,limit=4}){
         try {
             const responce = await axios.get(`/api/v1/users/pined?page=${page}&limit=${limit}`);
@@ -331,6 +346,21 @@ export class AuthServices {
         } catch (error) {
             console.log("authServices.checkUsernameAvailablity error: ", error);
             return false;
+        }
+    }
+
+    async searchUsers({search,page=1,limit=6}){
+        try {
+            if(!search) throw new Error("search is null");
+
+            const responce = await axios.get(`/api/v1/users/search?search=${search}&page=${page}&limit=${limit}`);
+
+            if (!responce) throw new Error("responce is null");
+
+            return responce.data;
+        } catch (error) {
+            console.log("authServices.searchUsers error: ", error);
+            return null;
         }
     }
 }
