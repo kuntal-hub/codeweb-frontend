@@ -68,7 +68,7 @@ export default function Header() {
          onKeyDown={handleSearch} placeholder="Search..."
          />
         </div>
-         {(!authStatus && !user) ? 
+         {(authStatus && user) ? 
           <div className='flex flex-nowrap py-2 justify-between mx-1 max-[390px]:w-[34vw]'>
             <Link to={"/signup"} className='bg-green-600 py-3 px-1 sm:px-2 sm:py-2 sm:text-[16px] font-semibold text-[12px] text-center rounded-lg'>
             Sign Up
@@ -79,12 +79,12 @@ export default function Header() {
           </div>
          :
          <div className='flex flex-nowrap py-[6px] justify-between mx-1'>
-         <button to={"/signup"} className='h-[48px] rounded-lg'>
+         <button className='h-[48px] rounded-lg'>
          <img src="./istockphoto-1219927783-612x612.jpg" alt="img" className='w-full h-full rounded-lg' />
          </button>
-         <Link className='h-[48px] ml-[2px] rounded-lg' to={"/login"}>
+         <button className='h-[48px] ml-[2px] rounded-lg menu-container' onClick={toggleRightMenu}>
          <img src="./istockphoto-1219927783-612x612.jpg" alt="" className='w-full h-full rounded-lg'/>
-         </Link>
+         </button>
        </div>
          }
       </nav>
@@ -123,6 +123,27 @@ export default function Header() {
                 <Link to={"/following#interesting-people"} className=' text-white font-semibold text-[16px] block py-2 px-3 hover:bg-gray-900'>Interesting People</Link>
                 <button className=' text-white font-semibold text-[16px] block mb-5 px-3 py-2 hover:bg-gray-900'>Pined Items</button>
             </div>}
+        </div>
+      )}
+
+
+      {(showRightMenu && !authStatus && !user) && (
+        <div className='menu-container fixed top-[60px] right-0 w-[150px] h-auto shadow-xl bg-gray-800 py-5'>
+          <Link to={"/your-work"} className='text-white font-semibold text-[16px] py-[6px] px-4 block hover:bg-gray-600'>
+          Your Work
+          </Link>
+          <Link to={"/your-work"} className='text-white font-semibold text-[16px] py-[6px] px-4 block hover:bg-gray-600'>
+          Your Work
+          </Link><hr /><br />
+          <Link to={"/your-work"} className='text-white font-semibold text-[16px] py-[6px] px-4 block hover:bg-gray-600'>
+          Your Work
+          </Link>
+          <Link to={"/your-work"} className='text-white font-semibold text-[16px] py-[6px] px-4 block hover:bg-gray-600'>
+          Your Work
+          </Link><hr /><br />
+          <Link to={"/your-work"} className='text-white font-semibold text-[16px] py-[6px] px-4 block hover:bg-gray-600'>
+          Your Work
+          </Link>
         </div>
       )}
     </>
