@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:200');
+
+.gradient-border-item {
+  width: 152px;
+  margin: 4px auto;
+  height: 62px;
+}
+.gradient-border-cointainer {
+  width: 160px;
+  height: 70px;
+  display: grid;
+  place-content: center;
+  border-radius: 6px;
+  background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82 ,
+  #e5e832, #0edff3, #6fba82, #07b39b, #1098ad, #5073b8, #a166ab, #ef4e7b, #f37055, #f79533
+  , #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+  animation: animatedgradient 3s ease alternate infinite;
+  background-size: 300% 300%;
+}
+
+
+@keyframes animatedgradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
