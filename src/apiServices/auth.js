@@ -35,7 +35,7 @@ export class AuthServices {
 
             if (!responce) throw new Error("responce is null");
 
-            return responce.data.user;
+            return responce.data.data.user;
         } catch (error) {
             console.log("authServices.login error: ", error);
             return null;
@@ -73,8 +73,8 @@ export class AuthServices {
             const responce = await axios.get("/api/v1/users/me");
 
             if (!responce) throw new Error("responce is null");
-
-            return responce.data;
+            
+            return responce.data.data;
         } catch (error) {
             console.log("authServices.getCurrentUser error: ", error);
             return null;
