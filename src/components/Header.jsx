@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import "../cssFiles/utils.css";
+import {authServices} from "../apiServices/auth.js"
+import { logout } from '../store/authSlice';
+import { addNotification } from '../store/notificationSlice.js';
 
 export default function Header() {
   const [showLeftMenu, setShowLeftMenu] = useState(false);
@@ -31,6 +34,21 @@ export default function Header() {
     if (event.key === 'Enter') {
       event.preventDefault();
       navigate(`/search?q=${search.trim().replaceAll(" ", "+").replaceAll("-", "+")}`);
+    }
+  }
+
+  const logoutUser = async () => {
+    if (authStatus && user) {
+      const response = authServices.logout({fromAllDevices: false});
+      if (response) {
+        dispatch(logout());
+        dispatch(addNotification({ text: "You have been logged out", type: "success" }));
+        navigate('/');
+      }else {
+        dispatch(addNotification({ text: "An error occurred", type: "error" }));
+      }
+    } else {
+      return;
     }
   }
 
@@ -84,8 +102,8 @@ export default function Header() {
             <button className='h-[48px] rounded-lg'>
               <img src="./istockphoto-1219927783-612x612.jpg" alt="img" className='w-full h-full rounded-lg' />
             </button>
-            <button className='h-[48px] ml-[2px] rounded-lg menu-container' onClick={toggleRightMenu}>
-              <img src="./istockphoto-1219927783-612x612.jpg" alt="" className='w-full h-full rounded-lg' />
+            <button className='h-[48px] ml-[2px] sm:mx-2 rounded-lg menu-container' onClick={toggleRightMenu}>
+              <img src={user.avatar.replace("/upload","/upload/q_5")} alt="" className='w-full h-full rounded-lg' />
             </button>
           </div>
         }
@@ -143,9 +161,10 @@ export default function Header() {
           <Link to={"/your-work"} className='text-white font-semibold text-[16px] py-[6px] px-4 block hover:bg-gray-600'>
             Your Work
           </Link><hr /><br />
-          <Link to={"/your-work"} className='text-white font-semibold text-[16px] py-[6px] px-4 block hover:bg-gray-600'>
-            Your Work
-          </Link>
+          <button className='text-white font-semibold text-[16px] py-[6px] px-4 block hover:bg-gray-600'
+          onClick={logoutUser}>
+            Logout
+          </button>
         </div>
       )}
     </>

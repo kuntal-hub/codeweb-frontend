@@ -1,8 +1,9 @@
 import axios from "axios";
+import * as cheerio from 'cheerio';
 
 export class AuthServices {
 
-    async createUser ({username,email,password,fullName,verificationURL=""}) {
+    async createUser ({username,email,password,fullName,verificationURL="http://localhost:5173/verify-email"}) {
         try {
             if (!username || !email || !password || !fullName) throw new Error("username or email or password or fullName is null");
 
@@ -14,13 +15,15 @@ export class AuthServices {
                 verificationURL
             });
 
-            if (!responce) throw new Error("responce is null");
+            if (responce.data.status>=400){
+                return {message:responce.data.message,status:responce.data.status,data:null};
+            } 
             
             return await this.login({identifier:email,password});
 
         } catch (error) {
             console.log("authServices.createUser error: ", error);
-            return null;
+            return {message:error.message,status:error.status||500,data:null};
         }
     }
 
@@ -33,12 +36,14 @@ export class AuthServices {
                 password
             });
 
-            if (!responce) throw new Error("responce is null");
+            if (responce.data.status>=400){
+                return {message:responce.data.message,status:responce.data.status,data:null};
+            }
 
-            return responce.data.data.user;
+            return {status:responce.data.status,data:responce.data.data.user,message:responce.data.message};
         } catch (error) {
             console.log("authServices.login error: ", error);
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
@@ -46,7 +51,7 @@ export class AuthServices {
         try {
             const responce = await axios.post(`/api/v1/users/logout?fromAllDevices=${fromAllDevices}`);
 
-            if (!responce) throw new Error("responce is null");
+            if (responce.data.status>=400) return false;
 
             return true;
         } catch (error) {
@@ -59,36 +64,39 @@ export class AuthServices {
         try {
             const responce = await axios.post("/api/v1/users/refresh-token");
 
-            if (!responce) throw new Error("responce is null");
+            if (responce.data.status>=400){
+                return {status:responce.data.status,message:responce.data.message,data:null};
+            }
 
-            return true;
+            return await this.getCurrentUser();
         } catch (error) {
             console.log("authServices.refreshAccessToken error: ", error);
-            return false;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
     async getCurrentUser () {
         try {
             const responce = await axios.get("/api/v1/users/me");
+            if (responce.data.status>=400){
+                return {status:responce.data.status,message:responce.data.message,data:null};
+            }
 
-            if (!responce) throw new Error("responce is null");
-            
-            return responce.data.data;
+            return responce.data;
         } catch (error) {
             console.log("authServices.getCurrentUser error: ", error);
-            return null;
+            return {status:error.status,data:null,message:error.message};
         }
     
     }
 
-    async requestVeryficationEmail ({verificationURL=""}) {
+    async requestVeryficationEmail ({verificationURL="http://localhost:5173/verify-email"}) {
         try {
             const responce = await axios.post("/api/v1/users/request-verify-email", {
                 verificationURL
             });
 
-            if (!responce) throw new Error("responce is null");
+            if (responce.data.status>=400) return false;
 
             return true;
         } catch (error) {
@@ -106,12 +114,12 @@ export class AuthServices {
                 token
             });
 
-            if (!responce) throw new Error("responce is null");
+            if (responce.data.status>=400) return {status:responce.data.status,message:responce.data.message,data:null};
 
-            return true;
+            return {status:responce.data.status,data:responce.data.data,message:responce.data.message};
         } catch (error) {
             console.log("authServices.verifyEmail error: ", error);
-            return false;
+            return {status:error.status,message:error.message,data:null};
         }
     
     }
@@ -340,7 +348,7 @@ export class AuthServices {
 
             const responce = await axios.get(`/api/v1/users/check-username-availability/${username}`);
 
-            if (!responce) throw new Error("responce is null");
+            if (responce.data.status>=400) return false;
 
             return true;
         } catch (error) {
