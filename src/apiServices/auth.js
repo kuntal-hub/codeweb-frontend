@@ -124,7 +124,7 @@ export class AuthServices {
     
     }
 
-    async requestForgotPasswordEmail ({email,resetPasswordURL=""}) {
+    async requestForgotPasswordEmail ({email,resetPasswordURL="http://localhost:5173/reset-password"}) {
         try {
             if (!email) throw new Error("email is null");
 
@@ -133,12 +133,12 @@ export class AuthServices {
                 resetPasswordURL
             });
 
-            if (!responce) throw new Error("responce is null");
+            if (responce.data.status>=400) return {status:responce.data.status,message:responce.data.message,data:null};
 
-            return true;
+            return {status:responce.data.status,data:{},message:responce.data.message};
         } catch (error) {
             console.log("authServices.requestForgotPasswordEmail error: ", error);
-            return false;
+            return {status:error.status,message:error.message,data:null};
         }
     
     }
@@ -152,12 +152,12 @@ export class AuthServices {
                 newPassword
             });
 
-            if (!responce) throw new Error("responce is null");
+            if (responce.data.status>=400) return {status:responce.data.status,message:responce.data.message,data:null};
 
-            return true;
+            return {status:responce.data.status,data:{},message:responce.data.message};
         } catch (error) {
             console.log("authServices.resetPassrod error: ", error);
-            return false;
+            return {status:error.status,message:error.message,data:null};
         }
     
     }

@@ -5,7 +5,7 @@ export default memo(function Form2({usernameError,setUsername,username}) {
     <div>
         <label htmlFor="username" className='block mx-auto text-center font-semibold text-white text-lg mb-2'
         >username :</label>
-        <input className='block w-[80vw] sm:w-[55vw] md:w-[50vw] lg:w-[40vw] mx-auto bg-gray-600 text-white rounded-xl outline-none px-3 py-3 text-sm' 
+        <input className='block w-[80vw] sm:w-[55vw] md:w-[50vw] lg:w-[35vw] mx-auto bg-gray-600 text-white rounded-xl outline-none px-3 py-3 text-sm' 
         required={true}
         placeholder='Enter Your username Here...'
         type="text" id='username' value={username} onChange={(e)=>setUsername(e.target.value)}/>

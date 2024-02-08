@@ -9,7 +9,6 @@ import { useDispatch } from 'react-redux';
 import { login } from "../store/authSlice.js";
 import { addNotification } from "../store/notificationSlice.js";
 import RetroBG from '../components/backgrounds/RetroBG.jsx';
-import { useNavigate } from 'react-router-dom';
 
 export default function Signup() {
   const [username, setUsername] = useState('');
@@ -27,7 +26,6 @@ export default function Signup() {
   const [isForm3Rendered, setIsForm3Rendered] = useState(false);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   document.title = "Signup";
 
   const handleBAck = () => {

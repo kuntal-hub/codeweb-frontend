@@ -89,7 +89,7 @@ export default function Login() {
                                     onClick={handelSubmit} />
                             </div>
                             <div className="links">
-                                <Link to={"/"}>Forget Password</Link>
+                                <Link to={"/forgot-password"}>Forget Password</Link>
                                 <Link to={"/signup"}>Signup</Link>
                             </div>
                         </div>
