@@ -26,7 +26,7 @@
 .GB-cointainer {
   display: grid;
   place-content: center;
-  border-radius: 6px;
+  border-radius: 8px;
   background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82 ,
   #e5e832, #0edff3, #6fba82, #07b39b, #1098ad, #5073b8, #a166ab, #ef4e7b, #f37055, #f79533
   , #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
@@ -94,4 +94,69 @@
 .bold{
   font-weight: 900 !important;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
+}
+
+.sight-nav{
+  position: fixed;
+  top: 60px;
+  left: 0px;
+  height: calc(100vh - 60px);
+  width: 190px;
+  display: none;
+}
+
+.h-adjusted{
+  height: calc(100vh - 60px);
+}
+
+.main-home-container{
+  margin: 0px;
+  padding: 0px;
+  height: 100%;
+  position: fixed;
+  overflow: auto;
+  width: 100vw;
+  top: 60px;
+  left: 0px;
+  right: 0px;
+}
+
+@media (min-width: 768px) {
+  .main-home-container {
+      left: 190px;
+      width: calc(100vw - 190px);
+  }
+  .sight-nav{
+    display: block;
+  }
+}
+
+.active{
+  background-color: rgba(255, 255, 255, 0.207);
+  border-top: rgb(0, 255, 0) 4px solid;
+  color: white;
+  border-radius: 6px;
+}
+
+.settings-page-cobtainer{
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  border-top: rgb(255, 255, 255) 1px solid;
+  border-left: none;
+}
+
+@media (min-width: 1024px) {
+  .settings-page-cobtainer {
+    width: calc(100% - 160px);
+    height: 100%;
+    overflow: auto;
+    border-top: none;
+    border-left: wheat 1px solid;
+  }
+
+  .active{
+    border-left: rgb(0, 255, 0) 6px solid;
+    border-top: none;
+  }
 }

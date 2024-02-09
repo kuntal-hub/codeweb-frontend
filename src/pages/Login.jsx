@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { login } from '../store/authSlice';
 import RetroBG from '../components/backgrounds/RetroBG';
 import { addNotification } from '../store/notificationSlice';
+import MainContainer from "../components/MainContainer";
 
 export default function Login() {
     const [identifier, setIdentifier] = useState('');
@@ -63,7 +64,8 @@ export default function Login() {
         <>
             {loading && <RetroBG text={"Login in Your Account..."} />}
             {!loading &&
-                <div className='main-container'>
+                <MainContainer>
+                    <div className='main-container'>
                     <div className="ring">
                         <i className="i101" />
                         <i className="i202" />
@@ -94,7 +96,9 @@ export default function Login() {
                             </div>
                         </div>
                     </div>
-                </div>}
+                </div>
+                </MainContainer>
+            }
         </>
     )
 }

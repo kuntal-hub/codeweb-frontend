@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import { login } from "../store/authSlice.js";
 import { addNotification } from "../store/notificationSlice.js";
 import RetroBG from '../components/backgrounds/RetroBG.jsx';
+import MainContainer from '../components/MainContainer.jsx';
 
 export default function Signup() {
   const [username, setUsername] = useState('');
@@ -118,7 +119,7 @@ export default function Signup() {
         username: username.trim(),
         password: password.trim()
       }).then(response => {
-        if (response.data && response.status<400) {
+        if (response.data && response.status < 400) {
           dispatch(login(response.data));
           dispatch(addNotification({ text: "Account Created Successfully", type: "success" }));
           setLoading(false);
@@ -156,49 +157,51 @@ export default function Signup() {
     <>
       {loading && <RetroBG text={"Creating Account..."} />}
       {!loading && (isForm1Rendered || isForm2Rendered || isForm3Rendered) &&
-        <div className='m-0 p-0 w-screen h-screen grid place-content-center bg-gray-900'>
-          <div className='GB-cointainer p-1'>
-            <div className='w-full h-auto bg-gray-800 p-5'>
+        <MainContainer>
+          <div className='m-0 p-0 w-full h-adjusted grid place-content-center bg-gray-900'>
+            <div className='GB-cointainer p-1'>
+              <div className='w-full h-auto bg-gray-800 p-5'>
 
-              <p className='flex flex-nowrap justify-center py-[6px] sm:px-2'>
-                <img src="./images__3_-removebg-preview-min.png"
-                  alt="O"
-                  className="w-12 h-12 m-0 p-0" />
-                <span
-                  className='text-2xl font-bold text-white mt-2'
-                >CODEWEB</span>
-              </p>
+                <p className='flex flex-nowrap justify-center py-[6px] sm:px-2'>
+                  <img src="https://res.cloudinary.com/dvrpvl53d/image/upload/q_30/v1707462949/images__3_-removebg-preview_muaeav.png"
+                    alt="O"
+                    className="w-12 h-12 m-0 p-0" />
+                  <span
+                    className='text-2xl font-bold text-white mt-2'
+                  >CODEWEB</span>
+                </p>
 
-              <p className='text-sm font-semibold text-gray-400 mt-1 text-center mb-5'>Already have any account? &#160;
-                <Link to='/login' className='text-blue-400 underline'
-                > Login</Link></p>
+                <p className='text-sm font-semibold text-gray-400 mt-1 text-center mb-5'>Already have any account? &#160;
+                  <Link to='/login' className='text-blue-400 underline'
+                  > Login</Link></p>
 
-              {(isForm1Rendered && !isForm2Rendered && !isForm3Rendered) &&
-                <Form1 fullName={fullName} setFullName={setFullName} email={email} setEmail={setEmail} emailError={emailError}
-                  fullNameError={fullNameError} />}
+                {(isForm1Rendered && !isForm2Rendered && !isForm3Rendered) &&
+                  <Form1 fullName={fullName} setFullName={setFullName} email={email} setEmail={setEmail} emailError={emailError}
+                    fullNameError={fullNameError} />}
 
 
-              {(isForm2Rendered && !isForm1Rendered && !isForm3Rendered) && <Form2 username={username} setUsername={setUsername}
-                usernameError={usernameError} />}
+                {(isForm2Rendered && !isForm1Rendered && !isForm3Rendered) && <Form2 username={username} setUsername={setUsername}
+                  usernameError={usernameError} />}
 
-              {(isForm3Rendered && !isForm1Rendered && !isForm2Rendered) && <Form3 password={password} setPassword={setPassword}
-                confirmPassword={confirmPassword} setConfirmPassword={setConfirmPassword} passwordError={passwordError}
-                setPasswordError={setPasswordError} confirmPasswordError={confirmPasswordError} />}
+                {(isForm3Rendered && !isForm1Rendered && !isForm2Rendered) && <Form3 password={password} setPassword={setPassword}
+                  confirmPassword={confirmPassword} setConfirmPassword={setConfirmPassword} passwordError={passwordError}
+                  setPasswordError={setPasswordError} confirmPasswordError={confirmPasswordError} />}
 
-              <div className='flex justify-between flex-nowrap px-2 mt-8'>
-                <button className={`bg-green-600 ${isForm1Rendered ? "opacity-0" : ""} rounded-lg py-2 px-5 font-semibold hover:underline`}
-                  disabled={isForm1Rendered}
-                  onClick={handleBAck}
-                >Back</button>
-                <button className={`bg-blue-600 rounded-lg py-2 px-5 text-white font-semibold hover:underline`}
-                  onClick={handleNext}
-                >{isForm3Rendered ? "Create Account" : "Next"}</button>
+                <div className='flex justify-between flex-nowrap px-2 mt-8'>
+                  <button className={`bg-green-600 ${isForm1Rendered ? "opacity-0" : ""} rounded-lg py-2 px-5 font-semibold hover:underline`}
+                    disabled={isForm1Rendered}
+                    onClick={handleBAck}
+                  >Back</button>
+                  <button className={`bg-blue-600 rounded-lg py-2 px-5 text-white font-semibold hover:underline`}
+                    onClick={handleNext}
+                  >{isForm3Rendered ? "Create Account" : "Next"}</button>
+                </div>
+
+
               </div>
-
-
             </div>
           </div>
-        </div>
+        </MainContainer>
       }
     </>
   )

@@ -229,12 +229,12 @@ export class AuthServices {
 
             const responce = await axios.patch("/api/v1/users/update-avatar",{image,public_id});
 
-            if (!responce) throw new Error("responce is null");
+            if (responce.data.status>=400) return {status:responce.data.status,message:responce.data.message,data:null};
 
             return responce.data;
         } catch (error) {
             console.log("authServices.updateAvatar error: ", error);
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
@@ -244,12 +244,12 @@ export class AuthServices {
 
             const responce = await axios.patch("/api/v1/users/update-cover-image",{image,public_id});
 
-            if (!responce) throw new Error("responce is null");
+            if (responce.data.status>=400) return {status:responce.data.status,message:responce.data.message,data:null};
 
             return responce.data;
         } catch (error) {
             console.log("authServices.updateCoverImage error: ", error);
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 

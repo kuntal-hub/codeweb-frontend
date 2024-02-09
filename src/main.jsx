@@ -13,6 +13,10 @@ import {
   VerifyEmail,
   ForgotPassWord,
   ResetPassword,
+  Settings,
+  ProfileSettings,
+  AccountSettings,
+  
 } from "./index.js";
 
 const routes = createBrowserRouter(
@@ -47,6 +51,25 @@ const routes = createBrowserRouter(
           <ResetPassword/>
         </AuthLayout>
       } />
+
+      <Route path='settings/' element={
+        <AuthLayout authentication={true}>
+          <Settings/>
+        </AuthLayout>
+      }> 
+
+          <Route path='profile' element={
+            <AuthLayout authentication={true}>
+              <ProfileSettings/>
+            </AuthLayout>
+          } />
+
+          <Route path='account' element={
+            <AuthLayout authentication={true}>
+              <AccountSettings/>
+            </AuthLayout>
+          } />
+      </Route>
 
     </Route>
   )

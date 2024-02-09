@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import "../cssFiles/utils.css";
-import {authServices} from "../apiServices/auth.js"
+import { authServices } from "../apiServices/auth.js"
 import { logout } from '../store/authSlice';
 import { addNotification } from '../store/notificationSlice.js';
 
@@ -39,12 +39,12 @@ export default function Header() {
 
   const logoutUser = async () => {
     if (authStatus && user) {
-      const response = authServices.logout({fromAllDevices: false});
+      const response = authServices.logout({ fromAllDevices: false });
       if (response) {
         dispatch(logout());
         dispatch(addNotification({ text: "You have been logged out", type: "success" }));
         navigate('/');
-      }else {
+      } else {
         dispatch(addNotification({ text: "An error occurred", type: "error" }));
       }
     } else {
@@ -64,7 +64,7 @@ export default function Header() {
     <>
       <nav className='flex flex-nowrap bg-gray-800 h-[60px] justify-between fixed top-0 left-0 right-0'>
         <Link to={"/"} className='flex flex-nowrap w-auto h-full py-[6px] sm:px-2'>
-          <img src="./images__3_-removebg-preview-min.png"
+          <img src="https://res.cloudinary.com/dvrpvl53d/image/upload/q_30/v1707462949/images__3_-removebg-preview_muaeav.png"
             alt="O"
             className="w-12 h-12 m-0 p-0" />
           <span
@@ -88,22 +88,22 @@ export default function Header() {
         </div>
         {(!authStatus && !user) ?
           <div className='flex flex-nowrap py-2 justify-between mx-1 max-[390px]:w-[34vw]'>
-            {window.location.pathname !== '/signup' && 
-            <Link to={"/signup"} className='bg-green-600 py-3 px-1 sm:px-2 sm:py-2 sm:text-[16px] font-semibold text-[12px] text-center rounded-lg'>
-              Sign Up
-            </Link>}
+            {window.location.pathname !== '/signup' &&
+              <Link to={"/signup"} className='bg-green-600 py-3 px-1 sm:px-2 sm:py-2 sm:text-[16px] font-semibold text-[12px] text-center rounded-lg'>
+                Sign Up
+              </Link>}
             {window.location.pathname !== '/login' &&
-            <Link className='bg-blue-500 py-3 text-white ml-[2px] md:mx-2 px-1 sm:px-2 sm:py-2 sm:text-[16px] font-semibold text-[12px] text-center rounded-lg' to={"/login"}>
-            Log In
-          </Link>}
+              <Link className='bg-blue-500 py-3 text-white ml-[2px] md:mx-2 px-1 sm:px-2 sm:py-2 sm:text-[16px] font-semibold text-[12px] text-center rounded-lg' to={"/login"}>
+                Log In
+              </Link>}
           </div>
           :
           <div className='flex flex-nowrap py-[6px] justify-between mx-1'>
             <button className='h-[48px] rounded-lg'>
-              <img src="./istockphoto-1219927783-612x612.jpg" alt="img" className='w-full h-full rounded-lg' />
+              <img src="https://res.cloudinary.com/dvrpvl53d/image/upload/q_30/v1707463164/istockphoto-1219927783-612x612_fgnzjx.jpg" alt="img" className='w-full h-full rounded-lg' />
             </button>
             <button className='h-[48px] ml-[2px] sm:mx-2 rounded-lg menu-container' onClick={toggleRightMenu}>
-              <img src={user.avatar.replace("/upload","/upload/q_5")} alt="" className='w-full h-full rounded-lg' />
+              <img src={user.avatar.replace("upload/", "upload/ar_1.0,g_face,c_fill,w_80/")} alt="" className='w-full h-full rounded-lg' />
             </button>
           </div>
         }
@@ -111,7 +111,7 @@ export default function Header() {
 
 
       {showLeftMenu && (
-        <div className='menu-container fixed top-[60px] left-0 w-auto h-auto md:hidden shadow-xl'>
+        <div className='menu-container fixed top-[60px] z-10 left-0 w-auto h-auto md:hidden shadow-xl'>
           {(!authStatus && !user) ?
             <div className='p-4 bg-gray-800'>
               <p className='block text-[10px] font-sans font-bold text-gray-400 ml-2 mb-3'>
@@ -129,13 +129,20 @@ export default function Header() {
 
             <div className='p-4 bg-gray-800'>
               <p className='block text-[10px] font-sans font-bold text-gray-400 ml-2 mb-3'>
-                CREATE NEW WEB
+                CREATE NEW
               </p>
-              <Link className='gradient-border-cointainer' to={"/new-web"}>
-                <span
-                  className='gradient-border-item block rounded-md bg-black text-white py-4 px-6 font-bold text-center'
-                >New Pen</span>
-              </Link>
+              <div className='GB-cointainer bg-black p-1 w-36 mx-auto'>
+                <div className='m-0 p-0 w-[136px]'>
+                  <Link to={"/new-web"}
+                    className='block text-center py-2 bg-gray-700 rounded-t-lg text-white hover:bg-black font-semibold'>
+                    Pen
+                  </Link>
+                  <button
+                    className='block w-full text-center py-2 bg-gray-700 rounded-b-lg text-white hover:bg-black font-semibold mt-1'>
+                    Collection
+                  </button>
+                </div>
+              </div>
               <Link to={"/your-work"} className=' text-white font-semibold text-[16px] block mt-5 py-2 px-3 hover:bg-gray-900'>Your Work</Link>
               <Link to={"/following"} className=' text-white font-semibold text-[16px] block py-2 px-3 hover:bg-gray-900'>Following</Link>
               <Link to={"/trending"} className=' text-white font-semibold text-[16px] block py-2 px-3 hover:bg-gray-900'>Trending</Link>
@@ -148,25 +155,80 @@ export default function Header() {
 
 
       {(showRightMenu && authStatus && user) && (
-        <div className='menu-container fixed top-[60px] right-0 w-[150px] h-auto shadow-xl bg-gray-800 py-5'>
-          <Link to={"/your-work"} className='text-white font-semibold text-[16px] py-[6px] px-4 block hover:bg-gray-600'>
+        <div className='menu-container fixed top-[60px] z-30 right-0 w-[150px] h-auto shadow-xl bg-gray-800 py-5'>
+          <Link to={"/your-work"} 
+          className='text-white text-center font-semibold text-[16px] py-[6px] px-4 block hover:bg-black'>
             Your Work
           </Link>
-          <Link to={"/your-work"} className='text-white font-semibold text-[16px] py-[6px] px-4 block hover:bg-gray-600'>
+
+          <Link to={"/your-work"} 
+          className='text-white mb-2 text-center font-semibold text-[16px] py-[6px] px-4 block hover:bg-black'>
             Your Work
-          </Link><hr /><br />
-          <Link to={"/your-work"} className='text-white font-semibold text-[16px] py-[6px] px-4 block hover:bg-gray-600'>
+          </Link><hr />
+
+          <Link to={"/your-work"} 
+          className='text-white text-center font-semibold text-[16px] py-[6px] px-4 block hover:bg-black'>
             Your Work
           </Link>
-          <Link to={"/your-work"} className='text-white font-semibold text-[16px] py-[6px] px-4 block hover:bg-gray-600'>
+
+          <Link to={"/your-work"} 
+          className='text-white mb-2 text-center font-semibold text-[16px] py-[6px] px-4 block hover:bg-black'>
             Your Work
-          </Link><hr /><br />
-          <button className='text-white font-semibold text-[16px] py-[6px] px-4 block hover:bg-gray-600'
-          onClick={logoutUser}>
-            Logout
+          </Link><hr />
+
+          <Link to={"/settings/profile"}
+          className='text-white text-center font-semibold mt-2
+           text-[16px] py-[6px] px-4 flex flex-nowrap justify-center hover:bg-black'>
+            <span className='material-symbols-outlined mr-1'>settings</span><span>Settings</span>
+          </Link>
+
+          <button className='text-white font-semibold text-[16px] py-[6px] px-4 flex flex-nowrap justify-center hover:bg-black w-full'
+            onClick={logoutUser}>
+            <span className='material-symbols-outlined'>logout</span><span>Logout</span>
           </button>
         </div>
       )}
+
+      <nav className='sight-nav bg-gray-800'>
+        {authStatus && user ?
+        <>
+        <p className='block text-[10px] font-sans font-bold text-gray-400 ml-5 mb-3 mt-5'>
+          CREATE NEW
+        </p>
+        <div className='GB-cointainer bg-black p-1 w-36 mx-auto'>
+          <div className='m-0 p-0 w-[136px]'>
+            <Link to={"/new-web"}
+              className='block text-center py-2 bg-gray-700 rounded-t-lg text-white hover:bg-black font-semibold'>
+              Pen
+            </Link>
+            <button
+              className='block w-full text-center py-2 bg-gray-700 rounded-b-lg text-white hover:bg-black font-semibold mt-1'>
+              Collection
+            </button>
+          </div>
+        </div>
+        <Link to={"/your-work"} className=' text-white font-semibold text-[16px] block mt-5 py-2 px-6 hover:bg-gray-900'>Your Work</Link>
+        <Link to={"/following"} className=' text-white font-semibold text-[16px] block py-2 px-6 hover:bg-gray-900'>Following</Link>
+        <Link to={"/trending"} className=' text-white font-semibold text-[16px] block py-2 px-6 hover:bg-gray-900'>Trending</Link>
+        <Link to={"/assets"} className=' text-white font-semibold text-[16px] block py-2 px-6 hover:bg-gray-900'>Assets</Link>
+        <Link to={"/following#interesting-people"} className=' text-white font-semibold text-[16px] block py-2 px-6 hover:bg-gray-900'>Interesting People</Link>
+        <button className=' text-white font-semibold text-[16px] block mb-5 px-6 py-2 hover:bg-gray-900'>Pined Items</button>
+        </>
+          :
+        <>
+        <p className='block text-[10px] font-sans font-bold text-gray-400 ml-4 mb-3 mt-6'>
+                TRY OUR ONLINE EDITOR
+              </p>
+              <Link className='gradient-border-cointainer ml-3' to={"/new-web"}>
+                <span
+                  className='gradient-border-item block rounded-md bg-black text-white py-4 px-6 font-bold text-center'
+                >Start Coding</span>
+              </Link>
+              <Link to={"/trending"} className=' text-white font-semibold text-[16px] ml-3 block mt-5 p-3 hover:bg-gray-950'>Trending</Link>
+              <Link to={"/signup"} className=' text-white font-semibold text-[16px] ml-3 block mb-5 p-3 hover:bg-gray-950'>Join Us</Link>
+        </>
+        }
+      </nav>
     </>
   )
 }
