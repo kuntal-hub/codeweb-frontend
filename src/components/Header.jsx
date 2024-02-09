@@ -75,7 +75,7 @@ export default function Header() {
           className='block md:hidden py-2 w-8 h-full menu-container'
           onClick={toggleLeftMenu}
         >
-          <img src={showLeftMenu ? "./cross.png" : "./pngtree-list-vector-icon-png-image_4279414-removebg-preview-min.png"} alt="menu" />
+          <img src={showLeftMenu ? "https://res.cloudinary.com/dvrpvl53d/image/upload/q_20/v1707477839/cross_qb9y0k.png" : "https://res.cloudinary.com/dvrpvl53d/image/upload/q_20/v1707477839/pngtree-list-vector-icon-png-image_4279414-removebg-preview-min_hnf1ts.png"} alt="menu" />
         </button>
 
         <div className='flex flex-nowrap justify-center py-2 rounded-lg md:min-w-[55vw] min-w-[50vw]'>
