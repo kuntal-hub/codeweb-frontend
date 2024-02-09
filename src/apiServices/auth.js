@@ -47,7 +47,7 @@ export class AuthServices {
         }
     }
 
-    async logout ({fromAllDevices=false}) {
+    async logout ({fromAllDevices=true}) {
         try {
             const responce = await axios.post(`/api/v1/users/logout?fromAllDevices=${fromAllDevices}`);
 
@@ -96,12 +96,12 @@ export class AuthServices {
                 verificationURL
             });
 
-            if (responce.data.status>=400) return false;
+            if (responce.data.status>=400) return {status:responce.data.status,message:responce.data.message,data:false};
 
-            return true;
+            return {status:responce.data.status,data:true,message:responce.data.message};
         } catch (error) {
             console.log("authServices.requestVeryficationEmail error: ", error);
-            return false;
+            return {status:error.status,message:error.message,data:false};
         }
     
     }
@@ -184,27 +184,27 @@ export class AuthServices {
 
             const responce = await axios.post("/api/v1/users/change-password",{oldPassword,newPassword});
 
-            if (!responce) throw new Error("responce is null");
+            if (responce.data.status>=400) return {status:responce.data.status,message:responce.data.message,data:null};
 
-            return true;
+            return {status:responce.data.status,data:true,message:responce.data.message};
         } catch (error) {
             console.log("authServices.chengePassword error: ", error);
-            return false;
+            return {status:error.status,message:error.message,data:false};
         }
     }
 
-    async chengeEmail({email,password,verificationURL=""}){
+    async chengeEmail({email,password,verificationURL="http://localhost:5173/verify-email"}){
         try {
             if(!email || !password) throw new Error("email or password is null");
 
             const responce = await axios.post("/api/v1/users/change-email",{email,password,verificationURL});
 
-            if (!responce) throw new Error("responce is null");
+            if (responce.data.status>=400) return {status:responce.data.status,message:responce.data.message,data:null};
 
             return responce.data;
         } catch (error) {
             console.log("authServices.chengeEmail error: ", error);
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
@@ -212,14 +212,14 @@ export class AuthServices {
         try {
             if (!password) throw new Error("password is null");
 
-            const responce = await axios.delete("/api/v1/users/delete",{password});
+            const responce = await axios.delete(`/api/v1/users/delete/${password}`);
 
-            if (!responce) throw new Error("responce is null");
+            if (responce.data.status>=400) return {status:responce.data.status,message:responce.data.message,data:false};
 
-            return true;
+            return {status:responce.data.status,data:true,message:responce.data.message};
         } catch (error) {
             console.log("authServices.deleteUser error: ", error);
-            return false;
+            return {status:error.status,message:error.message,data:false};
         }
     }
 

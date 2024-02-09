@@ -39,7 +39,7 @@ export default function Header() {
 
   const logoutUser = async () => {
     if (authStatus && user) {
-      const response = authServices.logout({ fromAllDevices: false });
+      const response = authServices.logout({ fromAllDevices: true });
       if (response) {
         dispatch(logout());
         dispatch(addNotification({ text: "You have been logged out", type: "success" }));
