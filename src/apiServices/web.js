@@ -263,6 +263,48 @@ export class WebService {
     
     }
 
+    async getEditorPreferences(){
+        try {
+            const response = await axios.get(`/api/v1/webs/editor-preferences`)
+
+            if (response.data.status>=400) return {
+                message:response.data.message,
+                status:response.data.status,
+                data:{
+                    theme:"vs-dark",
+                    indentation:1,
+                    fontSize:"15px",
+                    fontWeight:"500",
+                    formatOnType:true,
+                    minimap:false,
+                    lineHeight:20,
+                    mouseWheelZoom:true,
+                    wordWrap:"on"
+                }
+            };
+
+            return response.data;
+        } catch (error) {
+            console.log("webService.getEditorPreferences error: ", error)
+            return {
+                message:error.message,
+                status:error.status,
+                data:{
+                    theme:"vs-dark",
+                    indentation:1,
+                    fontSize:"15px",
+                    fontWeight:"500",
+                    formatOnType:true,
+                    minimap:false,
+                    lineHeight:20,
+                    mouseWheelZoom:true,
+                    wordWrap:"on"
+                }
+            };
+        }
+    
+    }
+
 }
 
 export const webService = new WebService();

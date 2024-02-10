@@ -16,6 +16,7 @@ import {
   Settings,
   ProfileSettings,
   AccountSettings,
+  NewWeb,
   
 } from "./index.js";
 
@@ -70,6 +71,8 @@ const routes = createBrowserRouter(
             </AuthLayout>
           } />
       </Route>
+
+      <Route path='new-web' element={<NewWeb />} />
 
     </Route>
   )

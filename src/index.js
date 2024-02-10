@@ -7,6 +7,7 @@ import ResetPassword from "./pages/ResetPassword.jsx"
 import Settings from "./pages/Settings.jsx";
 import ProfileSettings from "./pages/ProfileSettings.jsx";
 import AccountSettings from "./pages/AccountSettings.jsx";
+import NewWeb from "./pages/NewWeb.jsx";
 
 
 export {
@@ -19,4 +20,5 @@ export {
     Settings,
     ProfileSettings,
     AccountSettings,
+    NewWeb,
 };

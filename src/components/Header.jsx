@@ -135,7 +135,7 @@ export default function Header() {
                 <div className='m-0 p-0 w-[136px]'>
                   <Link to={"/new-web"}
                     className='block text-center py-2 bg-gray-700 rounded-t-lg text-white hover:bg-black font-semibold'>
-                    Pen
+                    Web
                   </Link>
                   <button
                     className='block w-full text-center py-2 bg-gray-700 rounded-b-lg text-white hover:bg-black font-semibold mt-1'>
@@ -199,7 +199,7 @@ export default function Header() {
           <div className='m-0 p-0 w-[136px]'>
             <Link to={"/new-web"}
               className='block text-center py-2 bg-gray-700 rounded-t-lg text-white hover:bg-black font-semibold'>
-              Pen
+              Web
             </Link>
             <button
               className='block w-full text-center py-2 bg-gray-700 rounded-b-lg text-white hover:bg-black font-semibold mt-1'>
