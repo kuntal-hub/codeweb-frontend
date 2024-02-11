@@ -8,7 +8,7 @@ import { addNotification } from "../../store/notificationSlice.js"
 export default function WebHeader({setIndentationNo}) {
   const webTitle = useSelector(state => state.webs.title);
   const user = useSelector(state => state.auth.userData);
-  const [showAuth, setShowAuth] = useState(true);
+  const [showAuth, setShowAuth] = useState(false);
   const dispatch = useDispatch();
   return (
     <div className='w-full h-[50px] bg-gray-700 m-0 p-0 flex flex-nowrap justify-between'
@@ -83,7 +83,7 @@ export default function WebHeader({setIndentationNo}) {
           }
       </div>
 
-      {!showAuth && <SimpleAuth setShowAuth={setShowAuth} />}
+      {showAuth && <SimpleAuth setShowAuth={setShowAuth} />}
 
     </div>
   )

@@ -71,7 +71,6 @@ export default memo(function UpdateEmail() {
                         type="email"
                         lable="New Email :"
                         placeholder="Enter New Email Address"
-                        defaultValue={user.email}
                         required={true}
                         {...register("email")}
                     /> <br /> 
