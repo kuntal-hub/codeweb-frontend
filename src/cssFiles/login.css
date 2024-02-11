@@ -12,11 +12,11 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Quicksand", sans-serif;
   --tw-ring-color: #11111100 !important;
 }
 .main-container {
   display: flex;
+  font-family: "Quicksand", sans-serif;
   justify-content: center;
   align-items: center;
   height: calc(100vh - 60px);
@@ -26,6 +26,7 @@
 }
 .ring {
   position: relative;
+  font-family: "Quicksand", sans-serif;
   width: 500px;
   height: 500px;
   display: flex;
@@ -35,6 +36,7 @@
 }
 .ring i {
   position: absolute;
+  font-family: "Quicksand", sans-serif;
   inset: 0;
   border: 2px solid #fff;
   transition: 0.5s;
@@ -73,6 +75,7 @@
 }
 .login {
   position: absolute;
+  font-family: "Quicksand", sans-serif;
   width: 300px;
   height: 100%;
   display: flex;
@@ -82,14 +85,17 @@
   gap: 20px;
 }
 .login h2 {
+  font-family: "Quicksand", sans-serif;
   font-size: 2em;
   color: #fff;
 }
 .login .inputBx {
+  font-family: "Quicksand", sans-serif;
   position: relative;
   width: 100%;
 }
 .login .inputBx input {
+  font-family: "Quicksand", sans-serif;
   position: relative;
   width: 100%;
   padding: 12px 20px;
@@ -102,6 +108,7 @@
   outline: none;
 }
 .login .inputBx input[type="button"] {
+  font-family: "Quicksand", sans-serif;
   width: 100%;
   background: #0078ff;
   background: linear-gradient(45deg, #ff357a, #fff172);
@@ -109,9 +116,11 @@
   cursor: pointer;
 }
 .login .inputBx input::placeholder {
+  font-family: "Quicksand", sans-serif;
   color: rgba(255, 255, 255, 0.75);
 }
 .login .links {
+  font-family: "Quicksand", sans-serif;
   position: relative;
   width: 100%;
   display: flex;
@@ -120,6 +129,7 @@
   padding: 0 20px;
 }
 .login .links a {
+  font-family: "Quicksand", sans-serif;
   color: #fff;
   text-decoration: none;
 }
