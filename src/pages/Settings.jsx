@@ -1,8 +1,16 @@
 import React,{useEffect} from 'react';
-import { Outlet, NavLink } from 'react-router-dom';
+import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import MainContainer from '../components/MainContainer';
 
 export default function Settings() {
+    const navigate = useNavigate();
+    document.title = "Settings";
+
+    useEffect(() => {
+        if (window.location.pathname === "/settings" || window.location.pathname === "/settings/") {
+            navigate('/settings/profile');
+        }
+    }, []);
 
     return (
         <MainContainer>
@@ -22,6 +30,12 @@ export default function Settings() {
                                 return isPending ? "pending" : isActive ? "active" : ""
                             }}
                             text-lg font-semibold block px-3 py-[8px]`}>Account</NavLink>
+                        </li>
+                        <li className='block m-0 p-0 lg:text-center hover:bg-gray-700 hover:text-white text-gray-400'>
+                            <NavLink to='editor' className={`${({ isActive, isPending })=>{
+                                return isPending ? "pending" : isActive ? "active" : ""
+                            }}
+                            text-lg font-semibold block px-3 py-[8px]`}>Editor</NavLink>
                         </li>
                     </ul>
                 </nav>

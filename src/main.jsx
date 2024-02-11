@@ -17,7 +17,7 @@ import {
   ProfileSettings,
   AccountSettings,
   NewWeb,
-  
+  EditorSettings,
 } from "./index.js";
 
 const routes = createBrowserRouter(
@@ -68,6 +68,12 @@ const routes = createBrowserRouter(
           <Route path='account' element={
             <AuthLayout authentication={true}>
               <AccountSettings/>
+            </AuthLayout>
+          } />
+
+          <Route path='editor' element={
+            <AuthLayout authentication={true}>
+              <EditorSettings/>
             </AuthLayout>
           } />
       </Route>
