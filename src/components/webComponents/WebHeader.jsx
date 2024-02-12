@@ -1,7 +1,7 @@
 import React, { useState,memo } from 'react'
-import { Link } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import SimpleAuth from './SimpleAuth.jsx';
+import { useSafeNavigate } from '../../hooks/useSafeNavigate.js';
 import SetTitleDescpiption from './SetTitleDescpiption.jsx';
 
 export default memo(function WebHeader({setIndentationNo,hendleSaveWeb}) {
@@ -10,6 +10,7 @@ export default memo(function WebHeader({setIndentationNo,hendleSaveWeb}) {
   const user = useSelector(state => state.auth.userData);
   const [showAuth, setShowAuth] = useState(false);
   const [showTitleDescpiption, setShowTitleDescpiption] = useState(false);
+  const navigate = useSafeNavigate();
 
   const hendleSAveButtonClicked = () => {
     if(!user){
@@ -28,15 +29,16 @@ export default memo(function WebHeader({setIndentationNo,hendleSaveWeb}) {
       style={{ fontFamily: 'Poppins, sans-serif !important' }}
     >
       <div className='flex flex-nowrap'>
-        <Link className='h-[50px]' to="/">
+        <button className='h-[50px]' onClick={()=>navigate("/")}>
           <img src="https://res.cloudinary.com/dvrpvl53d/image/upload/q_30/v1707462949/images__3_-removebg-preview_muaeav.png" alt=""
             className='h-[48px] block' />
-        </Link>
+        </button>
         <div className='m-0 p-0'>
           <button className='block text-white text-[20px] md:text[24px] font-bold ml-1 mt-4 mb-1 md:ml-2 line-height-10-imp'
           onClick={()=>setShowTitleDescpiption(true)}
           >{webTitle}</button>
-          {user ? <Link to={`/${user.username}`} className='text-gray-300 text-[12px] pt-3 ml-1 md:ml-2'>{user.fullName}</Link>
+          {user ? <button onClick={()=>navigate(`/${user.username}`)}
+           className='text-gray-300 text-[12px] pt-2 ml-1 md:ml-2 block'>{user.fullName}</button>
             : <p className='text-gray-300 text-[12px] pt-3 ml-1 md:ml-2 inline'>Captain Anonymous</p>
           }
         </div>
@@ -72,27 +74,27 @@ export default memo(function WebHeader({setIndentationNo,hendleSaveWeb}) {
           </div>
         </div>
           {user?
-        <Link to={"/settings/editor"}
+        <button onClick={()=>navigate("/settings/editor")}
           className='block text-white material-symbols-outlined w-10 sm:w-14 md:mx-1 h-11 p-2 my-[3px] bg-blue-500 mx-[2px] hover:bg-blue-600 rounded-lg text-center'
           title='Editor settings' >
           settings
-        </Link>:
-        <Link to={"/signup"}
+        </button>:
+        <button onClick={()=>navigate("/signup")}
          className='hidden md:block h-11 my-[3px] mx-[2px] p-2 md:mx-1 rounded-lg text-white font-semibold text-sm bg-green-600 hover:bg-green-500'>
         Sign up
-        </Link>
+        </button>
         }
 
 
         {user?
-          <Link to={`/${user.username}`}
+          <button onClick={()=>navigate(`/${user.username}`)}
             className='block w-11 h-11 my-[3px] mr-1 ml-[2px] rounded-lg md:ml-1 md:mr-2' >
             <img src={user.avatar.replace("upload/", "upload/ar_1.0,g_face,c_fill,w_80/")} alt="" className='w-ll rounded-lg' />
-          </Link>:
-          <Link to={"/login"}
+          </button>:
+          <button onClick={()=>navigate("/login")}
            className='block h-11 my-[3px] mr-1 ml-[2px] md:ml-1 md:mr-2 p-2 rounded-lg text-white font-semibold text-sm bg-blue-600 hover:bg-blue-500'>
           Log in
-          </Link>
+          </button>
           }
       </div>
 

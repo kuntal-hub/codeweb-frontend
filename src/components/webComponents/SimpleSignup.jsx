@@ -147,7 +147,7 @@ export default memo(function SimpleSignup({setShowAuth}) {
         <p className='text-red-500 font-semibold text-sm'
         >{passwordError}</p> <br />
 
-        <input type="submit" value="Chenge Email" readOnly={isDisabaled}
+        <input type="submit" value="Create Account" readOnly={isDisabaled}
           className='bg-blue-500 text-white font-semibold py-3 px-4 rounded-lg cursor-pointer hover:bg-blue-600 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50'
         />
       </form>

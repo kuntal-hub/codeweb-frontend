@@ -3,8 +3,8 @@
     height: calc(100% - 28px) !important;
 }
 
-.h-calc-screen-50px{
-    height: calc(100vh - 50px) !important;
+.h-calc-screen-75px{
+    height: calc(100vh - 75px) !important;
 }
 
 .line-height-10-imp{

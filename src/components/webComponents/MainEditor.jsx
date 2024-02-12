@@ -10,7 +10,6 @@ import * as htmlToImage from 'html-to-image';
 import { useNavigate } from 'react-router-dom';
 import { addNotification } from '../../store/notificationSlice.js';
 
-
 export default function MainEditor() {
   document.title = 'new web - codeWeb.io'
   const navigate = useNavigate();
@@ -32,6 +31,23 @@ export default function MainEditor() {
         setLoading(false);
       })
   }, []);
+
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      // Cancel the event
+      event.preventDefault();
+      // Chrome requires returnValue to be set
+      event.returnValue = '';
+    };
+
+    // Listen for the beforeunload event
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    // Remove the event listener on component unmount
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []); //
 
 
   window.addEventListener("resize",(e)=>{
@@ -83,7 +99,7 @@ export default function MainEditor() {
         </nav>
 
         {indentationNo === 1 &&
-          <div className='w-screen h-calc-screen-50px m-0 p-0 flex flex-nowrap'>
+          <div className='w-screen h-calc-screen-75px m-0 p-0 flex flex-nowrap'>
 
             <div className={`${showResult ? "w-[40%]" : "w-full"} bg-gray-950 h-full`}>
               <EditorBox showResult={showResult} setShowResult={setShowResult} />
@@ -98,7 +114,7 @@ export default function MainEditor() {
         }
 
         {indentationNo === 2 &&
-          <div className='w-screen h-calc-screen-50px m-0 p-0 md:flex md:flex-nowrap lg:block'>
+          <div className='w-screen h-calc-screen-75px m-0 p-0 md:flex md:flex-nowrap lg:block'>
 
             <div className={`${showResult ? "h-[55%] md:w-[50%] md:h-full lg:w-full lg:h-[55%]" : "h-full md:w-[100%]"} 
           m-0 p-0 flex flex-nowrap justify-center bg-gray-950`}>
@@ -119,7 +135,7 @@ export default function MainEditor() {
           </div>}
 
         {indentationNo === 3 &&
-          <div className='w-screen h-calc-screen-50px m-0 p-0 flex flex-nowrap'>
+          <div className='w-screen h-calc-screen-75px m-0 p-0 flex flex-nowrap'>
             {showResult &&
               <div className='h-full m-0 p-0 w-[60%]'>
                 <Iframe ref={ifreamRef} />
@@ -130,6 +146,9 @@ export default function MainEditor() {
             </div>
           </div>
         }
+        <div className='w-screen h-[25px] bg-gray-700'>
+
+        </div>
       </div>
 
   )

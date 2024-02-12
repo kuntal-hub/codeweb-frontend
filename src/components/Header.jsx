@@ -88,11 +88,11 @@ export default function Header() {
         </div>
         {(!authStatus && !user) ?
           <div className='flex flex-nowrap py-2 justify-between mx-1 max-[390px]:w-[34vw]'>
-            {window.location.pathname !== '/signup' &&
+            {(window.location.pathname !== '/signup' && window.location.pathname!=="/signup/") &&
               <Link to={"/signup"} className='bg-green-600 py-3 px-1 sm:px-2 sm:py-2 sm:text-[16px] font-semibold text-[12px] text-center rounded-lg'>
                 Sign Up
               </Link>}
-            {window.location.pathname !== '/login' &&
+            {(window.location.pathname !== '/login'&& window.location.pathname !=="/login/") &&
               <Link className='bg-blue-500 py-3 text-white ml-[2px] md:mx-2 px-1 sm:px-2 sm:py-2 sm:text-[16px] font-semibold text-[12px] text-center rounded-lg' to={"/login"}>
                 Log In
               </Link>}
