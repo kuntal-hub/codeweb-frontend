@@ -4,7 +4,7 @@ export class WebService {
 
     async createWeb({title,description,html,css,js,isPublic=true,image}) {
         try {
-            if (!title || !description || image || !(html || css || js)) {
+            if (!title || !description || !image || !(html || css || js)) {
                 throw new Error("title, description, image and at least one of html, css or js are required");
             }
 
@@ -23,12 +23,10 @@ export class WebService {
                 },
             });
 
-            if (!response) throw new Error("Response is null");
-
             return response.data;
         } catch (error) {
             console.log("webService.createWeb error: ", error);
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 

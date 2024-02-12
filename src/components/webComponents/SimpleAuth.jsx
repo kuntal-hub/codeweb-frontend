@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState,memo } from 'react'
 import "../../cssFiles/utils.css";
 import SimpleLogin from "./SimpleLogin.jsx";
 import SimpleSignup from "./SimpleSignup.jsx";
 
-export default function SimpleAuth({ setShowAuth }) {
+export default memo(function SimpleAuth({ setShowAuth }) {
     const [isLoginRendered, setIsLoginRendered] = useState(true);
     const [isSignupRendered, setIsSignupRendered] = useState(false);
 
@@ -42,4 +42,4 @@ export default function SimpleAuth({ setShowAuth }) {
             </div>
         </div>
     )
-}
+})

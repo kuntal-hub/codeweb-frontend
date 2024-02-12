@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import Input from "../utilComponents/Input.jsx";
 import { authServices } from "../../apiServices/auth.js";
 import { useDispatch } from "react-redux";
@@ -6,7 +6,7 @@ import { login } from "../../store/authSlice.js";
 import { addNotification } from "../../store/notificationSlice.js";
 import { useForm } from "react-hook-form"
 
-export default function SimpleSignup({setShowAuth}) {
+export default memo(function SimpleSignup({setShowAuth}) {
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
   const [isDisabaled, setIsDisabled] = useState(false)
@@ -153,4 +153,4 @@ export default function SimpleSignup({setShowAuth}) {
       </form>
     </div>
   )
-}
+})

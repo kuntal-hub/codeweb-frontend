@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import EditorBox from './EditorBox'
 import { useSelector, useDispatch } from "react-redux";
 import { setEditorOption } from "../../store/editorOptionSlice.js"
@@ -6,10 +6,14 @@ import RetroBG from "../backgrounds/RetroBG.jsx";
 import { webService } from "../../apiServices/web.js"
 import Iframe from './Iframe.jsx';
 import WebHeader from './WebHeader.jsx';
+import * as htmlToImage from 'html-to-image';
+import { useNavigate } from 'react-router-dom';
+import { addNotification } from '../../store/notificationSlice.js';
 
 
 export default function MainEditor() {
   document.title = 'new web - codeWeb.io'
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const webHtml = useSelector(state => state.webs.html);
   const webCss = useSelector(state => state.webs.css);
@@ -19,6 +23,7 @@ export default function MainEditor() {
   const [loading, setLoading] = useState(true);
   const [showResult, setShowResult] = useState(true);
   const [indentationNo, setIndentationNo] = useState(2);
+  const ifreamRef = useRef(null);
 
   useEffect(() => {
     webService.getEditorPreferences()
@@ -28,17 +33,53 @@ export default function MainEditor() {
       })
   }, []);
 
+
   window.addEventListener("resize",(e)=>{
     if (window.innerWidth < 1024) {
       setIndentationNo(2);
     }
   })
 
+  const hendleSaveWeb = useCallback(async () => {
+    if (!webHtml && !webCss && !webJs) {
+      dispatch(addNotification({ text: "You can't save an empty web", type: "warning" }));
+      return;
+    } 
+    if (webTitle==="Untitled" || !webDescription) {
+      dispatch(addNotification({ text: "Title and description are required", type: "warning" }));
+      return;
+    }
+    const dataUrl = await htmlToImage.toJpeg(ifreamRef.current, { quality: 1.0,width:1200 ,height:700 });
+    const image = await fetch(dataUrl).then((res) => res.blob());
+    
+    setLoading(true);
+    const response = await webService.createWeb({
+      title:webTitle,
+      description:webDescription,
+      html:webHtml,
+      css:webCss,
+      js:webJs,
+      image:image,
+      isPublic:true
+    })
+
+    if(response.status<400 && response.data){
+      dispatch(addNotification({ text: response.message, type: "success" }));
+      setLoading(false);
+      navigate(`/web/${response.data._id}`);
+    } else if(response.status>=400 && !response.data){
+      dispatch(addNotification({ text: response.message, type: "error" }));
+      setLoading(false);
+    }
+
+  },[ifreamRef,webTitle,webDescription,webHtml,webCss,webJs]);
+
   return (
-    loading ? <RetroBG /> :
-      <div className='h-screen w-screen m-0 p-0'>
+    loading ? <RetroBG text={"Creating..."} /> :
+      <div className='h-screen w-screen m-0 p-0'
+      >
         <nav className='w-screen block h-[50px] bg-gray-700 m-0 p-0'>
-          <WebHeader setIndentationNo={setIndentationNo} />
+          <WebHeader setIndentationNo={setIndentationNo} hendleSaveWeb={hendleSaveWeb} />
         </nav>
 
         {indentationNo === 1 &&
@@ -50,7 +91,7 @@ export default function MainEditor() {
 
             {showResult &&
               <div className='h-full m-0 p-0 w-[60%]'>
-                <Iframe />
+                <Iframe ref={ifreamRef} />
               </div>}
 
           </div>
@@ -72,7 +113,7 @@ export default function MainEditor() {
 
             {showResult &&
               <div className='h-[45%] m-0 p-0 md:w-[50%] md:h-full lg:w-full lg:h-[45%]'>
-                <Iframe />
+                <Iframe ref={ifreamRef} />
               </div>}
 
           </div>}
@@ -81,7 +122,7 @@ export default function MainEditor() {
           <div className='w-screen h-calc-screen-50px m-0 p-0 flex flex-nowrap'>
             {showResult &&
               <div className='h-full m-0 p-0 w-[60%]'>
-                <Iframe />
+                <Iframe ref={ifreamRef} />
               </div>}
 
             <div className={`${showResult ? "w-[40%]" : "w-full"} bg-gray-950 h-full`}>

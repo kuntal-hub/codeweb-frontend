@@ -1,7 +1,7 @@
-import React,{memo} from 'react'
+import React,{memo,forwardRef} from 'react'
 import { useSelector } from 'react-redux';
 
-export default memo(function Iframe() {
+export default memo(forwardRef(function Iframe({},ref) {
     const html = useSelector(state => state.webs.html);
     const css = useSelector(state => state.webs.css);
     const javascript = useSelector(state => state.webs.js);
@@ -27,6 +27,7 @@ export default memo(function Iframe() {
     return (
         <>
             <iframe
+                ref={ref}
                 title="Embedded Content"
                 srcDoc={htmlContent}
                 width="100%"
@@ -35,4 +36,4 @@ export default memo(function Iframe() {
             />
         </>
     )
-})
+}))

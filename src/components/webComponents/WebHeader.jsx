@@ -1,15 +1,28 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useState,memo } from 'react'
 import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import SimpleAuth from './SimpleAuth.jsx';
-import { login } from "../../store/authSlice.js";
-import { addNotification } from "../../store/notificationSlice.js"
+import SetTitleDescpiption from './SetTitleDescpiption.jsx';
 
-export default function WebHeader({setIndentationNo}) {
+export default memo(function WebHeader({setIndentationNo,hendleSaveWeb}) {
   const webTitle = useSelector(state => state.webs.title);
+  const webDescription = useSelector(state => state.webs.description);
   const user = useSelector(state => state.auth.userData);
   const [showAuth, setShowAuth] = useState(false);
-  const dispatch = useDispatch();
+  const [showTitleDescpiption, setShowTitleDescpiption] = useState(false);
+
+  const hendleSAveButtonClicked = () => {
+    if(!user){
+      setShowAuth(true);
+      return;
+    } 
+    if (webTitle==="Untitled" || !webDescription) {
+      setShowTitleDescpiption(true);
+      return;
+    }
+    hendleSaveWeb();
+  }
+
   return (
     <div className='w-full h-[50px] bg-gray-700 m-0 p-0 flex flex-nowrap justify-between'
       style={{ fontFamily: 'Poppins, sans-serif !important' }}
@@ -21,7 +34,7 @@ export default function WebHeader({setIndentationNo}) {
         </Link>
         <div className='m-0 p-0'>
           <button className='block text-white text-[20px] md:text[24px] font-bold ml-1 mt-4 mb-1 md:ml-2 line-height-10-imp'
-
+          onClick={()=>setShowTitleDescpiption(true)}
           >{webTitle}</button>
           {user ? <Link to={`/${user.username}`} className='text-gray-300 text-[12px] pt-3 ml-1 md:ml-2'>{user.fullName}</Link>
             : <p className='text-gray-300 text-[12px] pt-3 ml-1 md:ml-2 inline'>Captain Anonymous</p>
@@ -30,7 +43,7 @@ export default function WebHeader({setIndentationNo}) {
       </div>
 
       <div className='flex flex-nowrap justify-end'>
-        <button
+        <button onClick={hendleSAveButtonClicked}
           className='text-white material-symbols-outlined w-10 sm:w-14 h-11 p-2 my-[3px] md:mx-1 bg-green-500 mx-[2px] hover:bg-green-600 rounded-lg text-center'
           title='save chenges' >
           save
@@ -84,7 +97,8 @@ export default function WebHeader({setIndentationNo}) {
       </div>
 
       {showAuth && <SimpleAuth setShowAuth={setShowAuth} />}
+      {showTitleDescpiption && <SetTitleDescpiption setShowTitleDescpiption={setShowTitleDescpiption} />}
 
     </div>
   )
-}
+})

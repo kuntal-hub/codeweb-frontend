@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import Input from "../utilComponents/Input.jsx";
 import { authServices } from "../../apiServices/auth.js";
 import { useDispatch } from "react-redux";
@@ -7,7 +7,7 @@ import { addNotification } from "../../store/notificationSlice.js";
 import { useForm } from "react-hook-form"
 import { Link } from 'react-router-dom';
 
-export default function SimpleLogin({ setShowAuth }) {
+export default memo(function SimpleLogin({ setShowAuth }) {
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
   const [isDisabaled, setIsDisabled] = useState(false)
@@ -52,4 +52,4 @@ export default function SimpleLogin({ setShowAuth }) {
       </form>
     </div>
   )
-}
+})
