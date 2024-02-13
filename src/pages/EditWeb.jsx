@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react'
-import EditorBox from './EditorBox'
 import { useSelector, useDispatch } from "react-redux";
-import { setEditorOption } from "../../store/editorOptionSlice.js"
-import RetroBG from "../backgrounds/RetroBG.jsx";
-import { webService } from "../../apiServices/web.js"
-import {chengeCss,chengeHtml,chengeJs,chengeTitleAndDesc} from "../../store/webSlice.js";
-import Iframe from './Iframe.jsx';
-import WebHeader from './WebHeader.jsx';
 import * as htmlToImage from 'html-to-image';
 import { useNavigate } from 'react-router-dom';
-import { addNotification } from '../../store/notificationSlice.js';
+import {chengeCss,chengeHtml,chengeJs,chengeTitleAndDesc} from "../store/webSlice.js";
+import { addNotification } from '../store/notificationSlice.js';
+import EditorBox from '../components/webComponents/EditorBox.jsx';
+import RetroBG from '../components/backgrounds/RetroBG.jsx';
+import Iframe from '../components/webComponents/Iframe';
+import { webService } from '../apiServices/web.js';
+import WebHeader from '../components/webComponents/WebHeader2.jsx';
+import {setEditorOption} from "../store/editorOptionSlice.js";
+import { useParams } from 'react-router-dom';
 
-export default function MainEditor() {
-  document.title = 'new web - codeWeb.io'
+export default function EditWeb() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const webHtml = useSelector(state => state.webs.html);
@@ -23,18 +23,31 @@ export default function MainEditor() {
   const [loading, setLoading] = useState(true);
   const [showResult, setShowResult] = useState(true);
   const [indentationNo, setIndentationNo] = useState(2);
+  const [web,setWeb] = useState(null);
   const ifreamRef = useRef(null);
+  const {webId} = useParams();
+  document.title = 'web - '+webTitle;
 
   useEffect(() => {
     webService.getEditorPreferences()
       .then(res => {
         dispatch(setEditorOption(res.data));
-        dispatch(chengeHtml(""));
-        dispatch(chengeCss(""));
-        dispatch(chengeJs(""));
-        dispatch(chengeTitleAndDesc({title:"Untitled",description:""}))
-        setLoading(false);
+        setIndentationNo(res.data.indentation)
       })
+      
+      webService.getWebById({webId:webId})
+      .then(res=>{
+        if (res.status<400 && res.data) {
+          setWeb(res.data);
+          dispatch(chengeHtml(res.data.html))
+          dispatch(chengeCss(res.data.css))
+          dispatch(chengeJs(res.data.js))
+          dispatch(chengeTitleAndDesc(res.data))
+          setLoading(false);
+      } else {
+        navigate("/error")
+      }
+    })
   }, []);
 
   useEffect(() => {
@@ -62,45 +75,44 @@ export default function MainEditor() {
   })
 
   const hendleSaveWeb = useCallback(async () => {
-    if (!webHtml && !webCss && !webJs) {
-      dispatch(addNotification({ text: "You can't save an empty web", type: "warning" }));
-      return;
-    } 
-    if (webTitle==="Untitled" || !webDescription) {
-      dispatch(addNotification({ text: "Title and description are required", type: "warning" }));
+    if (web.title===webTitle && web.description===webDescription && web.html===webHtml && web.css===webCss && web.js===webJs) {
+      dispatch(addNotification({ text: "No changes to save", type: "info" }));
       return;
     }
-    const dataUrl = await htmlToImage.toJpeg(ifreamRef.current, { quality: 1.0,width:1200 ,height:700 });
-    const image = await fetch(dataUrl).then((res) => res.blob());
+    let image;
+    if (web.html !== webHtml || web.css !== webCss || web.js !== webJs) {
+      const dataUrl = await htmlToImage.toJpeg(ifreamRef.current, { quality: 1.0,width:1200 ,height:700 });
+      image = await fetch(dataUrl).then((res) => res.blob()); 
+    }
     
     setLoading(true);
-    const response = await webService.createWeb({
-      title:webTitle,
-      description:webDescription,
-      html:webHtml,
-      css:webCss,
-      js:webJs,
-      image:image,
-      isPublic:true
-    })
+    const data ={};
+    data.webId = web._id;
+    if (web.title!==webTitle) data.title = webTitle;
+    if (web.description!==webDescription) data.description = webDescription;
+    if (web.html!==webHtml) data.html = webHtml;
+    if (web.css!==webCss) data.css = webCss;
+    if (web.js!==webJs) data.js = webJs;
+    if (image) data.image = image;
+    const response = await webService.updateWeb(data)
 
     if(response.status<400 && response.data){
       dispatch(addNotification({ text: response.message, type: "success" }));
+      setWeb({...web,html:webHtml,css:webCss,js:webJs,title:webTitle,description:webDescription});
       setLoading(false);
-      navigate(`/web/${response.data._id}`);
-    } else if(response.status>=400 && !response.data){
+    } else if(response.status>=400 || !response.data){
       dispatch(addNotification({ text: response.message, type: "error" }));
       setLoading(false);
     }
 
-  },[ifreamRef,webTitle,webDescription,webHtml,webCss,webJs]);
+  },[ifreamRef,webTitle,webDescription,webHtml,webCss,webJs,web]);
 
   return (
-    loading ? <RetroBG text={"Creating..."} /> :
-      <div className='h-screen w-screen m-0 p-0'
-      >
-        <nav className='w-screen block h-[50px] bg-gray-700 m-0 p-0'>
-          <WebHeader setIndentationNo={setIndentationNo} hendleSaveWeb={hendleSaveWeb} />
+    loading? <RetroBG text={web? "Saving Web..." : "Loading..."} /> : 
+    <div className='h-screen w-screen fixed top-0 left-0 bg-white m-0 p-0'>
+
+      <nav className='w-screen block h-[50px] bg-gray-700 m-0 p-0'>
+          <WebHeader setIndentationNo={setIndentationNo} hendleSaveWeb={hendleSaveWeb} web={web} />
         </nav>
 
         {indentationNo === 1 &&
@@ -154,7 +166,8 @@ export default function MainEditor() {
         <div className='w-screen h-[25px] bg-gray-700'>
 
         </div>
-      </div>
 
+    </div>
+  
   )
 }

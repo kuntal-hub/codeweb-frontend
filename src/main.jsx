@@ -18,6 +18,7 @@ import {
   AccountSettings,
   NewWeb,
   EditorSettings,
+  EditWeb,
 } from "./index.js";
 
 const routes = createBrowserRouter(
@@ -79,6 +80,8 @@ const routes = createBrowserRouter(
       </Route>
 
       <Route path='new-web' element={<NewWeb />} />
+
+      <Route path='web/:webId' element={<EditWeb />} />
 
     </Route>
   )

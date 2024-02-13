@@ -8,12 +8,10 @@ export class FollowerSearvice {
 
             const response = await axios.post(`/api/v1/followers/toggle/${username}`);
 
-            if(!response) throw new Error("response is null");
-
-            return true
+            return response.data;
         } catch (error) {
             console.log("error on followerSearvice.toggleFollow",error);
-            return false;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 

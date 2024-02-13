@@ -49,14 +49,12 @@ export class WebService {
         try {
             if (!webId) throw new Error("webId is null");
 
-            const response = await axios.get(`/api/v1/webs/${webId}`);
-
-            if (!response) throw new Error("Response is null");
+            const response = await axios.get(`/api/v1/webs/get/${webId}`);
 
             return response.data;
         } catch (error) {
             console.log("webService.getWeb error: ", error);
-            return null;
+            return {message:error.message,data:null,status:error.status};
         }
     }
 
@@ -173,9 +171,8 @@ export class WebService {
         try {
             if (!webId) throw new Error("webId is null");
             if (!title && !description && !html && !css && !js) throw new Error("No data to update");
-            if (!image) throw new Error("image is null");
             const formData = new FormData();
-            formData.append('image', image, 'my-image-name.jpeg');
+            if(image) formData.append('image', image, 'my-image-name.jpeg');
             if(title) formData.append('title', title);
             if(description) formData.append('description', description);
             if(html) formData.append('html', html);
@@ -188,12 +185,10 @@ export class WebService {
               },
           })
 
-            if (!response) throw new Error("Response is null");
-
             return response.data;
         } catch (error) {
             console.log("webService.updateWeb error: ", error)
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
@@ -270,7 +265,7 @@ export class WebService {
                 status:response.data.status,
                 data:{
                     theme:"vs-dark",
-                    indentation:1,
+                    indentation:2,
                     fontSize:"15px",
                     fontWeight:"500",
                     formatOnType:true,
@@ -289,7 +284,7 @@ export class WebService {
                 status:error.status,
                 data:{
                     theme:"vs-dark",
-                    indentation:1,
+                    indentation:2,
                     fontSize:"15px",
                     fontWeight:"500",
                     formatOnType:true,
@@ -303,11 +298,12 @@ export class WebService {
     
     }
 
-    async updateEditorPreferences({theme,fontSize,fontWeight,formatOnType,lineHeight,mouseWheelZoom,wordWrap}){
+    async updateEditorPreferences({theme,fontSize,indentation,fontWeight,formatOnType,lineHeight,mouseWheelZoom,wordWrap}){
         try {
             const response = await axios.patch(`/api/v1/webs/update-editor-preferences`,{
                 theme:theme||"vs-dark",
                 fontSize:fontSize||"15px",
+                indentation:indentation || 2,
                 fontWeight:fontWeight||"500",
                 formatOnType:formatOnType||true,
                 lineHeight:lineHeight||20,

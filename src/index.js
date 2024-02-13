@@ -9,6 +9,7 @@ import ProfileSettings from "./pages/ProfileSettings.jsx";
 import AccountSettings from "./pages/AccountSettings.jsx";
 import NewWeb from "./pages/NewWeb.jsx";
 import EditorSettings from "./pages/EditorSettings.jsx";
+import EditWeb from "./pages/EditWeb.jsx";
 
 
 export {
@@ -23,4 +24,5 @@ export {
     AccountSettings,
     NewWeb,
     EditorSettings,
+    EditWeb,
 };
