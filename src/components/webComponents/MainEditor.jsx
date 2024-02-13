@@ -29,6 +29,7 @@ export default function MainEditor() {
     webService.getEditorPreferences()
       .then(res => {
         dispatch(setEditorOption(res.data));
+        setIndentationNo(res.data.indentation);
         dispatch(chengeHtml(""));
         dispatch(chengeCss(""));
         dispatch(chengeJs(""));

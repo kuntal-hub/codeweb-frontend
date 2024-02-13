@@ -298,12 +298,11 @@ export class WebService {
     
     }
 
-    async updateEditorPreferences({theme,fontSize,indentation,fontWeight,formatOnType,lineHeight,mouseWheelZoom,wordWrap}){
+    async updateEditorPreferences({theme,fontSize,fontWeight,formatOnType,lineHeight,mouseWheelZoom,wordWrap}){
         try {
             const response = await axios.patch(`/api/v1/webs/update-editor-preferences`,{
                 theme:theme||"vs-dark",
                 fontSize:fontSize||"15px",
-                indentation:indentation || 2,
                 fontWeight:fontWeight||"500",
                 formatOnType:formatOnType||true,
                 lineHeight:lineHeight||20,
@@ -311,7 +310,21 @@ export class WebService {
                 wordWrap:wordWrap||"on"
             })
 
-            if (response.data.status>=400) return response.data;
+            return response.data;
+        } catch (error) {
+            console.log("webService.updateEditorPreferences error: ", error)
+            return {status:error.status,message:error.message,data:null};
+        }
+    
+    }
+
+
+    async chengeEditorView({indentation}){
+        try {
+            if(!indentation) throw new Error("indentation is null");
+            const response = await axios.patch(`/api/v1/webs/chenge-editor-view`,{
+                indentation:indentation
+            })
 
             return response.data;
         } catch (error) {

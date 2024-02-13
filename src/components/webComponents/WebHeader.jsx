@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import SimpleAuth from './SimpleAuth.jsx';
 import { useSafeNavigate } from '../../hooks/useSafeNavigate.js';
 import SetTitleDescpiption from './SetTitleDescpiption.jsx';
+import {webService} from "../../apiServices/web.js"
 
 export default memo(function WebHeader({setIndentationNo,hendleSaveWeb}) {
   const webTitle = useSelector(state => state.webs.title);
@@ -22,6 +23,13 @@ export default memo(function WebHeader({setIndentationNo,hendleSaveWeb}) {
       return;
     }
     hendleSaveWeb();
+  }
+
+  const chengeWebView = async (no) => {
+    setIndentationNo(no);
+    if (user) {
+      const res = await webService.chengeEditorView({indentation:no});
+    }
   }
 
   return (
@@ -57,15 +65,15 @@ export default memo(function WebHeader({setIndentationNo,hendleSaveWeb}) {
           </div>
           <div className="dropdown-content">
 
-            <button className='w-11 p-2'onClick={()=>setIndentationNo(1)} >
+            <button className='w-11 p-2'onClick={()=>chengeWebView(1)} >
             <img src="https://res.cloudinary.com/dvrpvl53d/image/upload/q_25/v1707650466/WhatsApp_Image_2024-02-11_at_4.48.29_PM_sfeilr.jpg" alt="" className='w-8' />
             </button>
 
-            <button className='w-11 p-2'onClick={()=>setIndentationNo(2)} >
+            <button className='w-11 p-2'onClick={()=>chengeWebView(2)} >
             <img src="https://res.cloudinary.com/dvrpvl53d/image/upload/q_25/v1707650466/WhatsApp_Image_2024-02-11_at_4.49.52_PM_dsyaex.jpg" alt="" className='w-8' />
             </button>
 
-            <button className='w-11 p-2'onClick={()=>setIndentationNo(3)} >
+            <button className='w-11 p-2'onClick={()=>chengeWebView(3)} >
             <img src="https://res.cloudinary.com/dvrpvl53d/image/upload/q_25/v1707650466/WhatsApp_Image_2024-02-11_at_4.48.26_PM_tbhfqw.jpg" alt="" className='w-8' />
             </button>
 

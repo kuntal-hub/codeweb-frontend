@@ -4,6 +4,7 @@ import { addNotification } from '../../store/notificationSlice.js';
 import { useSafeNavigate } from '../../hooks/useSafeNavigate.js';
 import SetTitleDescpiption from './SetTitleDescpiption.jsx';
 import {followerSearvice} from "../../apiServices/follower.js"
+import {webService} from "../../apiServices/web.js"
 
 export default memo(function WebHeader({setIndentationNo,hendleSaveWeb,web}) {
   const webTitle = useSelector(state => state.webs.title);
@@ -21,6 +22,18 @@ export default memo(function WebHeader({setIndentationNo,hendleSaveWeb,web}) {
       return;
     }
     hendleSaveWeb();
+  }
+
+  const chengeWebView = async (no) => {
+    setIndentationNo(no);
+    if (user) {
+      const res = await webService.chengeEditorView({indentation:no});
+      if(res.status>=400){
+        dispatch(addNotification({type:"error",text:res.message}))
+      } else {
+        dispatch(addNotification({type:"info",text:res.message}))
+      }
+    }
   }
 
   const toggleFollow = async ()=>{
@@ -47,6 +60,7 @@ export default memo(function WebHeader({setIndentationNo,hendleSaveWeb,web}) {
         <div className='m-0 p-0'>
           <button className='block text-white text-[20px] md:text[24px] font-bold ml-1 mt-3 mb-1 md:ml-2 line-height-10-imp'
           onClick={()=>setShowTitleDescpiption(true)}
+          disabled={!user || user._id !== web.owner._id}
           >{webTitle}</button>
 
           <div className='flex flex-nowrap justify-start mt-3  ml-1 md:ml-2'>
@@ -79,15 +93,15 @@ export default memo(function WebHeader({setIndentationNo,hendleSaveWeb,web}) {
           </div>
           <div className="dropdown-content">
 
-            <button className='w-11 p-2'onClick={()=>setIndentationNo(1)} >
+            <button className='w-11 p-2'onClick={()=>chengeWebView(1)} >
             <img src="https://res.cloudinary.com/dvrpvl53d/image/upload/q_25/v1707650466/WhatsApp_Image_2024-02-11_at_4.48.29_PM_sfeilr.jpg" alt="" className='w-8' />
             </button>
 
-            <button className='w-11 p-2'onClick={()=>setIndentationNo(2)} >
+            <button className='w-11 p-2'onClick={()=>chengeWebView(2)} >
             <img src="https://res.cloudinary.com/dvrpvl53d/image/upload/q_25/v1707650466/WhatsApp_Image_2024-02-11_at_4.49.52_PM_dsyaex.jpg" alt="" className='w-8' />
             </button>
 
-            <button className='w-11 p-2'onClick={()=>setIndentationNo(3)} >
+            <button className='w-11 p-2'onClick={()=>chengeWebView(3)} >
             <img src="https://res.cloudinary.com/dvrpvl53d/image/upload/q_25/v1707650466/WhatsApp_Image_2024-02-11_at_4.48.26_PM_tbhfqw.jpg" alt="" className='w-8' />
             </button>
 
