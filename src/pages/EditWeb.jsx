@@ -11,6 +11,7 @@ import { webService } from '../apiServices/web.js';
 import WebHeader from '../components/webComponents/WebHeader2.jsx';
 import {setEditorOption} from "../store/editorOptionSlice.js";
 import { useParams } from 'react-router-dom';
+import WebFooter from '../components/webComponents/WebFooter.jsx';
 
 export default function EditWeb() {
   const navigate = useNavigate();
@@ -48,7 +49,7 @@ export default function EditWeb() {
         navigate("/error")
       }
     })
-  }, []);
+  }, [webId]);
 
   useEffect(() => {
     const handleBeforeUnload = (event) => {
@@ -163,8 +164,8 @@ export default function EditWeb() {
             </div>
           </div>
         }
-        <div className='w-screen h-[25px] bg-gray-700'>
-
+        <div className='w-screen h-[25px]'>
+            <WebFooter web={web} />
         </div>
 
     </div>

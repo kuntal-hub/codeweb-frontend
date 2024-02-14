@@ -10,6 +10,7 @@ import WebHeader from './WebHeader.jsx';
 import * as htmlToImage from 'html-to-image';
 import { useNavigate } from 'react-router-dom';
 import { addNotification } from '../../store/notificationSlice.js';
+import WebFooter from './WebFooter.jsx';
 
 export default function MainEditor() {
   document.title = 'new web - codeWeb.io'
@@ -152,8 +153,8 @@ export default function MainEditor() {
             </div>
           </div>
         }
-        <div className='w-screen h-[25px] bg-gray-700'>
-
+        <div className='w-screen h-[25px]'>
+            <WebFooter />
         </div>
       </div>
 

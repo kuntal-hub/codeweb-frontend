@@ -36,12 +36,10 @@ export class WebService {
 
             const response = await axios.post(`/api/v1/webs/create-forked/${webId}`);
 
-            if (!response) throw new Error("Response is null");
-
             return response.data;
         } catch (error) {
             console.log("webService.createForkWeb error: ", error);
-            return null;
+            return {message:error.message,data:null,status:error.status};
         }
     }
 
