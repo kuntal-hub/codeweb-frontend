@@ -14,7 +14,7 @@ function App() {
   useEffect(() => {
     authServices.getCurrentUser()
       .then((response) => {
-        if (response.status == 401 && response.data===null) {
+        if (response.status >= 400 && response.data===null) {
           authServices.refreshAccessToken()
           .then(response2=>{
             if (response2.data && response2.status<400) {

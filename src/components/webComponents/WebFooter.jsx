@@ -3,12 +3,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addNotification } from '../../store/notificationSlice';
 import { webService } from '../../apiServices/web';
 import { useNavigate } from 'react-router-dom';
+import ShowAsset from './ShowAsset';
 
 export default function WebFooter({web}) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const user = useSelector(state => state.auth.userData);
     const [isForkButtonDisabled, setIsForkButtonDisabled] = useState(false);
+    const [showAsset, setShowAsset] = useState(false);
 
     const forkWeb = async () => {
         console.log(" forkWeb")
@@ -34,6 +36,11 @@ export default function WebFooter({web}) {
         className='h-full text-white px-3 bg-gray-700 hover:bg-gray-600 mx-[2px]'>
             Fork
         </button>}
+        <button onClick={()=>setShowAsset(true)}
+         className='h-full text-white px-3 bg-gray-700 hover:bg-gray-600 mx-[2px]'>
+            Assets
+        </button>
+        {showAsset && <ShowAsset setShowAsset={setShowAsset} />}
     </div>
   )
 }
