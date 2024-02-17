@@ -173,9 +173,9 @@ export class WebService {
             if(image) formData.append('image', image, 'my-image-name.jpeg');
             if(title) formData.append('title', title);
             if(description) formData.append('description', description);
-            if(html) formData.append('html', html);
-            if(css) formData.append('css', css);
-            if(js) formData.append('js', js);
+            if(html !== undefined && html !== null) formData.append('html', html);
+            if(css !== undefined && css !== null) formData.append('css', css);
+            if(js !== undefined && js!== null) formData.append('js', js);
 
           const response = await axios.patch(`/api/v1/webs/update/${webId}`,formData,{
               headers: {

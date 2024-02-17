@@ -80,6 +80,10 @@ export default function EditWeb() {
       dispatch(addNotification({ text: "No changes to save", type: "info" }));
       return;
     }
+    if(!webHtml || !webCss || !webJs){
+      dispatch(addNotification({ text: "nothing to save", type: "info" }));
+      return;
+    }
     let image;
     if (web.html !== webHtml || web.css !== webCss || web.js !== webJs) {
       const dataUrl = await htmlToImage.toJpeg(ifreamRef.current, { quality: 1.0,width:1200 ,height:700 });
