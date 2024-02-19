@@ -46,6 +46,7 @@ export default function EditWeb() {
           dispatch(chengeJs(res.data.js))
           dispatch(chengeTitleAndDesc(res.data))
           setLoading(false);
+          webService.increaseViewsOfWeb({webId:webId})
       } else {
         navigate("/error")
       }
