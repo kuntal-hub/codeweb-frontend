@@ -24,6 +24,7 @@ export default function MainEditor() {
   const [loading, setLoading] = useState(true);
   const [showResult, setShowResult] = useState(true);
   const [indentationNo, setIndentationNo] = useState(2);
+  const [showRenderingIfream, setShowRenderingIfream] = useState(false);
   const ifreamRef = useRef(null);
 
   useEffect(() => {
@@ -72,9 +73,10 @@ export default function MainEditor() {
       dispatch(addNotification({ text: "Title and description are required", type: "warning" }));
       return;
     }
+    setShowRenderingIfream(true);
     const dataUrl = await htmlToImage.toJpeg(ifreamRef.current, { quality: 1.0,width:1200 ,height:700 });
     const image = await fetch(dataUrl).then((res) => res.blob());
-    
+    setShowRenderingIfream(false);
     setLoading(true);
     const response = await webService.createWeb({
       title:webTitle,
@@ -114,7 +116,7 @@ export default function MainEditor() {
 
             {showResult &&
               <div className='h-full m-0 p-0 w-[60%]'>
-                <Iframe ref={ifreamRef} />
+                <Iframe />
               </div>}
 
           </div>
@@ -136,7 +138,7 @@ export default function MainEditor() {
 
             {showResult &&
               <div className='h-[45%] m-0 p-0 md:w-[50%] md:h-full lg:w-full lg:h-[45%]'>
-                <Iframe ref={ifreamRef} />
+                <Iframe />
               </div>}
 
           </div>}
@@ -145,7 +147,7 @@ export default function MainEditor() {
           <div className='w-screen h-calc-screen-75px m-0 p-0 flex flex-nowrap'>
             {showResult &&
               <div className='h-full m-0 p-0 w-[60%]'>
-                <Iframe ref={ifreamRef} />
+                <Iframe />
               </div>}
 
             <div className={`${showResult ? "w-[40%]" : "w-full"} bg-gray-950 h-full`}>
@@ -156,6 +158,10 @@ export default function MainEditor() {
         <div className='w-screen h-[25px]'>
             <WebFooter />
         </div>
+
+        {showRenderingIfream && <div className='w-[1200px] h-[700px] opacity-0'>
+      <Iframe ref={ifreamRef} />
+    </div> }
       </div>
 
   )

@@ -168,14 +168,15 @@ export class WebService {
     async updateWeb({webId,title,description,html,css,js,image}){
         try {
             if (!webId) throw new Error("webId is null");
-            if (!title && !description && !html && !css && !js) throw new Error("No data to update");
+            if (!title && !description && html===undefined && css===undefined && js===undefined) throw new Error("No data to update");
+            if (!title && !description && html==="" && css==="" && js==="") throw new Error("No data to update");
             const formData = new FormData();
             if(image) formData.append('image', image, 'my-image-name.jpeg');
             if(title) formData.append('title', title);
             if(description) formData.append('description', description);
-            if(html !== undefined && html !== null) formData.append('html', html);
-            if(css !== undefined && css !== null) formData.append('css', css);
-            if(js !== undefined && js!== null) formData.append('js', js);
+            if(html !== undefined) formData.append('html', html);
+            if(css !== undefined) formData.append('css', css);
+            if(js !== undefined) formData.append('js', js);
 
           const response = await axios.patch(`/api/v1/webs/update/${webId}`,formData,{
               headers: {

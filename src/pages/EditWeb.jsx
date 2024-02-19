@@ -25,6 +25,7 @@ export default function EditWeb() {
   const [showResult, setShowResult] = useState(true);
   const [indentationNo, setIndentationNo] = useState(2);
   const [web,setWeb] = useState(null);
+  const [showRenderingIfream, setShowRenderingIfream] = useState(false);
   const ifreamRef = useRef(null);
   const {webId} = useParams();
   document.title = 'web - '+webTitle;
@@ -80,16 +81,17 @@ export default function EditWeb() {
       dispatch(addNotification({ text: "No changes to save", type: "info" }));
       return;
     }
-    if(!webHtml || !webCss || !webJs){
+    if(!webHtml && !webCss && !webJs){
       dispatch(addNotification({ text: "nothing to save", type: "info" }));
       return;
     }
     let image;
     if (web.html !== webHtml || web.css !== webCss || web.js !== webJs) {
+      setShowRenderingIfream(true);
       const dataUrl = await htmlToImage.toJpeg(ifreamRef.current, { quality: 1.0,width:1200 ,height:700 });
       image = await fetch(dataUrl).then((res) => res.blob()); 
+      setShowRenderingIfream(false);
     }
-    
     setLoading(true);
     const data ={};
     data.webId = web._id;
@@ -129,7 +131,7 @@ export default function EditWeb() {
 
             {showResult &&
               <div className='h-full m-0 p-0 w-[60%]'>
-                <Iframe ref={ifreamRef} />
+                <Iframe />
               </div>}
 
           </div>
@@ -151,7 +153,7 @@ export default function EditWeb() {
 
             {showResult &&
               <div className='h-[45%] m-0 p-0 md:w-[50%] md:h-full lg:w-full lg:h-[45%]'>
-                <Iframe ref={ifreamRef} />
+                <Iframe />
               </div>}
 
           </div>}
@@ -160,7 +162,7 @@ export default function EditWeb() {
           <div className='w-screen h-calc-screen-75px m-0 p-0 flex flex-nowrap'>
             {showResult &&
               <div className='h-full m-0 p-0 w-[60%]'>
-                <Iframe ref={ifreamRef} />
+                <Iframe />
               </div>}
 
             <div className={`${showResult ? "w-[40%]" : "w-full"} bg-gray-950 h-full`}>
@@ -172,7 +174,10 @@ export default function EditWeb() {
             <WebFooter web={web} />
         </div>
 
+        {showRenderingIfream && <div className='w-[1200px] h-[700px] opacity-0'>
+      <Iframe ref={ifreamRef} />
+    </div> }
+
     </div>
-  
   )
 }
