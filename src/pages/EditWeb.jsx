@@ -17,6 +17,7 @@ export default function EditWeb() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const webHtml = useSelector(state => state.webs.html);
+  const user = useSelector(state => state.auth.userData);
   const webCss = useSelector(state => state.webs.css);
   const webJs = useSelector(state => state.webs.js);
   const webTitle = useSelector(state => state.webs.title);
@@ -25,7 +26,7 @@ export default function EditWeb() {
   const [showResult, setShowResult] = useState(true);
   const [indentationNo, setIndentationNo] = useState(2);
   const [web,setWeb] = useState(null);
-  const [showRenderingIfream, setShowRenderingIfream] = useState(false);
+  const [showRenderingIfream, setShowRenderingIfream] = useState(true);
   const ifreamRef = useRef(null);
   const {webId} = useParams();
   document.title = 'web - '+webTitle;
@@ -45,11 +46,16 @@ export default function EditWeb() {
           dispatch(chengeCss(res.data.css))
           dispatch(chengeJs(res.data.js))
           dispatch(chengeTitleAndDesc(res.data))
-          setLoading(false);
-          webService.increaseViewsOfWeb({webId:webId})
-      } else {
-        navigate("/error")
-      }
+        } else {
+          navigate("/error")
+        }
+      })
+      .finally(()=>{
+        setLoading(false);
+        if (!user || user._id !== web.owner._id) {
+          setShowRenderingIfream(false);
+        }
+        webService.increaseViewsOfWeb({webId:webId});
     })
   }, [webId]);
 
@@ -88,10 +94,8 @@ export default function EditWeb() {
     }
     let image;
     if (web.html !== webHtml || web.css !== webCss || web.js !== webJs) {
-      setShowRenderingIfream(true);
       const dataUrl = await htmlToImage.toJpeg(ifreamRef.current, { quality: 1.0,width:1200 ,height:700 });
       image = await fetch(dataUrl).then((res) => res.blob()); 
-      setShowRenderingIfream(false);
     }
     setLoading(true);
     const data ={};
@@ -120,7 +124,10 @@ export default function EditWeb() {
     <div className='h-screen w-screen fixed top-0 left-0 bg-white m-0 p-0'>
 
       <nav className='w-screen block h-[50px] bg-gray-700 m-0 p-0'>
-          <WebHeader setIndentationNo={setIndentationNo} hendleSaveWeb={hendleSaveWeb} web={web} />
+          <WebHeader 
+          setIndentationNo={setIndentationNo} 
+          hendleSaveWeb={hendleSaveWeb} 
+          web={web} />
         </nav>
 
         {indentationNo === 1 &&
