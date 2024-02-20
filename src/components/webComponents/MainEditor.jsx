@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import EditorBox from './EditorBox'
 import { useSelector, useDispatch } from "react-redux";
 import { setEditorOption } from "../../store/editorOptionSlice.js"
@@ -38,7 +38,7 @@ export default function MainEditor() {
         dispatch(chengeTitleAndDesc({title:"Untitled",description:""}))
         setLoading(false);
       })
-  }, []);
+  });
 
   useEffect(() => {
     const handleBeforeUnload = (event) => {
@@ -58,7 +58,7 @@ export default function MainEditor() {
   }, []); //
 
 
-  window.addEventListener("resize",(e)=>{
+  window.addEventListener("resize",()=>{
     if (window.innerWidth < 1024) {
       setIndentationNo(2);
     }

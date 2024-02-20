@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import * as htmlToImage from 'html-to-image';
 import { useNavigate } from 'react-router-dom';
@@ -26,12 +26,13 @@ export default function EditWeb() {
   const [showResult, setShowResult] = useState(true);
   const [indentationNo, setIndentationNo] = useState(2);
   const [web,setWeb] = useState(null);
-  const [showRenderingIfream, setShowRenderingIfream] = useState(true);
+  const [showRenderingIfream, setShowRenderingIfream] = useState(false);
   const ifreamRef = useRef(null);
   const {webId} = useParams();
   document.title = 'web - '+webTitle;
 
   useEffect(() => {
+    let webOwnerId;
     webService.getEditorPreferences()
       .then(res => {
         dispatch(setEditorOption(res.data));
@@ -42,6 +43,7 @@ export default function EditWeb() {
       .then(res=>{
         if (res.status<400 && res.data) {
           setWeb(res.data);
+          webOwnerId = res.data.owner._id;
           dispatch(chengeHtml(res.data.html))
           dispatch(chengeCss(res.data.css))
           dispatch(chengeJs(res.data.js))
@@ -52,8 +54,8 @@ export default function EditWeb() {
       })
       .finally(()=>{
         setLoading(false);
-        if (!user || user._id !== web.owner._id) {
-          setShowRenderingIfream(false);
+        if (user && user._id === webOwnerId) {
+          setShowRenderingIfream(true);
         }
         webService.increaseViewsOfWeb({webId:webId});
     })
@@ -77,7 +79,7 @@ export default function EditWeb() {
   }, []); //
 
 
-  window.addEventListener("resize",(e)=>{
+  window.addEventListener("resize",()=>{
     if (window.innerWidth < 1024) {
       setIndentationNo(2);
     }
