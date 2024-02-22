@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { login,logout } from "./store/authSlice.js";
+import { useDispatch } from 'react-redux';
+import { login } from "./store/authSlice.js";
 import { authServices } from "./apiServices/auth.js"
 import RetroBG from './components/backgrounds/RetroBG.jsx';
 import Header from './components/Header';
@@ -28,7 +28,7 @@ function App() {
       .finally(() => {
         setLoading(false);
       })
-  }, [])
+  }, )
 
   return (
     <>
