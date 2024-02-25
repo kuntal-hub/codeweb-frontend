@@ -1,11 +1,5 @@
 {
     "rewrites": [
       { "source": "/(.*)", "destination": "/" }
-    ],
-    "routes": [
-      {
-        "src": "/api/v1",
-        "dest": "https://codeweb.onrender.com/api/v1"
-      }
     ]
 }
