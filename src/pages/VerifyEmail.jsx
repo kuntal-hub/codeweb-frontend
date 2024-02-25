@@ -35,7 +35,7 @@ export default function VerifyEmail() {
                 })
             }
         }
-    },[window.location.search])
+    },[urlParams])
 
     return loading ? <RetroBG text={"Verifying Your Email..."} /> :
         <div className='w-screen h-screen fixed top-0 left-0 right-0 z-10 bg-gray-800 grid place-content-center'>

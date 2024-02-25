@@ -38,7 +38,7 @@ export default function MainEditor() {
         dispatch(chengeTitleAndDesc({title:"Untitled",description:""}))
         setLoading(false);
       })
-  });
+  },[]);
 
   useEffect(() => {
     const handleBeforeUnload = (event) => {
