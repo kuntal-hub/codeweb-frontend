@@ -6,7 +6,7 @@ export class LikeSearvice {
         try {
             if(!webId) throw new Error("webId is missing")
 
-            const response = await axios.post(`https://codeweb.onrender.com/api/v1/likes/web/${webId}`);
+            const response = await axios.post(`/api/v1/likes/web/${webId}`);
 
             if(!response) throw new Error("response is null")
 
@@ -21,7 +21,7 @@ export class LikeSearvice {
         try {
             if(!assetId) throw new Error("assetId is missing")
 
-            const response = await axios.post(`https://codeweb.onrender.com/api/v1/likes/asset/${assetId}`);
+            const response = await axios.post(`/api/v1/likes/asset/${assetId}`);
 
             if(!response) throw new Error("response is null")
 
@@ -36,7 +36,7 @@ export class LikeSearvice {
         try {
             if(!collectionId) throw new Error("collectionId is missing")
 
-            const response = await axios.post(`https://codeweb.onrender.com/api/v1/likes/collection/${collectionId}`);
+            const response = await axios.post(`/api/v1/likes/collection/${collectionId}`);
 
             if(!response) throw new Error("response is null")
 
@@ -51,7 +51,7 @@ export class LikeSearvice {
         try {
             if(!commentId) throw new Error("commentId is missing")
 
-            const response = await axios.post(`https://codeweb.onrender.com/api/v1/likes/comment/${commentId}`);
+            const response = await axios.post(`/api/v1/likes/comment/${commentId}`);
 
             if(!response) throw new Error("response is null")
 
@@ -66,7 +66,7 @@ export class LikeSearvice {
         try {
             if(!replyId) throw new Error("replyId is missing")
 
-            const response = await axios.post(`https://codeweb.onrender.com/api/v1/likes/replay/${replyId}`);
+            const response = await axios.post(`/api/v1/likes/replay/${replyId}`);
 
             if(!response) throw new Error("response is null")
 

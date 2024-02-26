@@ -17,7 +17,7 @@ export class WebService {
             formData.append('js', js || "");
             formData.append('isPublic', isPublic);
 
-            const response = await axios.post("https://codeweb.onrender.com/api/v1/webs/create", formData,{
+            const response = await axios.post("/api/v1/webs/create", formData,{
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -34,7 +34,7 @@ export class WebService {
         try {
             if (!webId) throw new Error("webId is null");
 
-            const response = await axios.post(`https://codeweb.onrender.com/api/v1/webs/create-forked/${webId}`);
+            const response = await axios.post(`/api/v1/webs/create-forked/${webId}`);
 
             return response.data;
         } catch (error) {
@@ -47,7 +47,7 @@ export class WebService {
         try {
             if (!webId) throw new Error("webId is null");
 
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/webs/get/${webId}`);
+            const response = await axios.get(`/api/v1/webs/get/${webId}`);
 
             return response.data;
         } catch (error) {
@@ -64,7 +64,7 @@ export class WebService {
         // webType = public, private, forked
             if (!username) throw new Error("username is null");
 
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/webs/user/${username}?${queryParameters}`)
+            const response = await axios.get(`/api/v1/webs/user/${username}?${queryParameters}`)
 
             if (!response) throw new Error("Response is null");
 
@@ -82,7 +82,7 @@ export class WebService {
             // sortBy = views, createdAt, likesCount, commentsCount
             if (!username) throw new Error("username is null");
 
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/webs/liked/${username}?${queryParameters}`)
+            const response = await axios.get(`/api/v1/webs/liked/${username}?${queryParameters}`)
 
             if (!response) throw new Error("Response is null");
 
@@ -98,7 +98,7 @@ export class WebService {
             // queryParameters = string contains all querys of url
             // valid querys are sortBy, sortOrder, page, limit;
             // sortBy = views, createdAt, likesCount, commentsCount
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/webs/following?${queryParameters}`)
+            const response = await axios.get(`/api/v1/webs/following?${queryParameters}`)
 
             if (!response) throw new Error("Response is null");
 
@@ -111,7 +111,7 @@ export class WebService {
 
     async getTrendingWebs({page=1,limit=4}){
         try {
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/webs/trending?page=${page}&limit=${limit}`)
+            const response = await axios.get(`/api/v1/webs/trending?page=${page}&limit=${limit}`)
 
             if (!response) throw new Error("Response is null");
 
@@ -126,7 +126,7 @@ export class WebService {
         try {
             // queryParameters = string contains all querys of url
             // valid querys are sortBy, sortOrder, page, limit;
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/webs/your-work?${queryParameters}`)
+            const response = await axios.get(`/api/v1/webs/your-work?${queryParameters}`)
 
             if (!response) throw new Error("Response is null");
 
@@ -141,7 +141,7 @@ export class WebService {
         try {
             if (!search) throw new Error("search is null");
 
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/webs/search/my-webs?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}`)
+            const response = await axios.get(`/api/v1/webs/search/my-webs?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}`)
 
             if (!response) throw new Error("Response is null");
 
@@ -154,7 +154,7 @@ export class WebService {
 
     async showRecomendedPeople({page=1,limit=10}){
         try {
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/webs/recomended-people?page=${page}&limit=${limit}`)
+            const response = await axios.get(`/api/v1/webs/recomended-people?page=${page}&limit=${limit}`)
 
             if (!response) throw new Error("Response is null");
 
@@ -178,7 +178,7 @@ export class WebService {
             if(css !== undefined) formData.append('css', css);
             if(js !== undefined) formData.append('js', js);
 
-          const response = await axios.patch(`https://codeweb.onrender.com/api/v1/webs/update/${webId}`,formData,{
+          const response = await axios.patch(`/api/v1/webs/update/${webId}`,formData,{
               headers: {
                 'Content-Type': 'multipart/form-data',
               },
@@ -195,7 +195,7 @@ export class WebService {
         try {
             if (!webId) throw new Error("webId is null");
 
-            const response = await axios.delete(`https://codeweb.onrender.com/api/v1/webs/delete/${webId}`)
+            const response = await axios.delete(`/api/v1/webs/delete/${webId}`)
 
             if (!response) throw new Error("Response is null");
 
@@ -210,7 +210,7 @@ export class WebService {
         try {
             if (!webId) throw new Error("webId is null");
 
-            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/webs/toggle-publish-status/${webId}`)
+            const response = await axios.patch(`/api/v1/webs/toggle-publish-status/${webId}`)
 
             if (!response) throw new Error("Response is null");
 
@@ -226,7 +226,7 @@ export class WebService {
         try {
             if (!webId) throw new Error("webId is null");
 
-            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/webs/inc-view/${webId}`)
+            const response = await axios.patch(`/api/v1/webs/inc-view/${webId}`)
 
             if (!response) throw new Error("Response is null");
 
@@ -243,7 +243,7 @@ export class WebService {
         try {
             if (!search) throw new Error("search is null");
 
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/webs/search/all-webs?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}`)
+            const response = await axios.get(`/api/v1/webs/search/all-webs?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}`)
 
             if (!response) throw new Error("Response is null");
 
@@ -257,7 +257,7 @@ export class WebService {
 
     async getEditorPreferences(){
         try {
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/webs/editor-preferences`)
+            const response = await axios.get(`/api/v1/webs/editor-preferences`)
 
             if (response.data.status>=400) return {
                 message:response.data.message,
@@ -299,7 +299,7 @@ export class WebService {
 
     async updateEditorPreferences({theme,fontSize,fontWeight,formatOnType,lineHeight,mouseWheelZoom,wordWrap}){
         try {
-            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/webs/update-editor-preferences`,{
+            const response = await axios.patch(`/api/v1/webs/update-editor-preferences`,{
                 theme:theme||"vs-dark",
                 fontSize:fontSize||"15px",
                 fontWeight:fontWeight||"500",
@@ -321,7 +321,7 @@ export class WebService {
     async chengeEditorView({indentation}){
         try {
             if(!indentation) throw new Error("indentation is null");
-            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/webs/chenge-editor-view`,{
+            const response = await axios.patch(`/api/v1/webs/chenge-editor-view`,{
                 indentation:indentation
             })
 

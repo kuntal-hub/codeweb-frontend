@@ -6,7 +6,7 @@ export class FollowerSearvice {
         try {
             if(!username) throw new Error("username is missing");
 
-            const response = await axios.post(`https://codeweb.onrender.com/api/v1/followers/toggle/${username}`);
+            const response = await axios.post(`/api/v1/followers/toggle/${username}`);
 
             return response.data;
         } catch (error) {
@@ -19,7 +19,7 @@ export class FollowerSearvice {
         try {
             if(!username) throw new Error("username is missing");
 
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/followers/get-followers/${username}?page=${page}&limit=${limit}`);
+            const response = await axios.get(`/api/v1/followers/get-followers/${username}?page=${page}&limit=${limit}`);
 
             if(!response) throw new Error("response is null");
 
@@ -34,7 +34,7 @@ export class FollowerSearvice {
         try {
             if(!username) throw new Error("username is missing");
 
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/followers/get-followings/${username}?page=${page}&limit=${limit}`);
+            const response = await axios.get(`/api/v1/followers/get-followings/${username}?page=${page}&limit=${limit}`);
 
             if(!response) throw new Error("response is null");
 
