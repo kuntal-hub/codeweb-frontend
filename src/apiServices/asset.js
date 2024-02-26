@@ -8,7 +8,7 @@ export class AssetService {
                 throw new Error("Missing required fields");
             }
 
-            const response = await axios.post("/api/v1/assets/create", {
+            const response = await axios.post("https://codeweb.onrender.com/api/v1/assets/create", {
                 title,
                 assetType,
                 assetURL,
@@ -27,7 +27,7 @@ export class AssetService {
 
     async getMyAssets(page=1, limit=20 , assetType="image") {
         try {
-            const response = await axios.get(`/api/v1/assets/my-assets?page=${page}&limit=${limit}&assetType=${assetType}`);
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/assets/my-assets?page=${page}&limit=${limit}&assetType=${assetType}`);
 
             if (!response) throw new Error("response is undefined");
 
@@ -40,7 +40,7 @@ export class AssetService {
 
     async getAllPublicAssets(page=1, limit=20 , assetType="image") {
         try {
-            const response = await axios.get(`/api/v1/assets/get?page=${page}&limit=${limit}&assetType=${assetType}`);
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/assets/get?page=${page}&limit=${limit}&assetType=${assetType}`);
 
             if (!response) throw new Error("response is undefined");
 
@@ -56,7 +56,7 @@ export class AssetService {
         try {
             if (!search) throw new Error("Missing search text");
 
-            const response = await axios.get(`/api/v1/assets/search/all-assets?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}&assetType=${assetType}`);
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/assets/search/all-assets?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}&assetType=${assetType}`);
 
             if (!response) throw new Error("response is undefined");
 
@@ -71,7 +71,7 @@ export class AssetService {
         try {
             if (!assetId) throw new Error("Missing assetId");
 
-            const response = await axios.get(`/api/v1/assets/get/${assetId}`);
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/assets/get/${assetId}`);
 
             if (!response) throw new Error("response is undefined");
 
@@ -86,7 +86,7 @@ export class AssetService {
         try {
             if (!assetId) throw new Error("Missing assetId");
 
-            const response = await axios.delete(`/api/v1/assets/delete/${assetId}`);
+            const response = await axios.delete(`https://codeweb.onrender.com/api/v1/assets/delete/${assetId}`);
 
             if (!response) throw new Error("response is undefined");
 
@@ -101,7 +101,7 @@ export class AssetService {
         try {
             if (!assetId) throw new Error("Missing assetId");
 
-            const response = await axios.patch(`/api/v1/assets/update/${assetId}`, {
+            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/assets/update/${assetId}`, {
                 title,
                 isPublic
             });
@@ -117,7 +117,7 @@ export class AssetService {
 
     async getLikedAssets(page=1, limit=20 , assetType="image") {
         try {
-            const response = await axios.get(`/api/v1/assets/liked?page=${page}&limit=${limit}&assetType=${assetType}`);
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/assets/liked?page=${page}&limit=${limit}&assetType=${assetType}`);
 
             if (!response) throw new Error("response is undefined");
 
