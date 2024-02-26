@@ -6,7 +6,7 @@ export class CollectionService {
         try {
             if(!name) throw new Error("Name is undefined");
 
-            const response = await axios.post("/api/v1/collections/create",{name,description,isPublic});
+            const response = await axios.post("https://codeweb.onrender.com/api/v1/collections/create",{name,description,isPublic});
 
             if(!response) throw new Error("Response is null");
 
@@ -23,7 +23,7 @@ export class CollectionService {
 
             if(!name && !description) throw new Error("Name and description both are undefined");
 
-            const response = await axios.patch(`/api/v1/collections/update/${collectionId}`,{name,description});
+            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/collections/update/${collectionId}`,{name,description});
 
             if(!response) throw new Error("Response is null");
 
@@ -39,7 +39,7 @@ export class CollectionService {
         try {
             if(!collectionId) throw new Error("CollectionId is undefined");
 
-            const response = await axios.delete(`/api/v1/collections/delete/${collectionId}`);
+            const response = await axios.delete(`https://codeweb.onrender.com/api/v1/collections/delete/${collectionId}`);
 
             if(!response) throw new Error("Response is null");
 
@@ -54,7 +54,7 @@ export class CollectionService {
         try {
             if(!collectionId || !webId) throw new Error("CollectionId or webId is undefined");
 
-            const response = await axios.patch(`/api/v1/collections/add-web/${collectionId}/${webId}`);
+            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/collections/add-web/${collectionId}/${webId}`);
 
             if(!response) throw new Error("Response is null");
 
@@ -69,7 +69,7 @@ export class CollectionService {
         try {
             if(!collectionId || !webId) throw new Error("CollectionId or webId is undefined");
 
-            const response = await axios.patch(`/api/v1/collections/remove-web/${collectionId}/${webId}`);
+            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/collections/remove-web/${collectionId}/${webId}`);
 
             if(!response) throw new Error("Response is null");
 
@@ -84,7 +84,7 @@ export class CollectionService {
         try {
             if(!collectionId) throw new Error("CollectionId is undefined");
 
-            const response = await axios.patch(`/api/v1/collections/toggle-publish-status/${collectionId}`);
+            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/collections/toggle-publish-status/${collectionId}`);
 
             if(!response) throw new Error("Response is null");
 
@@ -100,7 +100,7 @@ export class CollectionService {
         try {
             if(!collectionId) throw new Error("CollectionId is undefined");
 
-            const response = await axios.patch(`/api/v1/collections/inc-view/${collectionId}`);
+            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/collections/inc-view/${collectionId}`);
 
             if(!response) throw new Error("Response is null");
 
@@ -116,7 +116,7 @@ export class CollectionService {
         try {
             if(!collectionId) throw new Error("CollectionId is undefined");
 
-            const response = await axios.get(`/api/v1/collections/get/${collectionId}`);
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/collections/get/${collectionId}`);
 
             if(!response) throw new Error("Response is null");
 
@@ -132,7 +132,7 @@ export class CollectionService {
         try {
             if(!collectionId) throw new Error("CollectionId is undefined");
 
-            const response = await axios.get(`/api/v1/collections/get-webs/${collectionId}?page=${page}&limit=${limit}`);
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/collections/get-webs/${collectionId}?page=${page}&limit=${limit}`);
 
             if(!response) throw new Error("Response is null");
 
@@ -151,7 +151,7 @@ export class CollectionService {
             // collectionType can be public, private
             if(!username) throw new Error("UserId is undefined");
 
-            const response = await axios.get(`/api/v1/collections/user-collection/${username}?${queryParameters}`);
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/collections/user-collection/${username}?${queryParameters}`);
 
             if(!response) throw new Error("Response is null");
 
@@ -168,7 +168,7 @@ export class CollectionService {
             // queryParameters = string contains all querys of url
             // valid querys are page, limit , sortBy, sortOrder;
             // sortBy = views,likesCount,websCount,createdAt;
-            const response = await axios.get(`/api/v1/collections/my-collections?${queryParameters}`);
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/collections/my-collections?${queryParameters}`);
 
             if(!response) throw new Error("Response is null");
 
@@ -186,7 +186,7 @@ export class CollectionService {
             // sortBy = views,likesCount,websCount,createdAt;
             if(!username) throw new Error("UserId is undefined");
 
-            const response = await axios.get(`/api/v1/collections/liked/${username}?${queryParameters}`);
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/collections/liked/${username}?${queryParameters}`);
 
             if(!response) throw new Error("Response is null");
 
@@ -201,7 +201,7 @@ export class CollectionService {
         try {
             if(!search) throw new Error("Search is undefined");
 
-            const response = await axios.get(`/api/v1/collections/search/all-collections?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}`);
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/collections/search/all-collections?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}`);
 
             if(!response) throw new Error("Response is null");
 
@@ -217,7 +217,7 @@ export class CollectionService {
         try {
             if(!search) throw new Error("Search is undefined");
 
-            const response = await axios.get(`/api/v1/collections/search/my-collections?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}`);
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/collections/search/my-collections?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}`);
 
             if(!response) throw new Error("Response is null");
 
@@ -233,7 +233,7 @@ export class CollectionService {
         try {
             if(!name) throw new Error("Name is undefined");
 
-            const response = await axios.get(`/api/v1/collections/check-name-availability/${name.trim().replaceAll(" ","-")}`);
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/collections/check-name-availability/${name.trim().replaceAll(" ","-")}`);
 
             if(!response) throw new Error("Response is null");
 
