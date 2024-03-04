@@ -36,6 +36,8 @@ export default memo(function UpdateAvatar({ isDisabled = true }) {
             secure: true,
             multiple: false,
             cropping: true,
+            maxImageFileSize: 3000000,
+            clientAllowedFormats: ["png", "jpg", "jpeg","gif","webp"],
             showSkipCropButton: false,
             croppingDefaultSelectionRatio: 1.0,
             croppingAspectRatio: 1.0,

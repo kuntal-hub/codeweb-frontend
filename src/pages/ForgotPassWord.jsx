@@ -61,7 +61,7 @@ export default function ForgotPassWord() {
 
                     <div className='flex flex-nowrap justify-between mt-6'>
                         <p className={`flex flex-nowrap justify-start ${(loading || emailSendCount>=3) || "opacity-0"}`}>
-                            {emailSendCount<3 && <img src="./Spinner-1s-200px (1).gif" alt="Sending..." className='block w-12' />}
+                            {emailSendCount<3 && <img src="https://res.cloudinary.com/dvrpvl53d/image/upload/v1709483867/Spinner-1s-200px_1_aoji2y.gif" alt="Sending..." className='block w-12' />}
                             <span className='block text-gray-300 mt-3 font-semibold w-[70%]'>
                                 {emailSendCount>=3 ? "You have reached the limit of sending email" : "Sending Reset Email..."}
                             </span>

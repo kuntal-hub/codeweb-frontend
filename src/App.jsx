@@ -12,22 +12,19 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    authServices.getCurrentUser()
-      .then((response) => {
-        if (response.status >= 400 && response.data===null) {
-          authServices.refreshAccessToken()
-          .then(response2=>{
-            if (response2.data && response2.status<400) {
-              dispatch(login(response2.data));
-            }
-          })
-        }else if(response.status<400 && response.data){
-          dispatch(login(response.data));
+    const getuser = async () => {
+      const response = await authServices.getCurrentUser();
+      if(response.status<400 && response.data){
+        dispatch(login(response.data));
+      } else if(response.status >= 400 && response.data===null){
+        const response2 = await authServices.refreshAccessToken();
+        if (response2.data && response2.status<400) {
+          dispatch(login(response2.data));
         }
-      })
-      .finally(() => {
-        setLoading(false);
-      })
+      }
+      setLoading(false);
+    }
+    getuser();
   },[] )
 
   return (

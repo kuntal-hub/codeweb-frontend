@@ -36,6 +36,8 @@ export default memo(function UpdateCover({ isDisabled = true }) {
             secure: true,
             multiple: false,
             cropping: true,
+            maxImageFileSize: 3000000,
+            clientAllowedFormats: ["png", "jpg", "jpeg","gif","webp"],
             showSkipCropButton: false,
             croppingCoordinatesMode: 'custom',
             croppingDefaultSelectionRatio: 9 / 2,

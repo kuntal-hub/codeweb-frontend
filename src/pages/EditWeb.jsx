@@ -32,33 +32,29 @@ export default function EditWeb() {
   document.title = 'web - '+webTitle;
 
   useEffect(() => {
-    let webOwnerId;
-    webService.getEditorPreferences()
-      .then(res => {
-        dispatch(setEditorOption(res.data));
-        setIndentationNo(res.data.indentation)
-      })
-      
-      webService.getWebById({webId:webId})
-      .then(res=>{
-        if (res.status<400 && res.data) {
-          setWeb(res.data);
-          webOwnerId = res.data.owner._id;
-          dispatch(chengeHtml(res.data.html))
-          dispatch(chengeCss(res.data.css))
-          dispatch(chengeJs(res.data.js))
-          dispatch(chengeTitleAndDesc(res.data))
+    const loadwebAndEditorOption = async () => {
+      let webOwnerId;
+      const response1 = await webService.getEditorPreferences();
+        dispatch(setEditorOption(response1.data));
+        setIndentationNo(response1.data.indentation)
+      const response2 = await webService.getWebById({webId:webId});
+        if (response2.status<400 && response2.data) {
+          setWeb(response2.data);
+          webOwnerId = response2.data.owner._id;
+          dispatch(chengeHtml(response2.data.html))
+          dispatch(chengeCss(response2.data.css))
+          dispatch(chengeJs(response2.data.js))
+          dispatch(chengeTitleAndDesc(response2.data))
         } else {
           navigate("/error")
         }
-      })
-      .finally(()=>{
-        setLoading(false);
-        if (user && user._id === webOwnerId) {
-          setShowRenderingIfream(true);
-        }
-        webService.increaseViewsOfWeb({webId:webId});
-    })
+      setLoading(false);
+      if (user && user._id === webOwnerId) {
+        setShowRenderingIfream(true);
+      }
+      await webService.increaseViewsOfWeb({webId:webId});
+    }
+    loadwebAndEditorOption();
   }, [webId]);
 
   useEffect(() => {

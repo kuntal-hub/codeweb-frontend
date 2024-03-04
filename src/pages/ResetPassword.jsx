@@ -74,7 +74,7 @@ export default function ResetPassword() {
             disabled={loading}
             >
               {loading ? <p className='text-center mx-auto'>
-                <img src="Gear-0.6s-200px (2).gif" alt="loading" className="w-6 h-6 inline-block" /> Resetting...
+                <img src="https://res.cloudinary.com/dvrpvl53d/image/upload/v1709483807/Gear-0.6s-200px_2_r5xx0o.gif" alt="loading" className="w-6 h-6 inline-block" /> Resetting...
               </p> : "Reset Password"}
             </button>
 
