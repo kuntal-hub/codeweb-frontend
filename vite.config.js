@@ -12,5 +12,14 @@ export default defineConfig({
       },
     },
   },
+  build:{
+    proxy: {
+      '/api/v1': {
+        target: 'https://codeweb.onrender.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/v1/, ''),
+      },
+    },
+  },
   plugins: [react()],
 });
