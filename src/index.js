@@ -10,6 +10,7 @@ import AccountSettings from "./pages/AccountSettings.jsx";
 import NewWeb from "./pages/NewWeb.jsx";
 import EditorSettings from "./pages/EditorSettings.jsx";
 import EditWeb from "./pages/EditWeb.jsx";
+import ViewFullWeb from "./pages/ViewFullWeb.jsx";
 
 
 export {
@@ -25,4 +26,5 @@ export {
     NewWeb,
     EditorSettings,
     EditWeb,
+    ViewFullWeb,
 };

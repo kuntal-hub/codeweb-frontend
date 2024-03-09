@@ -19,6 +19,7 @@ import {
   NewWeb,
   EditorSettings,
   EditWeb,
+  ViewFullWeb,
 } from "./index.js";
 
 const routes = createBrowserRouter(
@@ -82,6 +83,8 @@ const routes = createBrowserRouter(
       <Route path='new-web' element={<NewWeb />} />
 
       <Route path='web/:webId' element={<EditWeb />} />
+
+      <Route path='view-full/:webId' element={<ViewFullWeb />} />
 
     </Route>
   )

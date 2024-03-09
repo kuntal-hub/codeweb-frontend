@@ -8,12 +8,10 @@ export class LikeSearvice {
 
             const response = await axios.post(`/api/v1/likes/web/${webId}`);
 
-            if(!response) throw new Error("response is null")
-
-            return true;
+            return response.data;
         } catch (error) {
             console.log("error on LikeSearvice.toggleLikeWeb",error);
-            return false;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
@@ -23,12 +21,10 @@ export class LikeSearvice {
 
             const response = await axios.post(`/api/v1/likes/asset/${assetId}`);
 
-            if(!response) throw new Error("response is null")
-
-            return true;
+            return response.data;
         } catch (error) {
             console.log("error on LikeSearvice.toggleLikeAsset",error);
-            return false;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
@@ -38,12 +34,10 @@ export class LikeSearvice {
 
             const response = await axios.post(`/api/v1/likes/collection/${collectionId}`);
 
-            if(!response) throw new Error("response is null")
-
-            return true;
+            return response.data;
         } catch (error) {
             console.log("error on LikeSearvice.toggleLikeCollection",error);
-            return false;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
@@ -52,13 +46,11 @@ export class LikeSearvice {
             if(!commentId) throw new Error("commentId is missing")
 
             const response = await axios.post(`/api/v1/likes/comment/${commentId}`);
-
-            if(!response) throw new Error("response is null")
-
-            return true;
+            
+            return response.data;
         } catch (error) {
             console.log("error on LikeSearvice.toggleLikeComment",error);
-            return false;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
@@ -68,12 +60,10 @@ export class LikeSearvice {
 
             const response = await axios.post(`/api/v1/likes/replay/${replyId}`);
 
-            if(!response) throw new Error("response is null")
-
-            return true;
+            return response.data;
         } catch (error) {
             console.log("error on LikeSearvice.toggleLikeReply",error);
-            return false;
+            return {status:error.status,message:error.message,data:null};
         }
     }
     

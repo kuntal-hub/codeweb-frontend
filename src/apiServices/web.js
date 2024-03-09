@@ -43,6 +43,19 @@ export class WebService {
         }
     }
 
+    async getWebWithoutDteailsById({webId}) {
+        try {
+            if (!webId) throw new Error("webId is null");
+
+            const response = await axios.get(`/api/v1/webs/get-without-details/${webId}`);
+
+            return response.data;
+        } catch (error) {
+            console.log("webService.getWebWithoutDteailsById error: ", error);
+            return {message:error.message,data:null,status:error.status};
+        }
+    }
+
     async getWebById({webId}) {
         try {
             if (!webId) throw new Error("webId is null");

@@ -1,10 +1,18 @@
 import React,{memo,forwardRef} from 'react'
 import { useSelector } from 'react-redux';
 
-export default memo(forwardRef(function Iframe({},ref) {
-    const html = useSelector(state => state.webs.html);
-    const css = useSelector(state => state.webs.css);
-    const javascript = useSelector(state => state.webs.js);
+export default memo(forwardRef(function Iframe({web},ref) {
+    let html,css,javascript;
+    
+    if (web) {
+        html = web.html;
+        css = web.css;
+        javascript = web.js;
+    } else {
+      html = useSelector(state => state.webs.html);
+      css = useSelector(state => state.webs.css);
+      javascript = useSelector(state => state.webs.js);
+    }
 
     const htmlContent = `
     <html>

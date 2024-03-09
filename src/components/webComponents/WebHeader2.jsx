@@ -5,6 +5,7 @@ import { useSafeNavigate } from '../../hooks/useSafeNavigate.js';
 import SetTitleDescpiption from './SetTitleDescpiption.jsx';
 import {followerSearvice} from "../../apiServices/follower.js"
 import {webService} from "../../apiServices/web.js"
+import { likeSearvice } from '../../apiServices/like.js';
 
 export default memo(function WebHeader({setIndentationNo,hendleSaveWeb,web}) {
   const webTitle = useSelector(state => state.webs.title);
@@ -13,6 +14,7 @@ export default memo(function WebHeader({setIndentationNo,hendleSaveWeb,web}) {
   const user = useSelector(state => state.auth.userData);
   const [showTitleDescpiption, setShowTitleDescpiption] = useState(false);
   const [isFollowing,setIsFollowing] = useState(web.owner.isFollowedByMe);
+  const [isLikedByMe,setIsLikedByMe] = useState(web.isLikedByMe);
   const [isFollowButtonDisabled,setIsFollowButtonDisabled] = useState(false);
   const navigate = useSafeNavigate();
 
@@ -22,6 +24,11 @@ export default memo(function WebHeader({setIndentationNo,hendleSaveWeb,web}) {
       return;
     }
     hendleSaveWeb();
+  }
+
+  const ToggLelikeWeb = async ()=>{
+    setIsLikedByMe(!isLikedByMe);
+    await likeSearvice.toggleLikeWeb({webId:web._id});
   }
 
   const chengeWebView = async (no) => {
@@ -86,6 +93,14 @@ export default memo(function WebHeader({setIndentationNo,hendleSaveWeb,web}) {
           title='save chenges' >
           save
         </button>}
+
+        <button onClick={ToggLelikeWeb}
+        className='w-10 sm:w-11 h-11 p-2 my-[3px] mr-1 bg-gray-300 mx-[2px] rounded-lg text-center hover:bg-gray-400'
+        title='Like Web'>
+          <img className='w-full h-full'
+          src={isLikedByMe? "https://res.cloudinary.com/dvrpvl53d/image/upload/v1709992461/8294893_n5a1la.png":
+          "https://res.cloudinary.com/dvrpvl53d/image/upload/v1709992461/130195_lsk7as.png"} alt="like" />
+        </button>
 
         <div className="dropdown hidden lg:block">
           <div className="my-[3px] w-11 p-2 bg-yellow-300 rounded-md">
