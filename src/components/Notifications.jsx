@@ -1,4 +1,4 @@
-import React,{memo} from 'react'
+import React,{memo,useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import "../cssFiles/utils.css";
 import { removeNotification } from '../store/notificationSlice.js';
@@ -6,6 +6,14 @@ import { removeNotification } from '../store/notificationSlice.js';
 export default memo(function Notifications() {
     const dispatch = useDispatch();
     const notifications = useSelector((state)=>state.notifications.notifications);
+    useEffect(() => {
+      if (notifications.length > 0) {
+        const timer = setTimeout(() => {
+          dispatch(removeNotification(0));
+        }, 2500);
+        return () => clearTimeout(timer);
+      }
+    }, [notifications]);
   return (
     <div className='fixed top-0 left-0 right-0 h-auto w-screen bg-transparent z-50'>
         {notifications.map((notification,index)=>(

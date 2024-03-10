@@ -47,7 +47,7 @@ export default function WebFooter({web}) {
          className='h-full text-white px-3 bg-gray-700 hover:bg-gray-600 mx-[2px]'>
             Full View
         </button>}
-        {showAsset && <ShowAsset setShowAsset={setShowAsset} />}
+        {showAsset && <ShowAsset setShowAsset={setShowAsset} showAsset={showAsset} />}
     </div>
   )
 }

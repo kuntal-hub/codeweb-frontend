@@ -24,7 +24,7 @@ export default function MainEditor() {
   const [loading, setLoading] = useState(true);
   const [showResult, setShowResult] = useState(true);
   const [indentationNo, setIndentationNo] = useState(2);
-  const [showRenderingIfream, setShowRenderingIfream] = useState(false);
+  const [showRenderingIfream, setShowRenderingIfream] = useState(true);
   const ifreamRef = useRef(null);
 
   useEffect(() => {
@@ -73,7 +73,6 @@ export default function MainEditor() {
       dispatch(addNotification({ text: "Title and description are required", type: "warning" }));
       return;
     }
-    setShowRenderingIfream(true);
     const dataUrl = await htmlToImage.toJpeg(ifreamRef.current, { quality: 1.0,width:1200 ,height:700 });
     const image = await fetch(dataUrl).then((res) => res.blob());
     setShowRenderingIfream(false);
@@ -90,8 +89,8 @@ export default function MainEditor() {
 
     if(response.status<400 && response.data){
       dispatch(addNotification({ text: response.message, type: "success" }));
-      setLoading(false);
       navigate(`/web/${response.data._id}`);
+      setLoading(false);
     } else if(response.status>=400 && !response.data){
       dispatch(addNotification({ text: response.message, type: "error" }));
       setLoading(false);
