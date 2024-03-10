@@ -4,6 +4,7 @@ import { addNotification } from '../../store/notificationSlice';
 import { webService } from '../../apiServices/web';
 import { useNavigate } from 'react-router-dom';
 import ShowAsset from './ShowAsset';
+import { useSafeNavigate } from '../../hooks/useSafeNavigate';
 
 export default function WebFooter({web}) {
     const navigate = useNavigate();
@@ -11,6 +12,7 @@ export default function WebFooter({web}) {
     const user = useSelector(state => state.auth.userData);
     const [isForkButtonDisabled, setIsForkButtonDisabled] = useState(false);
     const [showAsset, setShowAsset] = useState(false);
+    const safeNavigate = useSafeNavigate();
 
     const forkWeb = async () => {
         console.log(" forkWeb")
@@ -40,6 +42,11 @@ export default function WebFooter({web}) {
          className='h-full text-white px-3 bg-gray-700 hover:bg-gray-600 mx-[2px]'>
             Assets
         </button>
+        {web &&
+        <button onClick={()=>safeNavigate(`/view-full/${web?._id}`)}
+         className='h-full text-white px-3 bg-gray-700 hover:bg-gray-600 mx-[2px]'>
+            Full View
+        </button>}
         {showAsset && <ShowAsset setShowAsset={setShowAsset} />}
     </div>
   )

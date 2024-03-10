@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 export default memo(forwardRef(function Iframe({web},ref) {
     let html,css,javascript;
-    
+
     if (web) {
         html = web.html;
         css = web.css;
@@ -21,6 +21,7 @@ export default memo(forwardRef(function Iframe({web},ref) {
         <style>
           ${css}
           </style>
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
       </head>
       <body>
         ${html}
