@@ -5,7 +5,9 @@ const initialState = {
     css:"",
     js:"",
     title:"Untitled",
-    description:""
+    description:"",
+    cssLinks: [],
+    jsLinks: [],
 }
 
 export const webSlice = createSlice({
@@ -24,11 +26,16 @@ export const webSlice = createSlice({
         chengeTitleAndDesc: (state, action) => {
             state.title = action.payload.title
             state.description = action.payload.description
-        
-        }
+        },
+        updateCssLinks: (state, action) => {
+            state.cssLinks = action.payload
+        },
+        updateJsLinks: (state, action) => {
+            state.jsLinks = action.payload
+        },
     },
   })
 
-export const { chengeHtml, chengeCss, chengeJs, chengeTitleAndDesc } = webSlice.actions;
+export const { chengeHtml, chengeCss, chengeJs, chengeTitleAndDesc, updateCssLinks, updateJsLinks } = webSlice.actions;
 
 export default webSlice.reducer;

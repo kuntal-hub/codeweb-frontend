@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import * as htmlToImage from 'html-to-image';
 import { useNavigate } from 'react-router-dom';
-import {chengeCss,chengeHtml,chengeJs,chengeTitleAndDesc} from "../store/webSlice.js";
+import {chengeCss,chengeHtml,chengeJs,chengeTitleAndDesc,updateCssLinks,updateJsLinks} from "../store/webSlice.js";
 import { addNotification } from '../store/notificationSlice.js';
 import EditorBox from '../components/webComponents/EditorBox.jsx';
 import RetroBG from '../components/backgrounds/RetroBG.jsx';
@@ -45,6 +45,8 @@ export default function EditWeb() {
           dispatch(chengeCss(response2.data.css))
           dispatch(chengeJs(response2.data.js))
           dispatch(chengeTitleAndDesc(response2.data))
+          dispatch(updateCssLinks(response2.data.cssLinks))
+          dispatch(updateJsLinks(response2.data.jsLinks))
         } else {
           navigate("/error")
         }

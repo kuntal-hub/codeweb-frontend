@@ -2,7 +2,7 @@ import axios from "axios";
 
 export class WebService {
 
-    async createWeb({title,description,html,css,js,isPublic=true,image}) {
+    async createWeb({title,description,html,css,js,isPublic=true,image,cssLinks=[],jsLinks=[]}) {
         try {
             if (!title || !description || !image || !(html || css || js)) {
                 throw new Error("title, description, image and at least one of html, css or js are required");
@@ -16,6 +16,8 @@ export class WebService {
             formData.append('css', css || "");
             formData.append('js', js || "");
             formData.append('isPublic', isPublic);
+            formData.append('cssLinks', JSON.stringify(cssLinks));
+            formData.append('jsLinks', JSON.stringify(jsLinks));
 
             const response = await axios.post("/api/v1/webs/create", formData,{
                 headers: {
@@ -233,6 +235,66 @@ export class WebService {
             return false;
         }
     
+    }
+
+    async addNewCssLink({webId,cssLink}) {
+        try {
+            if (!webId || !cssLink) throw new Error("webId or cssLink is null");
+
+            const response = await axios.patch(`/api/v1/webs/add-css-link/${webId}`,{
+                cssLink
+            })
+
+            return response.data;
+        } catch (error) {
+            console.log("webService.addNewCssLink error: ", error)
+            return {status:error.status,message:error.message,data:null};
+        }
+    }
+
+    async removeCssLink({webId,cssLink}) {
+        try {
+            if (!webId || !cssLink) throw new Error("webId or cssLink is null");
+
+            const response = await axios.patch(`/api/v1/webs/remove-css-link/${webId}`,{
+                cssLink
+            })
+
+            return response.data;
+        } catch (error) {
+            console.log("webService.removeCssLink error: ", error)
+            return {status:error.status,message:error.message,data:null};
+        }
+    }
+
+    async addNewJsLink({webId,jsLink}) {
+        try {
+            if (!webId || !jsLink) throw new Error("webId or jsLink is null");
+
+            const response = await axios.patch(`/api/v1/webs/add-js-link/${webId}`,{
+                jsLink
+            })
+
+            return response.data;
+        } catch (error) {
+            console.log("webService.addNewJsLink error: ", error)
+            return {status:error.status,message:error.message,data:null};
+        }
+    }
+
+    async removeJsLink({webId,jsLink}) {
+        try {
+            if (!webId || !jsLink) throw new Error("webId or jsLink is null");
+
+            const response = await axios.patch(`/api/v1/webs/remove-js-link/${webId}`,{
+                jsLink
+            })
+
+            return response.data;
+        } catch (error) {
+            console.log("webService.removeJsLink error: ", error)
+            return {status:error.status,message:error.message,data:null};
+        }
     }
 
     async increaseViewsOfWeb({webId}){
