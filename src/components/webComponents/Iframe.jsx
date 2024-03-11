@@ -33,14 +33,14 @@ export default memo(forwardRef(function Iframe({web},ref) {
       </head>
       <body>
         ${html}
-        <script>
-            ${javascript}
-        </script>
         ${
           jsLinks.map(link => {
             return link
           }).join("")
         }
+        <script>
+            ${javascript}
+        </script>
       </body>
     </html>
   `;

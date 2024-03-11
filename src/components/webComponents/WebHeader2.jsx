@@ -96,7 +96,7 @@ export default memo(function WebHeader({setIndentationNo,hendleSaveWeb,web}) {
 
         <button onClick={ToggLelikeWeb}
         className='w-10 sm:w-11 h-11 p-2 my-[3px] mr-1 bg-gray-300 mx-[2px] rounded-lg text-center hover:bg-gray-400'
-        title='Like Web'>
+        title={isLikedByMe? "Dislike Web":"Like Web"}>
           <img className='w-full h-full'
           src={isLikedByMe? "https://res.cloudinary.com/dvrpvl53d/image/upload/v1709992461/8294893_n5a1la.png":
           "https://res.cloudinary.com/dvrpvl53d/image/upload/v1709992461/130195_lsk7as.png"} alt="like" />
