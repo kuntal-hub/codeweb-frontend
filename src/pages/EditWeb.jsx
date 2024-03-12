@@ -22,6 +22,7 @@ export default function EditWeb() {
   const webJs = useSelector(state => state.webs.js);
   const webTitle = useSelector(state => state.webs.title);
   const webDescription = useSelector(state => state.webs.description);
+  const webIsPublic = useSelector(state => state.webs.isPublic);
   const [loading, setLoading] = useState(true);
   const [showResult, setShowResult] = useState(true);
   const [indentationNo, setIndentationNo] = useState(2);
@@ -41,6 +42,10 @@ export default function EditWeb() {
         if (response2.status<400 && response2.data) {
           setWeb(response2.data);
           webOwnerId = response2.data.owner._id;
+          if (response2.data.isPublic === false && (!user || user._id !== webOwnerId)) {
+            document.title = "This web is private"
+            return navigate("/error");
+          }
           dispatch(chengeHtml(response2.data.html))
           dispatch(chengeCss(response2.data.css))
           dispatch(chengeJs(response2.data.js))
@@ -84,7 +89,15 @@ export default function EditWeb() {
   })
 
   const hendleSaveWeb = useCallback(async () => {
-    if (web.title===webTitle && web.description===webDescription && web.html===webHtml && web.css===webCss && web.js===webJs) {
+    if (
+      web.title===webTitle && 
+      web.description===webDescription && 
+      web.html===webHtml && 
+      web.css===webCss && 
+      web.js===webJs && 
+      String(web.isPublic)===String(webIsPublic)
+      ) {
+        console.log(web.isPublic,webIsPublic)
       dispatch(addNotification({ text: "No changes to save", type: "info" }));
       return;
     }
@@ -96,8 +109,8 @@ export default function EditWeb() {
     if (web.html !== webHtml || web.css !== webCss || web.js !== webJs) {
       const dataUrl = await htmlToImage.toJpeg(ifreamRef.current, { quality: 1.0,width:1200 ,height:700 });
       image = await fetch(dataUrl).then((res) => res.blob()); 
+      setLoading(true);
     }
-    setLoading(true);
     const data ={};
     data.webId = web._id;
     if (web.title!==webTitle) data.title = webTitle;
@@ -106,18 +119,19 @@ export default function EditWeb() {
     if (web.css!==webCss) data.css = webCss;
     if (web.js!==webJs) data.js = webJs;
     if (image) data.image = image;
+    data.isPublic = webIsPublic;
     const response = await webService.updateWeb(data)
 
     if(response.status<400 && response.data){
       dispatch(addNotification({ text: response.message, type: "success" }));
-      setWeb({...web,html:webHtml,css:webCss,js:webJs,title:webTitle,description:webDescription});
+      setWeb({...web,html:webHtml,css:webCss,js:webJs,title:webTitle,description:webDescription,isPublic:webIsPublic});
       setLoading(false);
     } else if(response.status>=400 || !response.data){
       dispatch(addNotification({ text: response.message, type: "error" }));
       setLoading(false);
     }
 
-  },[ifreamRef,webTitle,webDescription,webHtml,webCss,webJs,web]);
+  },[ifreamRef,webTitle,webDescription,webHtml,webCss,webJs,web,webIsPublic]);
 
   return (
     loading? <RetroBG text={web? "Saving Web..." : "Loading..."} /> : 

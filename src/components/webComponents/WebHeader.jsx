@@ -107,7 +107,8 @@ export default memo(function WebHeader({setIndentationNo,hendleSaveWeb}) {
       </div>
 
       {showAuth && <SimpleAuth setShowAuth={setShowAuth} />}
-      {showTitleDescpiption && <SetTitleDescpiption setShowTitleDescpiption={setShowTitleDescpiption} />}
+      {showTitleDescpiption && <SetTitleDescpiption setShowTitleDescpiption={setShowTitleDescpiption} 
+      showTitleDescpiption={showTitleDescpiption} taskName="create" />}
 
     </div>
   )

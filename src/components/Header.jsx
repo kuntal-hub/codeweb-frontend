@@ -33,7 +33,7 @@ export default function Header() {
   const handleSearch = (event) => {
     if (event.key === 'Enter') {
       event.preventDefault();
-      navigate(`/search?q=${search.trim().replaceAll(" ", "+").replaceAll("-", "+")}`);
+      navigate(`/search?q=${search.trim().replaceAll(" ", "+")}`);
     }
   }
 

@@ -149,7 +149,8 @@ export default memo(function WebHeader({setIndentationNo,hendleSaveWeb,web}) {
           }
       </div>
 
-      {showTitleDescpiption && <SetTitleDescpiption setShowTitleDescpiption={setShowTitleDescpiption} />}
+      {showTitleDescpiption && <SetTitleDescpiption setShowTitleDescpiption={setShowTitleDescpiption} 
+      showTitleDescpiption={showTitleDescpiption} />}
 
     </div>
   )

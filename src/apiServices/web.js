@@ -15,7 +15,7 @@ export class WebService {
             formData.append('html', html || "");
             formData.append('css', css || "");
             formData.append('js', js || "");
-            formData.append('isPublic', isPublic);
+            formData.append('isPublic', String(isPublic));
             formData.append('cssLinks', JSON.stringify(cssLinks));
             formData.append('jsLinks', JSON.stringify(jsLinks));
 
@@ -32,11 +32,11 @@ export class WebService {
         }
     }
 
-    async createForkWeb({webId}){
+    async createForkWeb({webId,title,description,isPublic}) {
         try {
             if (!webId) throw new Error("webId is null");
 
-            const response = await axios.post(`/api/v1/webs/create-forked/${webId}`);
+            const response = await axios.post(`/api/v1/webs/create-forked/${webId}`,{title,description,isPublic});
 
             return response.data;
         } catch (error) {
@@ -180,11 +180,11 @@ export class WebService {
         }
     }
 
-    async updateWeb({webId,title,description,html,css,js,image}){
+    async updateWeb({webId,title,description,html,css,js,image,isPublic}){
         try {
             if (!webId) throw new Error("webId is null");
-            if (!title && !description && html===undefined && css===undefined && js===undefined) throw new Error("No data to update");
-            if (!title && !description && html==="" && css==="" && js==="") throw new Error("No data to update");
+            if (!title && !description && !isPublic && html===undefined && css===undefined && js===undefined) throw new Error("No data to update");
+            if (!title && !description && !isPublic && html==="" && css==="" && js==="") throw new Error("No data to update");
             const formData = new FormData();
             if(image) formData.append('image', image, 'my-image-name.jpeg');
             if(title) formData.append('title', title);
@@ -192,6 +192,7 @@ export class WebService {
             if(html !== undefined) formData.append('html', html);
             if(css !== undefined) formData.append('css', css);
             if(js !== undefined) formData.append('js', js);
+            if(isPublic) formData.append('isPublic', isPublic);
 
           const response = await axios.patch(`/api/v1/webs/update/${webId}`,formData,{
               headers: {

@@ -8,6 +8,7 @@ const initialState = {
     description:"",
     cssLinks: [],
     jsLinks: [],
+    isPublic: true,
 }
 
 export const webSlice = createSlice({
@@ -26,6 +27,7 @@ export const webSlice = createSlice({
         chengeTitleAndDesc: (state, action) => {
             state.title = action.payload.title
             state.description = action.payload.description
+            state.isPublic = action.payload.isPublic
         },
         updateCssLinks: (state, action) => {
             state.cssLinks = action.payload

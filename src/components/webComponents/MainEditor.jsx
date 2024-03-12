@@ -21,6 +21,7 @@ export default function MainEditor() {
   const webJs = useSelector(state => state.webs.js);
   const webTitle = useSelector(state => state.webs.title);
   const webDescription = useSelector(state => state.webs.description);
+  const webIsPublic = useSelector(state => state.webs.isPublic);
   const cssLinks = useSelector(state => state.webs.cssLinks);
   const jsLinks = useSelector(state => state.webs.jsLinks);
   const [loading, setLoading] = useState(true);
@@ -37,7 +38,7 @@ export default function MainEditor() {
         dispatch(chengeHtml(""));
         dispatch(chengeCss(""));
         dispatch(chengeJs(""));
-        dispatch(chengeTitleAndDesc({title:"Untitled",description:""}))
+        dispatch(chengeTitleAndDesc({title:"Untitled",description:"",isPublic:true}))
         dispatch(updateCssLinks([]));
         dispatch(updateJsLinks([]));
         setLoading(false);
@@ -88,9 +89,9 @@ export default function MainEditor() {
       css:webCss,
       js:webJs,
       image:image,
-      isPublic:true,
       cssLinks:cssLinks,
       jsLinks:jsLinks,
+      isPublic:webIsPublic,
     })
 
     if(response.status<400 && response.data){
@@ -102,7 +103,7 @@ export default function MainEditor() {
       setLoading(false);
     }
 
-  },[ifreamRef,webTitle,webDescription,webHtml,webCss,webJs,cssLinks,jsLinks]);
+  },[ifreamRef,webTitle,webDescription,webHtml,webCss,webJs,cssLinks,jsLinks,webIsPublic]);
 
   return (
     loading ? <RetroBG text={"Creating..."} /> :
