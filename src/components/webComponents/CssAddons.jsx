@@ -17,7 +17,7 @@ export default function CssAddons({owner}) {
             return;
         }
 
-        if (webId && user && user.username === owner.username) {
+        if (webId && user && user.username === owner?.username) {
             const response = await webService.addNewCssLink({webId, cssLink:link})
             if (response.status<400 && response.data) {
                 dispatch(addNotification({type:"success",text:response.message}))
@@ -30,7 +30,7 @@ export default function CssAddons({owner}) {
     }
 
     const deleteCssLink = async (index) => {
-        if (webId && user && user.username === owner.username) {
+        if (webId && user && user.username === owner?.username) {
             const response = await webService.removeCssLink({webId,cssLink:cssLinks[index]})
             if (response.status<400 && response.data) {
                 dispatch(addNotification({type:"success",text:response.message}))
@@ -44,7 +44,7 @@ export default function CssAddons({owner}) {
   return (
     <div className='w-full h-full-50px rounded-b-lg overflow-y-auto'>
         <p className='text-white font-semibold py-1 px-4'>
-            Add External css in head tag of your web page by providing the link to the css file.
+            Add External css in the head of your web page by providing the link to the css file.
         </p>
         <div className='w-full px-3 py-5 md:px-10 flex flex-nowrap justify-between'>
             <input type="text"

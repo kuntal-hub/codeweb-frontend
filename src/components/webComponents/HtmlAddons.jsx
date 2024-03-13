@@ -17,7 +17,7 @@ export default function HtmlAddons({owner}) {
             return;
         }
 
-        if (webId && user && user.username === owner.username) {
+        if (webId && user && user.username === owner?.username) {
             const response = await webService.addNewHtmlTag({webId, htmlLink:link})
             if (response.status<400 && response.data) {
                 dispatch(addNotification({type:"success",text:response.message}))
@@ -30,7 +30,7 @@ export default function HtmlAddons({owner}) {
     }
 
     const deleteHtmlLink = async (index) => {
-        if (webId && user && user.username === owner.username) {
+        if (webId && user && user.username === owner?.username) {
             const response = await webService.removeHtmlTag({webId,htmlLink:htmlLinks[index]})
             if (response.status<400 && response.data) {
                 dispatch(addNotification({type:"success",text:response.message}))
@@ -44,7 +44,7 @@ export default function HtmlAddons({owner}) {
   return (
     <div className='w-full h-full-50px rounded-b-lg overflow-y-auto'>
         <p className='text-white font-semibold py-1 px-4'>
-            Add External css in head tag of your web page by providing the link to the css file.
+            Add meta tags, charset, viewport, etc. in the head tag of your web page by providing the html tag.
         </p>
         <div className='w-full px-3 py-5 md:px-10 flex flex-nowrap justify-between'>
             <input type="text"

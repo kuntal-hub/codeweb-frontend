@@ -12,6 +12,7 @@ import WebHeader from '../components/webComponents/WebHeader2.jsx';
 import {setEditorOption} from "../store/editorOptionSlice.js";
 import { useParams } from 'react-router-dom';
 import WebFooter from '../components/webComponents/WebFooter.jsx';
+import Loader from '../components/backgrounds/Loader.jsx';
 
 export default function EditWeb() {
   const navigate = useNavigate();
@@ -24,6 +25,7 @@ export default function EditWeb() {
   const webDescription = useSelector(state => state.webs.description);
   const webIsPublic = useSelector(state => state.webs.isPublic);
   const [loading, setLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
   const [showResult, setShowResult] = useState(true);
   const [indentationNo, setIndentationNo] = useState(2);
   const [web,setWeb] = useState(null);
@@ -108,9 +110,9 @@ export default function EditWeb() {
     }
     let image;
     if (web.html !== webHtml || web.css !== webCss || web.js !== webJs) {
+      setIsSaving(true);
       const dataUrl = await htmlToImage.toJpeg(ifreamRef.current, { quality: 1.0,width:1200 ,height:700 });
       image = await fetch(dataUrl).then((res) => res.blob()); 
-      setLoading(true);
     }
     const data ={};
     data.webId = web._id;
@@ -126,10 +128,10 @@ export default function EditWeb() {
     if(response.status<400 && response.data){
       dispatch(addNotification({ text: response.message, type: "success" }));
       setWeb({...web,html:webHtml,css:webCss,js:webJs,title:webTitle,description:webDescription,isPublic:webIsPublic});
-      setLoading(false);
+      setIsSaving(false);
     } else if(response.status>=400 || !response.data){
       dispatch(addNotification({ text: response.message, type: "error" }));
-      setLoading(false);
+      setIsSaving(false);
     }
 
   },[ifreamRef,webTitle,webDescription,webHtml,webCss,webJs,web,webIsPublic]);
@@ -200,6 +202,17 @@ export default function EditWeb() {
         {showRenderingIfream && <div className='w-[1200px] h-[700px] opacity-0'>
       <Iframe ref={ifreamRef} />
     </div> }
+
+      {isSaving && <Loader 
+      texts={[
+        "Saving Chenages...",
+        "Please wait...",
+        "Updating Web...",
+        "Just Wait a moment...",
+        "Almost Done...",
+        "Please wait..."
+      ]}
+      />}
 
     </div>
   )

@@ -11,6 +11,7 @@ import * as htmlToImage from 'html-to-image';
 import { useNavigate } from 'react-router-dom';
 import { addNotification } from '../../store/notificationSlice.js';
 import WebFooter from './WebFooter.jsx';
+import Loader from '../backgrounds/Loader.jsx';
 
 export default function MainEditor() {
   document.title = 'new web - codeWeb.io'
@@ -29,6 +30,7 @@ export default function MainEditor() {
   const [showResult, setShowResult] = useState(true);
   const [indentationNo, setIndentationNo] = useState(2);
   const [showRenderingIfream, setShowRenderingIfream] = useState(true);
+  const [isCreating,setIsCreating] = useState(false);
   const ifreamRef = useRef(null);
 
   useEffect(() => {
@@ -80,10 +82,10 @@ export default function MainEditor() {
       dispatch(addNotification({ text: "Title and description are required", type: "warning" }));
       return;
     }
+    setIsCreating(true);
     const dataUrl = await htmlToImage.toJpeg(ifreamRef.current, { quality: 1.0,width:1200 ,height:700 });
     const image = await fetch(dataUrl).then((res) => res.blob());
     setShowRenderingIfream(false);
-    setLoading(true);
     const response = await webService.createWeb({
       title:webTitle,
       description:webDescription,
@@ -99,11 +101,11 @@ export default function MainEditor() {
 
     if(response.status<400 && response.data){
       dispatch(addNotification({ text: response.message, type: "success" }));
+      setIsCreating(false);
       navigate(`/web/${response.data._id}`);
-      setLoading(false);
     } else if(response.status>=400 && !response.data){
       dispatch(addNotification({ text: response.message, type: "error" }));
-      setLoading(false);
+      setIsCreating(false);
     }
 
   },[ifreamRef,webTitle,webDescription,webHtml,webCss,webJs,cssLinks,jsLinks,webIsPublic,htmlLinks]);
@@ -171,6 +173,14 @@ export default function MainEditor() {
         {showRenderingIfream && <div className='w-[1200px] h-[700px] opacity-0'>
       <Iframe ref={ifreamRef} />
     </div> }
+
+    {isCreating && <Loader texts={[
+      "Creating Your Web...",
+      "Uploading Data...",
+      "Almost Done...",
+      "just Wait a moment...",
+      "Almost Done..."
+      ]} />}
       </div>
 
   )

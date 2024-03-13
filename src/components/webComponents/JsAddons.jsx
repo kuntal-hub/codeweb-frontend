@@ -17,7 +17,7 @@ export default function JsAddons({owner}) {
             return;
         }
 
-        if (webId && user && user.username === owner.username) {
+        if (webId && user && user.username === owner?.username) {
             const response = await webService.addNewJsLink({ webId, jsLink: link })
             if (response.status < 400 && response.data) {
                 dispatch(addNotification({ type: "success", text: response.message }))
@@ -30,7 +30,7 @@ export default function JsAddons({owner}) {
     }
 
     const deleteJsLink = async (index) => {
-        if (webId && user && user.username === owner.username) {
+        if (webId && user && user.username === owner?.username) {
             const response = await webService.removeJsLink({ webId, jsLink: jsLinks[index] })
             if (response.status < 400 && response.data) {
                 dispatch(addNotification({ type: "success", text: response.message }))
@@ -43,7 +43,7 @@ export default function JsAddons({owner}) {
     return (
         <div className='w-full h-full-50px rounded-b-lg overflow-y-auto'>
             <p className='text-white font-semibold py-1 px-4'>
-                Add External javascript in the body of your web page by providing the link to the js file.
+                Add External Js in your web page by providing the link to the Js file.
             </p>
             <div className='w-full px-3 py-5 md:px-10 flex flex-nowrap justify-between'>
                 <input type="text"
