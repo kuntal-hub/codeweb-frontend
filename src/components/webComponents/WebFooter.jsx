@@ -56,7 +56,7 @@ export default function WebFooter({web}) {
             Full View
         </button>}
         {showAsset && <ShowAsset setShowAsset={setShowAsset} showAsset={showAsset} />}
-        {showAddons && <WebAddons setShowAddons={setShowAddons} showAddons={showAddons} />}
+        {showAddons && <WebAddons setShowAddons={setShowAddons} showAddons={showAddons} owner={web.owner} />}
         {showTitleDescpiption && <SetTitleDescpiption setShowTitleDescpiption={setShowTitleDescpiption} showTitleDescpiption={showTitleDescpiption} forkWeb={forkWeb} />}
     </div>
   )

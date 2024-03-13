@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setEditorOption } from "../../store/editorOptionSlice.js"
 import RetroBG from "../backgrounds/RetroBG.jsx";
 import { webService } from "../../apiServices/web.js"
-import {chengeCss,chengeHtml,chengeJs,chengeTitleAndDesc,updateCssLinks,updateJsLinks} from "../../store/webSlice.js";
+import {chengeCss,chengeHtml,chengeJs,chengeTitleAndDesc,updateCssLinks,updateJsLinks,updateHtmlLinks} from "../../store/webSlice.js";
 import Iframe from './Iframe.jsx';
 import WebHeader from './WebHeader.jsx';
 import * as htmlToImage from 'html-to-image';
@@ -24,6 +24,7 @@ export default function MainEditor() {
   const webIsPublic = useSelector(state => state.webs.isPublic);
   const cssLinks = useSelector(state => state.webs.cssLinks);
   const jsLinks = useSelector(state => state.webs.jsLinks);
+  const htmlLinks = useSelector(state => state.webs.htmlLinks);
   const [loading, setLoading] = useState(true);
   const [showResult, setShowResult] = useState(true);
   const [indentationNo, setIndentationNo] = useState(2);
@@ -41,6 +42,7 @@ export default function MainEditor() {
         dispatch(chengeTitleAndDesc({title:"Untitled",description:"",isPublic:true}))
         dispatch(updateCssLinks([]));
         dispatch(updateJsLinks([]));
+        dispatch(updateHtmlLinks([]));
         setLoading(false);
       })
   },[]);
@@ -91,6 +93,7 @@ export default function MainEditor() {
       image:image,
       cssLinks:cssLinks,
       jsLinks:jsLinks,
+      htmlLinks:htmlLinks,
       isPublic:webIsPublic,
     })
 
@@ -103,7 +106,7 @@ export default function MainEditor() {
       setLoading(false);
     }
 
-  },[ifreamRef,webTitle,webDescription,webHtml,webCss,webJs,cssLinks,jsLinks,webIsPublic]);
+  },[ifreamRef,webTitle,webDescription,webHtml,webCss,webJs,cssLinks,jsLinks,webIsPublic,htmlLinks]);
 
   return (
     loading ? <RetroBG text={"Creating..."} /> :

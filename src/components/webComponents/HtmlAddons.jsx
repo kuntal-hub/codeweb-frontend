@@ -1,44 +1,44 @@
 import React,{useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { addNotification } from '../../store/notificationSlice';
-import { updateCssLinks } from '../../store/webSlice';
+import { updateHtmlLinks } from '../../store/webSlice';
 import { useParams } from 'react-router-dom';
 import {webService} from "../../apiServices/web.js";
 
-export default function CssAddons({owner}) {
+export default function HtmlAddons({owner}) {
     const dispatch = useDispatch();
     const {webId} = useParams();
-    const cssLinks = useSelector(state => state.webs.cssLinks);
+    const htmlLinks = useSelector(state => state.webs.htmlLinks);
     const user = useSelector(state => state.auth.userData);
     const [link, setLink] = useState('');
 
-    const addCssLink = async () => {
+    const addHtmlLink = async () => {
         if (link.trim().length<10) {
             return;
         }
 
         if (webId && user && user.username === owner.username) {
-            const response = await webService.addNewCssLink({webId, cssLink:link})
+            const response = await webService.addNewHtmlTag({webId, htmlLink:link})
             if (response.status<400 && response.data) {
                 dispatch(addNotification({type:"success",text:response.message}))
             } else {
                 dispatch(addNotification({type:"error",text:response.message}))
             }
         }
-        dispatch(updateCssLinks([...cssLinks, link]))
+        dispatch(updateHtmlLinks([...htmlLinks, link]))
         setLink('')
     }
 
-    const deleteCssLink = async (index) => {
+    const deleteHtmlLink = async (index) => {
         if (webId && user && user.username === owner.username) {
-            const response = await webService.removeCssLink({webId,cssLink:cssLinks[index]})
+            const response = await webService.removeHtmlTag({webId,htmlLink:htmlLinks[index]})
             if (response.status<400 && response.data) {
                 dispatch(addNotification({type:"success",text:response.message}))
             } else {
                 dispatch(addNotification({type:"error",text:response.message}))
             }
         }
-        dispatch(updateCssLinks(cssLinks.filter((_, i) => i !== index)))
+        dispatch(updateHtmlLinks(htmlLinks.filter((_, i) => i !== index)))
     }
 
   return (
@@ -49,25 +49,25 @@ export default function CssAddons({owner}) {
         <div className='w-full px-3 py-5 md:px-10 flex flex-nowrap justify-between'>
             <input type="text"
             value={link}
-            placeholder=' https://yourWebSite.com/style.css'
+            placeholder=' <meta charset="UTF-8" />'
             onChange={(e)=>setLink(e.target.value)}
             className='w-4/5 h-10 bg-gray-700 text-white px-2 rounded-l-lg outline-blue-600'
             />
-            <button onClick={addCssLink}
+            <button onClick={addHtmlLink}
             className='w-1/5 h-10 bg-blue-600 text-white px-2 rounded-r-lg hover:bg-blue-500 font-semibold'
             >
                 Add
             </button>
         </div>
         {
-            cssLinks.map((link, index) => (
+            htmlLinks.map((link, index) => (
                 <div className='w-full px-3 py-5 md:px-10 flex flex-nowrap justify-between' key={index}>
                 <input type="text"
                 value={link}
                 readOnly={true}
                 className='w-4/5 h-10 bg-gray-700 text-white px-2 rounded-l-lg overflow-auto'
                 />
-                <button onClick={()=>deleteCssLink(index)}
+                <button onClick={()=>deleteHtmlLink(index)}
                 className='w-1/5 h-10 bg-red-600 text-white px-2 rounded-r-lg hover:bg-red-500 font-semibold'
                 >
                     delete
@@ -78,3 +78,4 @@ export default function CssAddons({owner}) {
     </div>
   )
 }
+

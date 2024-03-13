@@ -5,10 +5,11 @@ import { updateJsLinks } from '../../store/webSlice';
 import { useParams } from 'react-router-dom';
 import { webService } from "../../apiServices/web.js";
 
-export default function JsAddons() {
+export default function JsAddons({owner}) {
     const dispatch = useDispatch();
     const { webId } = useParams();
     const jsLinks = useSelector(state => state.webs.jsLinks);
+    const user = useSelector(state => state.auth.userData);
     const [link, setLink] = useState('');
 
     const addJsLink = async () => {
@@ -16,7 +17,7 @@ export default function JsAddons() {
             return;
         }
 
-        if (webId) {
+        if (webId && user && user.username === owner.username) {
             const response = await webService.addNewJsLink({ webId, jsLink: link })
             if (response.status < 400 && response.data) {
                 dispatch(addNotification({ type: "success", text: response.message }))
@@ -29,7 +30,7 @@ export default function JsAddons() {
     }
 
     const deleteJsLink = async (index) => {
-        if (webId) {
+        if (webId && user && user.username === owner.username) {
             const response = await webService.removeJsLink({ webId, jsLink: jsLinks[index] })
             if (response.status < 400 && response.data) {
                 dispatch(addNotification({ type: "success", text: response.message }))
@@ -47,7 +48,7 @@ export default function JsAddons() {
             <div className='w-full px-3 py-5 md:px-10 flex flex-nowrap justify-between'>
                 <input type="text"
                     value={link}
-                    placeholder=' <script src="https://yourWebSite.com/script.js"></script>'
+                    placeholder=' https://yourWebSite.com/script.js'
                     onChange={(e) => setLink(e.target.value)}
                     className='w-4/5 h-10 bg-gray-700 text-white px-2 rounded-l-lg outline-blue-600'
                 />

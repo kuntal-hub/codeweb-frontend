@@ -2,7 +2,7 @@ import axios from "axios";
 
 export class WebService {
 
-    async createWeb({title,description,html,css,js,isPublic=true,image,cssLinks=[],jsLinks=[]}) {
+    async createWeb({title,description,html,css,js,isPublic=true,image,cssLinks=[],jsLinks=[],htmlLinks=[]}) {
         try {
             if (!title || !description || !image || !(html || css || js)) {
                 throw new Error("title, description, image and at least one of html, css or js are required");
@@ -18,6 +18,7 @@ export class WebService {
             formData.append('isPublic', String(isPublic));
             formData.append('cssLinks', JSON.stringify(cssLinks));
             formData.append('jsLinks', JSON.stringify(jsLinks));
+            formData.append('htmlLinks', JSON.stringify(htmlLinks));
 
             const response = await axios.post("/api/v1/webs/create", formData,{
                 headers: {
@@ -294,6 +295,36 @@ export class WebService {
             return response.data;
         } catch (error) {
             console.log("webService.removeJsLink error: ", error)
+            return {status:error.status,message:error.message,data:null};
+        }
+    }
+
+    async addNewHtmlTag({webId,htmlLink}) {
+        try {
+            if (!webId || !htmlLink) throw new Error("webId or html Tag is null");
+
+            const response = await axios.patch(`/api/v1/webs/add-html-link/${webId}`,{
+                htmlLink
+            })
+
+            return response.data;
+        } catch (error) {
+            console.log("webService.addNewHtmlTag error: ", error)
+            return {status:error.status,message:error.message,data:null};
+        }
+    }
+
+    async removeHtmlTag({webId,htmlLink}) {
+        try {
+            if (!webId || !htmlLink) throw new Error("webId or html Tag is null");
+
+            const response = await axios.patch(`/api/v1/webs/remove-html-link/${webId}`,{
+                htmlLink
+            })
+
+            return response.data;
+        } catch (error) {
+            console.log("webService.removeHtmlTag error: ", error)
             return {status:error.status,message:error.message,data:null};
         }
     }

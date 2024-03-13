@@ -1,9 +1,11 @@
 import React,{useEffect,useState} from 'react'
 import CssAddons from './CssAddons';
 import JsAddons from './JsAddons';
+import HtmlAddons from './HtmlAddons';
 
-export default function WebAddons({showAddons,setShowAddons}) {
-    const [showCssAddons, setShowCssAddons] = useState(true);
+export default function WebAddons({showAddons,setShowAddons,owner}) {
+  const [showHtmlAddons, setShowHtmlAddons] = useState(true);
+    const [showCssAddons, setShowCssAddons] = useState(false);
     const [showJsAddons, setShowJsAddons] = useState(false);
 
     const handleOutsideClick = (event) => {
@@ -26,17 +28,34 @@ export default function WebAddons({showAddons,setShowAddons}) {
       <div className='GB-cointainer p-1 menu-container'>
         <div className='w-[94vw] bg-gray-950 md:w-[80vw] lg:w-[70vw] h-screen-60px rounded-lg'>
           <div className='w-full text-white flex flex-nowrap justify-center overflow-x-auto bg-gray-800 rounded-t-lg'>
-            <button onClick={() => {setShowCssAddons(true); setShowJsAddons(false)}}
-              className={`py-2 px-2 md:px-4 font-semibold hover:bg-gray-700 ${showCssAddons ? "bg-gray-700 border-b-4 border-b-green-600" : ""}`}>
-              StyleSheet
+            <button onClick={() => {
+              setShowHtmlAddons(true);
+              setShowCssAddons(false); 
+              setShowJsAddons(false)
+            }}
+              className={`py-2 px-2 md:px-4 font-semibold hover:bg-gray-700 ${showHtmlAddons ? "bg-gray-700 border-b-4 border-b-green-600" : ""}`}>
+              HTML
             </button>
-            <button onClick={() => {setShowCssAddons(false); setShowJsAddons(true)}}
+            <button onClick={() => {
+              setShowHtmlAddons(false)
+              setShowCssAddons(true); 
+              setShowJsAddons(false);
+            }}
+              className={`py-2 px-2 md:px-4 font-semibold hover:bg-gray-700 ${showCssAddons ? "bg-gray-700 border-b-4 border-b-green-600" : ""}`}>
+              CSS
+            </button>
+            <button onClick={() => {
+              setShowHtmlAddons(false);
+              setShowCssAddons(false); 
+              setShowJsAddons(true)
+            }}
               className={`py-2 px-2 md:px-4 font-semibold hover:bg-gray-700 ${showJsAddons ? "bg-gray-700 border-b-4 border-b-green-600" : ""}`}>
-              Script
+              JS
             </button>
           </div>
-                {showCssAddons && <CssAddons />}
-                {showJsAddons && <JsAddons />}
+                {showCssAddons && <CssAddons owner={owner} />}
+                {showJsAddons && <JsAddons owner={owner} />}
+                {showHtmlAddons && <HtmlAddons owner={owner} />}
         </div>
       </div>
     </div>
