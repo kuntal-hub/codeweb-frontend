@@ -11,7 +11,10 @@ import NewWeb from "./pages/NewWeb.jsx";
 import EditorSettings from "./pages/EditorSettings.jsx";
 import EditWeb from "./pages/EditWeb.jsx";
 import ViewFullWeb from "./pages/ViewFullWeb.jsx";
-
+import Assets from "./pages/Assets.jsx";
+import ImageAssets from "./pages/ImageAssets.jsx";
+import VideoAssets from "./pages/VideoAssets.jsx";
+import AudioAssets from "./pages/AudioAssets.jsx";
 
 export {
     ErrorPage,
@@ -27,4 +30,8 @@ export {
     EditorSettings,
     EditWeb,
     ViewFullWeb,
+    Assets,
+    ImageAssets,
+    VideoAssets,
+    AudioAssets,
 };

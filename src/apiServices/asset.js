@@ -16,12 +16,10 @@ export class AssetService {
                 isPublic
             });
 
-            if (!response) throw new Error("response is undefined");
-
             return response.data;
         } catch (error) {
             console.log("Error in AssetService.createNewAsset:", error);
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
@@ -29,12 +27,10 @@ export class AssetService {
         try {
             const response = await axios.get(`/api/v1/assets/my-assets?page=${page}&limit=${limit}&assetType=${assetType}`);
 
-            if (!response) throw new Error("response is undefined");
-
             return response.data;
         } catch (error) {
             console.log("Error in AssetService.getMyAssets:", error);
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
@@ -42,12 +38,10 @@ export class AssetService {
         try {
             const response = await axios.get(`/api/v1/assets/get?page=${page}&limit=${limit}&assetType=${assetType}`);
 
-            if (!response) throw new Error("response is undefined");
-
             return response.data;
         } catch (error) {
             console.log("Error in AssetService.getAllPublicAssets:", error);
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     
     }
@@ -58,12 +52,10 @@ export class AssetService {
 
             const response = await axios.get(`/api/v1/assets/search/all-assets?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}&assetType=${assetType}`);
 
-            if (!response) throw new Error("response is undefined");
-
             return response.data;
         } catch (error) {
             console.log("Error in AssetService.searchFromPublicAssets:", error);
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
@@ -73,12 +65,10 @@ export class AssetService {
 
             const response = await axios.get(`/api/v1/assets/get/${assetId}`);
 
-            if (!response) throw new Error("response is undefined");
-
             return response.data;
         } catch (error) {
             console.log("Error in AssetService.getAssetById:", error);
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
@@ -88,12 +78,10 @@ export class AssetService {
 
             const response = await axios.delete(`/api/v1/assets/delete/${assetId}`);
 
-            if (!response) throw new Error("response is undefined");
-
-            return true;
+            return response.data;
         } catch (error) {
             console.log("Error in AssetService.deleteAssetById:", error);
-            return false;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
@@ -106,12 +94,10 @@ export class AssetService {
                 isPublic
             });
 
-            if (!response) throw new Error("response is undefined");
-
             return response.data;
         } catch (error) {
             console.log("Error in AssetService.updateAssetById:", error);
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
@@ -119,12 +105,10 @@ export class AssetService {
         try {
             const response = await axios.get(`/api/v1/assets/liked?page=${page}&limit=${limit}&assetType=${assetType}`);
 
-            if (!response) throw new Error("response is undefined");
-
             return response.data;
         } catch (error) {
             console.log("Error in AssetService.getLikedAssets:", error);
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     }
     

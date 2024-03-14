@@ -20,6 +20,10 @@ import {
   EditorSettings,
   EditWeb,
   ViewFullWeb,
+  Assets,
+  ImageAssets,
+  VideoAssets,
+  AudioAssets,
 } from "./index.js";
 
 const routes = createBrowserRouter(
@@ -78,6 +82,32 @@ const routes = createBrowserRouter(
               <EditorSettings/>
             </AuthLayout>
           } />
+      </Route>
+
+      <Route path='assets/' element={
+        <AuthLayout authentication={true}>
+          <Assets/>
+        </AuthLayout>
+      } >
+          
+            <Route path='images' element={
+              <AuthLayout authentication={true}>
+                <ImageAssets/>
+              </AuthLayout>
+            } />
+  
+            <Route path='videos' element={
+              <AuthLayout authentication={true}>
+                <VideoAssets/>
+              </AuthLayout>
+            } />
+  
+            <Route path='audios' element={
+              <AuthLayout authentication={true}>
+                <AudioAssets/>
+              </AuthLayout>
+            } />
+            
       </Route>
 
       <Route path='new-web' element={<NewWeb />} />
