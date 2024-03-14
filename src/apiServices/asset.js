@@ -23,7 +23,7 @@ export class AssetService {
         }
     }
 
-    async getMyAssets(page=1, limit=20 , assetType="image") {
+    async getMyAssets({page=1, limit=20 , assetType="image"}) {
         try {
             const response = await axios.get(`/api/v1/assets/my-assets?page=${page}&limit=${limit}&assetType=${assetType}`);
 
@@ -34,7 +34,7 @@ export class AssetService {
         }
     }
 
-    async getAllPublicAssets(page=1, limit=20 , assetType="image") {
+    async getAllPublicAssets({page=1, limit=20 , assetType="image"}) {
         try {
             const response = await axios.get(`/api/v1/assets/get?page=${page}&limit=${limit}&assetType=${assetType}`);
 
@@ -46,7 +46,7 @@ export class AssetService {
     
     }
 
-    async searchFromPublicAssets(search, page=1, limit=20 , assetType="image") {
+    async searchFromPublicAssets({search, page=1, limit=20 , assetType="image"}) {
         try {
             if (!search) throw new Error("Missing search text");
 
@@ -101,7 +101,7 @@ export class AssetService {
         }
     }
 
-    async getLikedAssets(page=1, limit=20 , assetType="image") {
+    async getLikedAssets({page=1, limit=20 , assetType="image"}) {
         try {
             const response = await axios.get(`/api/v1/assets/liked?page=${page}&limit=${limit}&assetType=${assetType}`);
 

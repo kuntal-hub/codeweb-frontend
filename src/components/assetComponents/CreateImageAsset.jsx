@@ -2,9 +2,15 @@ import React,{useEffect,useState} from 'react'
 import Input from "../utilComponents/Input";
 import {useForm} from 'react-hook-form';
 import { assetService } from '../../apiServices/asset';
+import { conf } from '../../conf/conf';
+import { useDispatch, useSelector } from 'react-redux';
+import { addNotification } from '../../store/notificationSlice';
 
 export default function CreateImageAsset({isCreateImageAssetRendering, setIsCreateImageAssetRendering, setImages}) {
     const {register, handleSubmit} = useForm();
+    const [disabled, setDisabled] = useState(false);
+    const user = useSelector(state => state.auth.userData);
+    const dispatch = useDispatch();
 
     const handleOutsideClick = (event) => {
         if (isCreateImageAssetRendering && !event.target.closest('.menu-container')) {
@@ -21,7 +27,42 @@ export default function CreateImageAsset({isCreateImageAssetRendering, setIsCrea
   }, []);
 
     const submit = (data) => {
-        console.log(data);
+        setDisabled(true);
+        const myWidget = window.cloudinary.createUploadWidget({
+            cloudName: conf.cloudinaryCloudName,
+            uploadPreset: conf.cloudinaryUploadPreset,
+            folder: 'codeweb',
+            resourceType: 'image',
+            sources: ['local', 'url', 'camera', 'image_search', "google_drive",],
+            secure: true,
+            multiple: false,
+            maxImageFileSize: 1500000,
+            clientAllowedFormats: ["png", "jpg", "jpeg","gif","webp"],
+        }, async (error, result) => {
+            if (!error && result && result.event === "success") {
+                const response = await assetService.createNewAsset({
+                    title: data.title.trim(),
+                    assetType: "image",
+                    assetURL: result.info.secure_url,
+                    assetPublicId: result.info.public_id,
+                    isPublic: data.isPublic === "true"? true : false,
+                })
+                if (response.status < 400 && response.data) {
+                    dispatch(addNotification({ type: "success", text: response.message }))
+                    response.data.isLikedByMe = false;
+                    response.data.likesCount=0;
+                    response.data.owner={_id:user._id,username:user.username,avatar:user.avatar,fullName:user.fullName};
+                    setImages(prev=>[response.data,...prev]);
+                    setIsCreateImageAssetRendering(false);
+                } else if (response.status >= 400 || !response.data) {
+                    dispatch(addNotification({ type: "error", text: response.message }))
+                }
+            }
+        }
+        )
+
+        myWidget.open()
+        setDisabled(false);
     }
 
   return (
@@ -56,7 +97,11 @@ export default function CreateImageAsset({isCreateImageAssetRendering, setIsCrea
                     <input 
                     className='bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-5 rounded-lg'
                     value={"Upload Image"}
+                    readOnly={disabled}
                     type="submit" />
+                    <p className='text-red-500'>
+                        Max Size  1.5MB
+                    </p>
                 </form>
             </div>
         </div>
