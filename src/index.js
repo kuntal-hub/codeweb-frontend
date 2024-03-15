@@ -15,6 +15,8 @@ import Assets from "./pages/Assets.jsx";
 import ImageAssets from "./pages/ImageAssets.jsx";
 import VideoAssets from "./pages/VideoAssets.jsx";
 import AudioAssets from "./pages/AudioAssets.jsx";
+import MyAssets from "./pages/MyAssets.jsx";
+import LikedAssets from "./pages/LikedAssets.jsx";
 
 export {
     ErrorPage,
@@ -34,4 +36,6 @@ export {
     ImageAssets,
     VideoAssets,
     AudioAssets,
+    MyAssets,
+    LikedAssets,
 };

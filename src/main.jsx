@@ -24,6 +24,8 @@ import {
   ImageAssets,
   VideoAssets,
   AudioAssets,
+  MyAssets,
+  LikedAssets,
 } from "./index.js";
 
 const routes = createBrowserRouter(
@@ -105,6 +107,18 @@ const routes = createBrowserRouter(
             <Route path='audios' element={
               <AuthLayout authentication={true}>
                 <AudioAssets/>
+              </AuthLayout>
+            } />
+
+            <Route path='my' element={
+              <AuthLayout authentication={true}>
+                <MyAssets/>
+              </AuthLayout>
+            } />
+
+            <Route path='liked' element={
+              <AuthLayout authentication={true}>
+                <LikedAssets/>
               </AuthLayout>
             } />
             
