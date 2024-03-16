@@ -175,6 +175,7 @@ export default function ImageAssets() {
                     <input 
                     type="search"
                     id='searchImageAssets'
+                    defaultValue={urlParams.get('query') ? urlParams.get('query') : "" }
                     placeholder='Search Images'
                     {...register('search')}
                     className='h-10 py-1 px-3 bg-gray-700 text-white font-semibold rounded-r-full sm:w-96 lg:w-[450px]'

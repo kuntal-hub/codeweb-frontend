@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from 'react'
+import React,{useEffect,useState,memo} from 'react'
 import Input from "../utilComponents/Input";
 import {useForm} from 'react-hook-form';
 import { assetService } from '../../apiServices/asset';
@@ -6,7 +6,7 @@ import { conf } from '../../conf/conf';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNotification } from '../../store/notificationSlice';
 
-export default function CreateVideoAsset({isCreateVideoAssetRendering, setIsCreateVideoAssetRendering, setVideos}) {
+export default memo(function CreateVideoAsset({isCreateVideoAssetRendering, setIsCreateVideoAssetRendering, setVideos}) {
     const {register, handleSubmit} = useForm();
     const [disabled, setDisabled] = useState(false);
     const user = useSelector(state => state.auth.userData);
@@ -32,17 +32,17 @@ export default function CreateVideoAsset({isCreateVideoAssetRendering, setIsCrea
             cloudName: conf.cloudinaryCloudName,
             uploadPreset: conf.cloudinaryUploadPreset,
             folder: 'codeweb',
-            resourceType: 'image',
+            resourceType: 'video',
             sources: ['local', 'url', 'camera', 'image_search', "google_drive",],
             secure: true,
             multiple: false,
-            maxImageFileSize: 1500000,
-            clientAllowedFormats: ["png", "jpg", "jpeg","gif","webp"],
+            maxImageFileSize: 50000000,
+            clientAllowedFormats: ["mp4", "webm", "ogg","mov"],
         }, async (error, result) => {
             if (!error && result && result.event === "success") {
                 const response = await assetService.createNewAsset({
                     title: data.title.trim(),
-                    assetType: "image",
+                    assetType: "video",
                     assetURL: result.info.secure_url,
                     assetPublicId: result.info.public_id,
                     isPublic: data.isPublic === "true"? true : false,
@@ -70,12 +70,12 @@ export default function CreateVideoAsset({isCreateVideoAssetRendering, setIsCrea
         <div className='GB-cointainer p-1 menu-container'>
             <div className='p-5 pb-8 bg-gray-900 rounded-md text-center w-[92vw] sm:w-[75vw] md:w-[60vw] lg:w-[38vw]'>
                 <p className='text-2xl font-bold text-white mb-6'>
-                    Create New Image Asset
+                    Create New Video Asset
                 </p>
                 <form onSubmit={handleSubmit(submit)}>
                     <Input 
                     type='text' 
-                    lable='Image Title :' 
+                    lable='Video Title :' 
                     placeholder='Title' 
                     required={true}
                     {...register('title')} /> <br /><br />
@@ -96,15 +96,15 @@ export default function CreateVideoAsset({isCreateVideoAssetRendering, setIsCrea
 
                     <input 
                     className='bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-5 rounded-lg'
-                    value={"Upload Image"}
+                    value={"Upload Video"}
                     readOnly={disabled}
                     type="submit" />
                     <p className='text-red-500'>
-                        Max Size  1.5MB
+                        Max Size 50 MB
                     </p>
                 </form>
             </div>
         </div>
     </div>
   )
-}
+})
