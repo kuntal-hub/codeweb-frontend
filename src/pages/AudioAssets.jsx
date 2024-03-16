@@ -1,31 +1,114 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { assetService } from '../apiServices/asset';
+import { useDispatch } from 'react-redux';
+import { addNotification } from '../store/notificationSlice';
 
 export default function AudioAssets() {
-    const [isShowAll, setIsShowAll] = useState(true)
     const [audios, setAudios] = useState([])
-    const [loading, setLoading] = useState(true)
+    const [isCreateAudioAssetRendering, setIsCreateAudioAssetRendering] = useState(false)
+    const [resData, setResData] = useState(null);
+    const [page, setPage] = useState(1);
+    const {register, handleSubmit} = useForm();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const urlParams = new URLSearchParams(window.location.search);
+    document.title = "codeweb - Video Assets"
+
+    const getPublicAssets = async (page) => {
+        const limit = 20;
+        if (!urlParams.has('query') || urlParams.get('query').trim() === "") {
+            const response = await assetService.getAllPublicAssets({assetType:"audio",page:page,limit})
+            if (response.status < 400 && response.data) {
+                setResData(response.data)
+                if (page === 1) {
+                    setAudios(response.data.docs)
+                } else {
+                    setAudios([...audios,...response.data.docs])
+                }
+                setPage(page)
+            } else{
+                dispatch(addNotification({type:"error",text:response.message}))
+            }
+        }else{
+            const response = await assetService.searchFromPublicAssets({search:urlParams.get('query'),assetType:"audio",page:page,limit})
+            if (response.status < 400 && response.data) {
+                setResData(response.data)
+                if (page === 1) {
+                    setAudios(response.data.docs)
+                } else {
+                    setAudios([...audios,...response.data.docs])
+                }
+                setPage(page)
+            } else{
+                dispatch(addNotification({type:"error",text:response.message}))
+            }
+        }
+    }
+
+    const search = (data) => {
+        const search = data.search.trim().replaceAll(" ","+")
+        if (data.search.trim() === "") {
+            return navigate(`/assets/audios`)
+        }
+        navigate(`/assets/audios?query=${search}`)
+    }
+
+    useEffect(() => {
+        getPublicAssets(1)
+    }, [urlParams.get('query')])
     
   return (
     <div className='w-full h-full overflow-auto bg-gray-950 pb-24'>
         <div className='px-2 md:px-4 flex flex-nowrap justify-between pt-2'>
             <div>
-                <button onClick={()=>setIsShowAll(true)}
-                className={`text-white font-semibold py-[2px] px-3 text-[14px] rounded-lg hover:bg-gray-700 
-                ${isShowAll? "bg-gray-700 border":"bg-gray-600"}`}>
-                    All
-                </button>
-                <button onClick={()=>setIsShowAll(false)}
-                className={`text-white font-semibold py-[2px] px-3 text-[14px] rounded-lg ml-3 hover:bg-gray-700 
-                ${!isShowAll? "bg-gray-700 border":"bg-gray-600"}`}>
-                    My
-                </button>
+            <form onSubmit={handleSubmit(search)} className='flex flex-nowrap justify-start'>
+                    <label
+                    className='material-symbols-outlined text-white bg-gray-700 h-10 pt-2 px-3 rounded-l-full cursor-pointer'
+                    htmlFor='searchAudioAssets'
+                    >search</label>
+                    <input 
+                    type="search"
+                    defaultValue={urlParams.get('query') ? urlParams.get('query') : "" }
+                    id='searchAudioAssets'
+                    placeholder='Search Audios'
+                    {...register('search')}
+                    className='h-10 py-1 px-3 bg-gray-700 text-white font-semibold rounded-r-full sm:w-96 lg:w-[450px]'
+                    />
+                </form>
             </div>
-            <button 
+            <button onClick={()=>setIsCreateAudioAssetRendering(true)}
             className=' bg-green-600 hover:bg-green-600 font-semibold py-2 px-5 rounded-lg'>
                 Create
             </button>
         </div>
+        {
+            resData ? audios.length > 0 ?
+            <InfiniteScroll
+            dataLength={audios.length}
+            next={()=>getPublicAssets(page+1)}
+            height={window.innerHeight-166}// editabe TODO
+            hasMore={resData.hasNextPage}
+            loader={<h4 className='w-full text-center font-bold text-lg'>Loading...</h4>}
+            endMessage={
+              <p className='w-full text-center font-semibold my-4'>No More Data</p>
+            }
+            >
+                
+    
+                
+            </InfiniteScroll> : 
+            <h1 className='text-center font-bold text-2xl text-white mt-32'>😵 No Audios Found</h1> :
+            <h1 className='text-center font-bold text-2xl text-white mt-32'>Loading...</h1>
+        }
+        {
+            isCreateAudioAssetRendering && <CreateAudioAsset 
+            setAudios={setAudios} 
+            setIsCreateAudioAssetRendering={setIsCreateAudioAssetRendering}
+            isCreateAudioAssetRendering={isCreateAudioAssetRendering} />
+        }
     </div>
   )
 }
