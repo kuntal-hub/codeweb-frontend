@@ -7,6 +7,7 @@ import { addNotification } from '../store/notificationSlice';
 import ImageAssetCard from '../components/assetComponents/ImageAssetCard';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import "../cssFiles/assetCards.css";
 
 export default function ImageAssets() {
     const [colum1, setColum1] = useState([])
@@ -47,19 +48,60 @@ export default function ImageAssets() {
         const divisionCount = Math.floor(mainArr.length/4);
         let arr1,arr2,arr3,arr4;
         const extraArr = mainArr.slice(divisionCount*4,mainArr.length);
+        const lengtArr = [colum1.length, colum2.length, colum3.length, colum4.length]
+        lengtArr.sort();
         arr1 = mainArr.slice(0,divisionCount);
         arr2 = mainArr.slice(divisionCount,divisionCount*2);
         arr3 = mainArr.slice(divisionCount*2,divisionCount*3);
         arr4 = mainArr.slice(divisionCount*3,divisionCount*4);
         if(extraArr.length === 1){
-          arr2.push(extraArr[0]);
+            if (colum1.length === lengtArr[0]) {
+                arr1.push(extraArr[0]);
+            } else if(colum2.length === lengtArr[0]){
+                arr2.push(extraArr[0]);
+            } else if(colum3.length === lengtArr[0]){
+                arr3.push(extraArr[0]);
+            } else if(colum4.length === lengtArr[0]){
+                arr4.push(extraArr[0]);
+            }
         } else if(extraArr.length === 2){
-          arr2.push(extraArr[0]);
-          arr4.push(extraArr[1]);
+            if ((colum1.length === lengtArr[0] || lengtArr[1]) && (colum2.length === lengtArr[0] || lengtArr[1])) {
+                arr1.push(extraArr[0]);
+                arr2.push(extraArr[1]);
+            } else if((colum1.length === lengtArr[0] || lengtArr[1]) && (colum3.length === lengtArr[0] || lengtArr[1])){
+                arr1.push(extraArr[0]);
+                arr3.push(extraArr[1]);
+            } else if((colum1.length === lengtArr[0] || lengtArr[1]) && (colum4.length === lengtArr[0] || lengtArr[1])){
+                arr1.push(extraArr[0]);
+                arr4.push(extraArr[1]);
+            } else if((colum2.length === lengtArr[0] || lengtArr[1]) && (colum3.length === lengtArr[0] || lengtArr[1])){
+                arr2.push(extraArr[0]);
+                arr3.push(extraArr[1]);
+            } else if((colum2.length === lengtArr[0] || lengtArr[1]) && (colum4.length === lengtArr[0] || lengtArr[1])){
+                arr2.push(extraArr[0]);
+                arr4.push(extraArr[1]);
+            } else if((colum3.length === lengtArr[0] || lengtArr[1]) && (colum4.length === lengtArr[0] || lengtArr[1])){
+                arr3.push(extraArr[0]);
+                arr4.push(extraArr[1]);
+            } 
         } else if(extraArr.length === 3){
-          arr1.push(extraArr[0]);
-          arr2.push(extraArr[1]);
-          arr3.push(extraArr[2]);
+          if (colum1.length === lengtArr[3]) {
+            arr2.push(extraArr[0]);
+            arr3.push(extraArr[1]);
+            arr4.push(extraArr[2]);
+          } else if(colum2.length === lengtArr[3]){
+            arr1.push(extraArr[0]);
+            arr3.push(extraArr[1]);
+            arr4.push(extraArr[2]);
+          } else if(colum3.length === lengtArr[3]){
+            arr1.push(extraArr[0]);
+            arr2.push(extraArr[1]);
+            arr4.push(extraArr[2]);
+          } else if(colum4.length === lengtArr[3]){
+            arr1.push(extraArr[0]);
+            arr2.push(extraArr[1]);
+            arr3.push(extraArr[2]);
+          }
         }
         return [arr1,arr2,arr3,arr4]
     }
@@ -157,7 +199,20 @@ export default function ImageAssets() {
               <p className='w-full text-center font-semibold my-4'>No More Data</p>
             }
             >
-              
+        <div className="row"> 
+        <div className="column">
+            {colum1.map((image,index) => <ImageAssetCard key={index} image={image} />)}
+        </div>
+        <div className="column">
+            {colum2.map((image,index) => <ImageAssetCard key={index} image={image} />)}
+        </div>  
+        <div className="column">
+            {colum3.map((image,index) => <ImageAssetCard key={index} image={image} />)}
+        </div>
+        <div className="column">
+            {colum4.map((image,index) => <ImageAssetCard key={index} image={image} />)}
+        </div>
+      </div>
             </InfiniteScroll> : 
             <h1 className='text-center font-bold text-2xl text-white mt-32'>😵 No Images Found</h1> :
             <h1 className='text-center font-bold text-2xl text-white mt-32'>Loading...</h1>

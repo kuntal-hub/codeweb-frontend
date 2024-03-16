@@ -1,12 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
+import ShowImageDetails from './ShowImageDetails';
 
-export default function ImageAssetCard({image}) {
+export default function ImageAssetCard({ image }) {
+  const [showImageDeatil, setShowImageDetails] = useState(false);
 
   return (
-    <div className='w-[90%] md:w-[43%] mx-auto md:mx-4 my-5 bg-gray-800 rounded-lg'>
-        <img src={image.assetURL} alt="IMG"
-        className='w-auto h-[250px] md:h-[200px] lg:h-[250px] block mx-auto rounded-lg shadow-lg'
-        />
-    </div>
+    <>
+      <img src={image.assetURL.replace("upload/", "upload/q_80/")} style={{ width: '100%' }}
+        className='hover:rounded-lg hover:scale-105 transition-transform duration-300 ease-in-out cursor-pointer'
+        alt='image asset'
+        onClick={() => setShowImageDetails(true)}
+      />
+      {showImageDeatil && <ShowImageDetails showImageDeatil={showImageDeatil} setShowImageDetails={setShowImageDetails} image={image} />}
+    </>
   )
 }

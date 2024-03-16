@@ -78,8 +78,9 @@ export default memo(function WebHeader({setIndentationNo,hendleSaveWeb,web}) {
             {user && user._id !== web.owner._id && 
             <button onClick={toggleFollow}
             disabled={isFollowButtonDisabled}
-            className='bg-green-500 py-[2px] rounded-md px-1 text-[12px] ml-1 font-semibold'>
-              {isFollowing? "Unfollow":"+Follow"}
+            className={`${isFollowing ? "border bg-gray-500 hover:bg-gray-600 text-white":"bg-green-600 hover:bg-green-500"} py-[2px]
+             rounded-md px-1 text-[12px] ml-1 font-semibold`}>
+              {isFollowing? "Following":"+Follow"}
             </button>}
           </div>
         </div>
