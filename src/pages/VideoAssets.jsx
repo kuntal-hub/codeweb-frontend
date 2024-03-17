@@ -91,7 +91,7 @@ export default function VideoAssets() {
             <InfiniteScroll
             dataLength={videos.length}
             next={()=>getPublicAssets(page+1)}
-            height={window.innerHeight-166}
+            height={window.innerWidth<1024 ? window.innerHeight-166 : window.innerHeight-112}
             hasMore={resData.hasNextPage}
             loader={<h4 className='w-full text-center font-bold text-lg'>Loading...</h4>}
             endMessage={

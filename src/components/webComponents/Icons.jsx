@@ -43,7 +43,7 @@ export default function Icons() {
                     <button onClick={() => {
                         navigator.clipboard.writeText(`<span class="material-symbols-outlined">${icon}</span>`)
                         dispatch(addNotification({ type: "success", text: "Text Copied Successfully!" }))
-                    }} title="Click To Copy" key={index}
+                    }} title={icon} key={index}
                         className='material-symbols-outlined p-2 transition duration-300 ease-in-out hover:scale-150'>
                         {icon}
                     </button>

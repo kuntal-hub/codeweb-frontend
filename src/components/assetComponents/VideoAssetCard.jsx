@@ -1,5 +1,6 @@
 import React, { useState,memo } from 'react'
 import { likeSearvice } from '../../apiServices/like';
+import { Link } from 'react-router-dom';
 
 export default memo(function VideoAssetCard({ video }) {
     const [isLikedByMe, setIsLikedByMe] = useState(video.isLikedByMe);
@@ -24,9 +25,21 @@ export default memo(function VideoAssetCard({ video }) {
                 className='w-full h-auto transition-transform duration-300 ease-in-out cursor-pointer block rounded-lg'
                 src={video.assetURL.replace("upload/", "upload/q_80/")}></video>
             <div className='w-full flex justify-between flex-nowrapn p-2'>
-                <p className='text-lg font-semibold'>
+            <div className=' flex flex-col'>
+                <p className='text-md sm:text-lg font-semibold text-left ml-1 mb-1'>
                     {video.title}
                 </p>
+                <div className='flex flex-nowrap justify-start'>
+                    <Link to={`/${video.owner.username}`}>
+                        <img src={video.owner.avatar.replace("upload/", "upload/ar_1.0,g_face,c_fill,w_32/")} alt="LOGO"
+                            className='h-8 w-[32px!important] rounded-full'
+                        />
+                    </Link>
+                    <Link to={`/${video.owner.username}`} className='text-[13px] mt-1 text-gray-400 ml-2'>
+                        {video.owner.fullName}
+                    </Link>
+                </div>
+            </div>
                 <div className='flex flex-nowrap'>
                     <button onClick={toggleLike}
                         title={isLikedByMe ? "Unlike" : "Like"}
@@ -44,7 +57,7 @@ export default memo(function VideoAssetCard({ video }) {
                                 </span>
                         }
                     </button>
-                    <span className='ml-2 block mt-3'>
+                    <span className='ml-2 block mt-6'>
                         {likesCount}
                     </span>
                 </div>
