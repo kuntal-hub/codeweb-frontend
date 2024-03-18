@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState,memo } from 'react'
 import ShowImageDetails from './ShowImageDetails';
 import { useDispatch } from 'react-redux';
 import { addNotification } from '../../store/notificationSlice';
 
-export default function ImageAssetCard({ image }) {
+export default memo(function ImageAssetCard({ image,copyOnly=false }) {
   const [showImageDeatil, setShowImageDetails] = useState(false);
   const dispatch = useDispatch();
 
@@ -18,7 +18,11 @@ export default function ImageAssetCard({ image }) {
       <img src={image.assetURL.replace("upload/", "upload/q_80/")} style={{ width: '100%' }}
         className='hover:rounded-lg transition-all duration-300 ease-in-out'
         alt='image asset'
-        onClick={() => setShowImageDetails(true)}
+        onClick={() => {
+          if(!copyOnly){
+            setShowImageDetails(true)
+          }
+        }}
       />
         <button onClick={copyToClipBord} title='Copy URL'
         className='material-symbols-outlined hidden absolute top-2 right-2 text-3xl text-white copyBtn'
@@ -26,7 +30,8 @@ export default function ImageAssetCard({ image }) {
           content_copy
         </button>
       </div>
-      {showImageDeatil && <ShowImageDetails showImageDeatil={showImageDeatil} setShowImageDetails={setShowImageDetails} image={image} />}
+      {showImageDeatil && !copyOnly &&
+      <ShowImageDetails showImageDeatil={showImageDeatil} setShowImageDetails={setShowImageDetails} image={image} />}
     </>
   )
-}
+})

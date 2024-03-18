@@ -2,7 +2,18 @@ import React from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component';
 import ImageAssetCard from './ImageAssetCard';
 
-export default function ShowMyImageAssets({ imgCol1, imgCol2, imgCol3, imgCol4, imgCurrentPage, imageResData, getImageAssets}) {
+export default function ShowMyImageAssets({ 
+  imgCol1, 
+  imgCol2, 
+  imgCol3, 
+  imgCol4, 
+  imgCurrentPage, 
+  imageResData, 
+  getImageAssets,
+  copyOnly=false,
+  height,
+}) {
+  const infiniteScrollHeight = window.innerWidth < 1024 ? window.innerHeight - 166 : window.innerHeight - 112
   return (
     <div className='w-full py-1'>
         {
@@ -10,7 +21,7 @@ export default function ShowMyImageAssets({ imgCol1, imgCol2, imgCol3, imgCol4, 
             <InfiniteScroll
               dataLength={imgCol1.length + imgCol2.length + imgCol3.length + imgCol4.length}
               next={() => getImageAssets(imgCurrentPage + 1)}
-              height={window.innerWidth < 1024 ? window.innerHeight - 166 : window.innerHeight - 112}
+              height={height ? height : infiniteScrollHeight}
               hasMore={imageResData.hasNextPage}
               loader={<h4 className='w-full text-center font-bold text-lg'>Loading...</h4>}
               endMessage={
@@ -19,16 +30,16 @@ export default function ShowMyImageAssets({ imgCol1, imgCol2, imgCol3, imgCol4, 
             >
               <div className="row">
                 <div className="column">
-                  {imgCol1.map((image, index) => <ImageAssetCard key={index} image={image} />)}
+                  {imgCol1.map((image, index) => <ImageAssetCard key={index} image={image} copyOnly={copyOnly} />)}
                 </div>
                 <div className="column">
-                  {imgCol2.map((image, index) => <ImageAssetCard key={index} image={image} />)}
+                  {imgCol2.map((image, index) => <ImageAssetCard key={index} image={image} copyOnly={copyOnly} />)}
                 </div>
                 <div className="column">
-                  {imgCol3.map((image, index) => <ImageAssetCard key={index} image={image} />)}
+                  {imgCol3.map((image, index) => <ImageAssetCard key={index} image={image} copyOnly={copyOnly} />)}
                 </div>
                 <div className="column">
-                  {imgCol4.map((image, index) => <ImageAssetCard key={index} image={image} />)}
+                  {imgCol4.map((image, index) => <ImageAssetCard key={index} image={image} copyOnly={copyOnly} />)}
                 </div>
               </div>
             </InfiniteScroll> :

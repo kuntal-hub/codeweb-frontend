@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react'
 import Icons from './Icons';
 import Fonts from './Fonts';
 import Patterns from './Patterns';
+import Images from './Images';
+import Videos from './Videos';
+import Audios from './Audios';
 
 export default function ShowAsset({ setShowAsset, showAsset }) {
   const [showIcons, setShowIcons] = useState(true);
@@ -92,6 +95,9 @@ export default function ShowAsset({ setShowAsset, showAsset }) {
             {showIcons && <Icons />}
             {showFonts && <Fonts />}
             {showPatterns && <Patterns />}
+            {showImages && <Images />}
+            {showVideos && <Videos />}
+            {showAudios && <Audios />}
           </div>
         </div>
       </div>

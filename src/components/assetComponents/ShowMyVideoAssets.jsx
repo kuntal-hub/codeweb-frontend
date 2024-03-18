@@ -2,15 +2,22 @@ import React from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component';
 import VideoAssetCard from './VideoAssetCard';
 
-export default function ShowMyVideoAssets({ videos, videoCurrentPage, videoResData, getVideoAssets }) {
+export default function ShowMyVideoAssets({ 
+    videos, 
+    videoCurrentPage, 
+    videoResData, 
+    getVideoAssets,
+    height,
+ }) {
+    const infiniteScrollHeight = window.innerWidth < 1024 ? window.innerHeight - 166 : window.innerHeight - 112
     return (
-        <div className='w-full py-1'>
+        <div className='w-full py-1 text-white'>
             {
                 videoResData ? videos.length > 0 ?
                     <InfiniteScroll
                         dataLength={videos.length}
                         next={() => getVideoAssets(videoCurrentPage + 1)}
-                        height={window.innerWidth < 1024 ? window.innerHeight - 166 : window.innerHeight - 112}
+                        height={height ? height : infiniteScrollHeight}
                         hasMore={videoResData.hasNextPage}
                         loader={<h4 className='w-full text-center font-bold text-lg'>Loading...</h4>}
                         endMessage={

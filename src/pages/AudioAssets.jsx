@@ -193,12 +193,13 @@ export default function AudioAssets() {
             togglePlay={togglePlay}
             playPriv={playPriv}
             playNext={playNext}
-            totalDuration={isNaN(audioEleRef.current.duration)?0:Math.floor(audioEleRef.current.duration)}
+            totalDuration={audioEleRef.current ? isNaN(audioEleRef.current.duration)?0:Math.floor(audioEleRef.current.duration) : 0}
             currentTime={currentTime}
             isPlaying={isPlaying}
             audioEleRef={audioEleRef}
             />
         }
+
         <audio src="" ref={audioEleRef} className='hidden'
         onTimeUpdate={(e)=>{
             if (showaudioDeatil) {
