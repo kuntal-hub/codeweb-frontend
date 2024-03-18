@@ -13,7 +13,6 @@ export default function Audios() {
     const [page, setPage] = useState(1);
     const [isPlaying, setIsPlaying] = useState(false);
     const [playingAudio, setPlayingAudio] = useState(null);
-    const [showaudioDeatil, setShowaudioDetails] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const audioEleRef = useRef(null);
     const totalDuration = audioEleRef.current ? isNaN(audioEleRef.current.duration)?0:Math.floor(audioEleRef.current.duration) : 0;
