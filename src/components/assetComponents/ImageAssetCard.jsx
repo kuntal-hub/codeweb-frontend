@@ -20,7 +20,7 @@ export default function ImageAssetCard({ image }) {
         alt='image asset'
         onClick={() => setShowImageDetails(true)}
       />
-        <button onClick={copyToClipBord}
+        <button onClick={copyToClipBord} title='Copy URL'
         className='material-symbols-outlined hidden absolute top-2 right-2 text-3xl text-white copyBtn'
         >
           content_copy

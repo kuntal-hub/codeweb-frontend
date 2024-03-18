@@ -58,7 +58,7 @@ export default memo(function AudioAssetCard({ audio, audioEleRef, isPlaying, set
             <span className="material-symbols-outlined block mt-4 isPlaiingSymbol">
                 {!isPlaying ? "play_circle" : playingAudio.assetURL === audio.assetURL ? "pause_circle" : "play_circle"}
             </span>
-            <button onClick={copyToClipBord}
+            <button onClick={copyToClipBord} title='Copy URL'
                 className='material-symbols-outlined hidden absolute top-5 right-3 text-3xl text-white copyBtn'
             >
                 content_copy

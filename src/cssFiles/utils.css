@@ -359,11 +359,6 @@
   right: 10px;
 }
 
-@media (min-width: 1024px) {
-  .audioElement{
-    width: calc(100% - 380px);
-  }
-}
 
 @media (min-width: 640px) {
   .audioElement{
@@ -375,5 +370,11 @@
 @media (min-width: 768px) {
   .audioElement{
     width: calc(100% - 220px);
+  }
+}
+
+@media (min-width: 1024px) {
+  .audioElement{
+    width: calc(100% - 380px);
   }
 }
