@@ -7,6 +7,7 @@ import { assetService } from '../apiServices/asset';
 import { useDispatch } from 'react-redux';
 import { addNotification } from '../store/notificationSlice';
 import VideoAssetCard from '../components/assetComponents/VideoAssetCard';
+import "../cssFiles/assetCards.css";
 
 export default function VideoAssets() {
     const [isCreateVideoAssetRendering, setIsCreateVideoAssetRendering] = useState(false);

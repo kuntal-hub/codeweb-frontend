@@ -1,8 +1,11 @@
-import React,{memo} from 'react'
+import React, { memo } from 'react'
 import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+import { addNotification } from '../../store/notificationSlice';
 
 export default memo(function AudioAssetCard({ audio, audioEleRef, isPlaying, setIsPlaying, setPlayingAudio, playingAudio }) {
-    
+    const dispatch = useDispatch();
+
     const play = () => {
         if (isPlaying && audioEleRef.current.src === audio.assetURL) {
             audioEleRef.current.pause();
@@ -22,9 +25,15 @@ export default memo(function AudioAssetCard({ audio, audioEleRef, isPlaying, set
         }
     }
 
+    const copyToClipBord = () => {
+        window.navigator.clipboard.writeText(audio.assetURL)
+        dispatch(addNotification({ text: "URL coppid Succesfully!", type: "success" }))
+    }
+
     return (
-        <button onClick={play}
-            className='w-[90%] mx-auto flex flex-nowrap justify-between my-3 bg-gray-700 rounded-full py-2 px-4'>
+        <div onClick={play}
+            className='w-[90%] mx-auto flex flex-nowrap justify-between my-3 hover:scale-95 cursor-pointer hovarable relative
+             transition-all ease-in-out duration-300 bg-gray-700 hover:bg-gray-600 rounded-full py-2 px-4'>
             <div className=' flex flex-col'>
                 <p className='text-md sm:text-lg font-semibold text-left ml-3 mb-1'>
                     {audio.title}
@@ -46,9 +55,14 @@ export default memo(function AudioAssetCard({ audio, audioEleRef, isPlaying, set
                     className='w-[70px] md:w-[150px] h-[40px]'
                     alt="Playing" />
             }
-            <span className="material-symbols-outlined block mt-4">
-                {!isPlaying? "play_circle":playingAudio.assetURL === audio.assetURL? "pause_circle":"play_circle"}
+            <span className="material-symbols-outlined block mt-4 isPlaiingSymbol">
+                {!isPlaying ? "play_circle" : playingAudio.assetURL === audio.assetURL ? "pause_circle" : "play_circle"}
             </span>
-        </button>
+            <button onClick={copyToClipBord}
+                className='material-symbols-outlined hidden absolute top-5 right-3 text-3xl text-white copyBtn'
+            >
+                content_copy
+            </button>
+        </div>
     )
 })

@@ -32,10 +32,28 @@
   }
   
   /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
-  @media screen and (max-width: 400px) {
+  @media screen and (max-width: 450px) {
     .column {
       -ms-flex: 100%;
       flex: 100%;
       max-width: 100%;
     }
+  }
+
+  .copyBtn{
+    transition: all 0.3s ease 0s;
+    transform: scale(0.75);
+  }
+
+  .copyBtn:hover{
+    transform: scale(1);
+  }
+
+  .hovarable:hover .copyBtn{
+    display: inline-block;
+    transition: all 0.3s ease 0s;
+  }
+
+  .hovarable:hover .isPlaiingSymbol{
+    opacity: 0;
   }

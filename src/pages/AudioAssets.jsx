@@ -8,6 +8,7 @@ import { addNotification } from '../store/notificationSlice';
 import CreateAudioAsset from '../components/assetComponents/CreateAudioAsset';
 import AudioAssetCard from '../components/assetComponents/AudioAssetCard';
 import AudioPlayer from '../components/assetComponents/AudioPlayer';
+import "../cssFiles/assetCards.css";
 
 export default function AudioAssets() {
     const [audios, setAudios] = useState([])

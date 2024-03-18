@@ -1,10 +1,13 @@
-import React, { useState,memo } from 'react'
+import React, { useState, memo } from 'react'
 import { likeSearvice } from '../../apiServices/like';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addNotification } from '../../store/notificationSlice';
 
 export default memo(function VideoAssetCard({ video }) {
     const [isLikedByMe, setIsLikedByMe] = useState(video.isLikedByMe);
     const [likesCount, setLikesCount] = useState(video.likesCount);
+    const dispatch = useDispatch();
 
     const toggleLike = async () => {
         const isLiked = isLikedByMe;
@@ -18,28 +21,40 @@ export default memo(function VideoAssetCard({ video }) {
         }
     }
 
+    const copyToClipBord = ()=>{
+        window.navigator.clipboard.writeText(video.assetURL)
+        dispatch(addNotification({text:"URL coppid Succesfully!",type:"success"}))
+    }
+
     return (
         <div className=' mx-auto p-3 hover:bg-gray-600 bg-gray-700 w-full sm:w-[75%] my-4 rounded-lg lg:w-[65%] xl:w-[55%]'>
-            <video
-                controls={true}
-                className='w-full h-auto transition-transform duration-300 ease-in-out cursor-pointer block rounded-lg'
-                src={video.assetURL.replace("upload/", "upload/q_80/")}></video>
-            <div className='w-full flex justify-between flex-nowrapn p-2'>
-            <div className=' flex flex-col'>
-                <p className='text-md sm:text-lg font-semibold text-left ml-1 mb-1'>
-                    {video.title}
-                </p>
-                <div className='flex flex-nowrap justify-start'>
-                    <Link to={`/${video.owner.username}`}>
-                        <img src={video.owner.avatar.replace("upload/", "upload/ar_1.0,g_face,c_fill,w_32/")} alt="LOGO"
-                            className='h-8 w-[32px!important] rounded-full'
-                        />
-                    </Link>
-                    <Link to={`/${video.owner.username}`} className='text-[13px] mt-1 text-gray-400 ml-2'>
-                        {video.owner.fullName}
-                    </Link>
-                </div>
+            <div className='m-0 p-0 hovarable relative'>
+                <video
+                    controls={true}
+                    className='w-full h-auto transition-transform duration-300 ease-in-out cursor-pointer block rounded-lg'
+                    src={video.assetURL.replace("upload/", "upload/q_80/")}></video>
+                <button onClick={copyToClipBord}
+                    className='material-symbols-outlined hidden absolute top-2 right-2 text-3xl text-white copyBtn'
+                >
+                    content_copy
+                </button>
             </div>
+            <div className='w-full flex justify-between flex-nowrapn p-2'>
+                <div className=' flex flex-col'>
+                    <p className='text-md sm:text-lg font-semibold text-left ml-1 mb-1'>
+                        {video.title}
+                    </p>
+                    <div className='flex flex-nowrap justify-start'>
+                        <Link to={`/${video.owner.username}`}>
+                            <img src={video.owner.avatar.replace("upload/", "upload/ar_1.0,g_face,c_fill,w_32/")} alt="LOGO"
+                                className='h-8 w-[32px!important] rounded-full'
+                            />
+                        </Link>
+                        <Link to={`/${video.owner.username}`} className='text-[13px] mt-1 text-gray-400 ml-2'>
+                            {video.owner.fullName}
+                        </Link>
+                    </div>
+                </div>
                 <div className='flex flex-nowrap'>
                     <button onClick={toggleLike}
                         title={isLikedByMe ? "Unlike" : "Like"}

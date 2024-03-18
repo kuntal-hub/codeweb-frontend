@@ -121,6 +121,11 @@ export default function ShowImageDetails({showImageDeatil,setShowImageDetails,im
                 </div>
             </div>
         </div>
+        <button
+        className='material-symbols-outlined fixed top-1 right-1 text-white z-30 bg-slate-800 rounded-md border border-white'
+        >
+            close
+        </button>
     </div>
   )
 }
