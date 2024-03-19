@@ -8,6 +8,7 @@ import { useSafeNavigate } from '../../hooks/useSafeNavigate';
 import WebAddons from './WebAddons';
 import SetTitleDescpiption from './SetTitleDescpiption';
 import JSZip from 'jszip';
+import Comments from './Comments';
 
 export default function WebFooter({web}) {
     const navigate = useNavigate();
@@ -24,6 +25,7 @@ export default function WebFooter({web}) {
     const [showAsset, setShowAsset] = useState(false);
     const [showAddons, setShowAddons] = useState(false);
     const [showTitleDescpiption, setShowTitleDescpiption] = useState(false);
+    const [showComments, setShowComments] = useState(false);
     const safeNavigate = useSafeNavigate();
 
     const forkWeb = useCallback(async (title,description,isPublic) => {
@@ -116,10 +118,17 @@ export default function WebFooter({web}) {
             Addons
         </button>
         {web &&
+        <>
         <button onClick={()=>safeNavigate(`/view-full/${web?._id}`)}
          className='h-full text-white px-2 text-[12px] bg-gray-700 hover:bg-gray-600 mx-[2px]'>
             Full View
-        </button>}
+        </button>
+        <button onClick={()=>setShowComments(true)}
+         className='h-full text-white px-2 text-[12px] bg-gray-700 hover:bg-gray-600 mx-[2px]'>
+            Comments
+        </button>
+           </>
+        }
         <button onClick={exportZip}
         className='h-full text-white px-2 text-[12px] bg-gray-700 hover:bg-gray-600 mx-[2px]'>
             Export
@@ -127,6 +136,7 @@ export default function WebFooter({web}) {
         {showAsset && <ShowAsset setShowAsset={setShowAsset} showAsset={showAsset} />}
         {showAddons && <WebAddons setShowAddons={setShowAddons} showAddons={showAddons} 
         owner={web? web.owner : null} />}
+        {showComments && <Comments web={web} setShowComments={setShowComments} showComments={showComments} />}
         {showTitleDescpiption && <SetTitleDescpiption setShowTitleDescpiption={setShowTitleDescpiption} showTitleDescpiption={showTitleDescpiption} forkWeb={forkWeb} />}
     </div>
   )

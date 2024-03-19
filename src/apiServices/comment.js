@@ -10,12 +10,10 @@ export class CommentService {
 
             const response = await axios.post("/api/v1/comments/create", {text,web});
 
-            if(response) throw new Error("Error creating comment");
-
             return response.data;
         } catch (error) {
             console.log("error on commentService.createComment", error);
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
@@ -27,12 +25,10 @@ export class CommentService {
 
             const response = await axios.patch(`/api/v1/comments/update/${commentId}`, {text});
 
-            if(response) throw new Error("Error updating comment");
-
             return response.data;
         } catch (error) {
             console.log("error on commentService.updateComment", error);
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
@@ -44,12 +40,10 @@ export class CommentService {
 
             const response = await axios.delete(`/api/v1/comments/delete/${commentId}`);
 
-            if(response) throw new Error("Error deleting comment");
-
             return response.data;
         } catch (error) {
             console.log("error on commentService.deleteComment", error);
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
@@ -59,12 +53,10 @@ export class CommentService {
 
             const response = await axios.get(`/api/v1/comments/get-comments/${webId}?page=${page}&limit=${limit}`);
 
-            if(!response) throw new Error("response is null");
-
             return response.data;
         } catch (error) {
             console.log("error on commentService.getAllCommentsByWebId", error)
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
@@ -74,12 +66,10 @@ export class CommentService {
 
             const response = await axios.get(`/api/v1/comments/get/${commentId}`)
 
-            if(!response) throw new Error("response is null");
-
             return response.data;
         } catch (error) {
             console.log("error on commentService.getCommentId", error)
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 

@@ -8,12 +8,10 @@ export class ReplySearvice {
 
             const response = await axios.post("/api/v1/replays/create",{commentId,text})
 
-            if(!response) throw new Error("response is null");
-
             return response.data;
         } catch (error) {
             console.log("error on ReplySearvice.createReply",error)
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
@@ -23,12 +21,10 @@ export class ReplySearvice {
 
             const response = await axios.patch(`/api/v1/replays/update/${replyId}`,{text})
 
-            if(!response) throw new Error("response is null");
-
             return response.data;
         } catch (error) {
             console.log("error on ReplySearvice.updateReply",error)
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
@@ -38,12 +34,23 @@ export class ReplySearvice {
 
             const response = await axios.delete(`/api/v1/replays/delete/${replyId}`);
 
-            if(!response) throw new Error("response is null");
-
             return response.data;
         } catch (error) {
             console.log("error on ReplySearvice.deleteReply",error)
-            return null;
+            return {status:error.status,message:error.message,data:null};
+        }
+    }
+
+    async getAllReplies({commentId,page=1,limit=10}){
+        try {
+            if(!commentId) throw new Error("commentId is Missing");
+
+            const response = await axios.get(`/api/v1/replays/${commentId}?page=${page}&limit=${limit}`);
+
+            return response.data;
+        } catch (error) {
+            console.log("error on ReplySearvice.getAllReplies",error)
+            return {status:error.status,message:error.message,data:null};
         }
     }
 }
