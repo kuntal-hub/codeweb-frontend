@@ -18,7 +18,7 @@ export default function Comments({web,setShowComments,showComments}) {
   }, []);
 
   return (
-    <div className='w-screen min-h-screen max-h-full fixed top-0 left-0 half_transparent pt-16'>
+    <div className='w-screen min-h-screen max-h-full fixed top-0 left-0 half_transparent pt-16 pb-10 overflow-y-auto'>
         <div className='GB-cointainer p-1 menu-container mx-auto block w-full sm:w-[86%] md:w-[70%] xl:w-[64%] menu-container'>
             <WebDEtails web={web} />
         </div>

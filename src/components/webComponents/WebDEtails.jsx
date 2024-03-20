@@ -1,29 +1,70 @@
-import React,{useEffect} from 'react'
-import { useDispatch } from 'react-redux';
+import React,{useEffect,useState,useRef} from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { addNotification } from '../../store/notificationSlice';
 import { useForm } from "react-hook-form"
 import {commentService} from "../../apiServices/comment"
-import {replySearvice} from "../../apiServices/reply"
+import CommentCard from './CommentCard';
 
 export default function WebDEtails({web}) {
     const dispatch = useDispatch();
     const {register,handleSubmit} = useForm()
     const createDate = new Date(web.createdAt).toDateString();
     const updateDate = new Date(web.updatedAt).toDateString();
-
-    const addComment = async(data)=>{
-        const response = await commentService.createComment({web:web._id,text:data.text})
+    const [comments,setComments] = useState([])
+    const [resData,setResData] = useState(null)
+    const [commentInputVal,setCommentInputVal] = useState("")
+    const [page,setPage] = useState(1)
+    const user = useSelector((state)=>state.auth.userData)
+    const textAreaRef = useRef(null);
+    const addComment = async()=>{
+        const response = await commentService.createComment({web:web._id,text:commentInputVal})
         if (response.status<400 && response.data) {
+            response.data.owner = {
+                _id:user._id,
+                username:user.username,
+                fullName:user.fullName,
+                avatar:user.avatar
+            }
+            response.data.replaysCount = 0
+            response.data.likesCount = 0
+            response.data.isLikedByMe = false
+            setComments((prev)=>[response.data,...prev])
             dispatch(addNotification({type:"success",text:"Comment Added Successfully!"}))
+            setCommentInputVal("")
+        } else {
+            dispatch(addNotification({type:"error",text:response.message}))
+        }
+    }
+
+    const getComments = async (page)=>{
+        const limit = 20;
+        const response = await commentService.getAllCommentsByWebId({webId:web._id,page,limit})
+        if (response.status<400 && response.data) {
+            setResData(response.data)
+            if (page === 1) {
+                setComments(response.data.docs)
+            }else {
+                setComments([...comments,...response.data.docs])
+            }
+            setPage(page)
         } else {
             dispatch(addNotification({type:"error",text:response.message}))
         }
     }
 
     useEffect(()=>{
-        commentService.getAllCommentsByWebId({webId:web._id,page:1,limit:20})
-        .then((response)=>console.log(response))
+        if (user) {
+            getComments(1)
+        }
     },[])
+
+    const resizeTextArea = () => {
+        textAreaRef.current.style.height = "auto";
+        textAreaRef.current.style.height = textAreaRef.current.scrollHeight + "px";
+      };
+    
+      useEffect(resizeTextArea, [commentInputVal]);
 
   return (
     <div className='bg-gray-950 text-white w-full rounded-md pb-2'>
@@ -32,7 +73,7 @@ export default function WebDEtails({web}) {
                 <h2 className='text-white font-bold text-lg sm:text-xl lg:text-2xl'>
                     {web.title}
                 </h2>
-                <p className='text-gray-300 mt-2 font-medium text-[14px]'>
+                <p className='text-gray-300 mt-2 text-[13px]'>
                     {web.description}
                 </p>
             </div>
@@ -65,24 +106,55 @@ export default function WebDEtails({web}) {
                 </p>
             </div>
         </div>
-        <div className='mx-1 sm:mx-2 rounded-md bg-gray-700 p-2'>
-            <form onSubmit={handleSubmit(addComment)}
-            className='flex flex-nowrap w-full justify-center px-2 sm:px-4'
-            >
-                <input type="text"
-                required={true}
-                placeholder='Add a Comment Hear...'
-                className='w-[90%] rounded-l-full py-2 pl-4 bg-gray-200 text-black'
-                {...register("text")}
-                />
-                <button
-                type='submit'
-                className='material-symbols-outlined text-black rounded-r-full py-2 px-3 bg-gray-200 ml-[1px]'
-                >
-                    send
-                </button>
-            </form>
+        <p className='text-lx font-bold text-white w-full px-5 sm:px-8 py-3'>
+            {resData? comments.length : web.commentsCount} Comments
+        </p>
+
+        <div className='mx-1 sm:mx-5 rounded-md p-2'>
+            <div className='w-full flex flex-nowrap justify-start'>
+            <img src={user.avatar.replace("upload/", "upload/ar_1.0,g_face,c_fill,w_40/")} alt="avatar" className='w-10 h-10 rounded-full' />
+            <div className='flex flex-col w-[90%] ml-2'>
+
+            <textarea
+            ref={textAreaRef}
+            value={commentInputVal}
+            onChange={(e)=>setCommentInputVal(e.target.value)}
+            placeholder='Add a comment...'
+            className='text-[12px] border-b-[1px] outline-none bg-gray-950 text-white mb-1 overflow-y-hidden resize-none'
+            cols="30" rows="2"></textarea>
+            
+            <div className='flex flex-nowrap justify-end'>
+                <button onClick={addComment} disabled={!commentInputVal.trim()}
+                className={`${!commentInputVal.trim() ? "bg-gray-700":"bg-blue-600 hover:bg-blue-500"} text-white px-2 py-1 rounded-full text-[12px]`}
+                >Comment</button>
+            </div>
+            </div>
+            </div>
         </div>
+
+        {
+            resData ? comments.length > 0 ?
+            <InfiniteScroll
+            dataLength={comments.length}
+            next={()=>getComments(page+1)}
+            height={600}
+            hasMore={resData.hasNextPage}
+            loader={<h4 className='w-full text-center font-bold text-lg'>Loading...</h4>}
+            endMessage={
+              <p className='w-full text-center font-semibold my-4'>No More Data</p>
+            }
+            >
+                
+                {
+                    comments.map((comment,index)=>{
+                        return <CommentCard key={index} comment={comment} setComments={setComments} index={index} />
+                    })
+                }
+    
+            </InfiniteScroll> : 
+            <h1 className='text-center font-bold text-2xl text-white my-14'>😵 No Comments Found</h1> :
+            <h1 className='text-center font-bold text-2xl text-white my-14'>Loading...</h1>
+        }
     </div>
   )
 }
