@@ -30,16 +30,32 @@ export default function ShowMyImageAssets({
             >
               <div className="row">
                 <div className="column">
-                  {imgCol1.map((image, index) => <ImageAssetCard key={index} image={image} copyOnly={copyOnly} />)}
+                  {imgCol1.map((image, index) => <ImageAssetCard 
+                  key={index} 
+                  image={image} 
+                  copyOnly={copyOnly} 
+                  getPublicAssets={getImageAssets} />)}
                 </div>
                 <div className="column">
-                  {imgCol2.map((image, index) => <ImageAssetCard key={index} image={image} copyOnly={copyOnly} />)}
+                  {imgCol2.map((image, index) => <ImageAssetCard 
+                  key={index} 
+                  image={image} 
+                  copyOnly={copyOnly} 
+                  getPublicAssets={getImageAssets} />)}
                 </div>
                 <div className="column">
-                  {imgCol3.map((image, index) => <ImageAssetCard key={index} image={image} copyOnly={copyOnly} />)}
+                  {imgCol3.map((image, index) => <ImageAssetCard 
+                  key={index} 
+                  image={image} 
+                  copyOnly={copyOnly} 
+                  getPublicAssets={getImageAssets} />)}
                 </div>
                 <div className="column">
-                  {imgCol4.map((image, index) => <ImageAssetCard key={index} image={image} copyOnly={copyOnly} />)}
+                  {imgCol4.map((image, index) => <ImageAssetCard 
+                  key={index} 
+                  image={image} 
+                  copyOnly={copyOnly} 
+                  getPublicAssets={getImageAssets} />)}
                 </div>
               </div>
             </InfiniteScroll> :

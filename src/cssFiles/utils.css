@@ -392,12 +392,3 @@
   z-index: 30;
 }
 
-.autoResizeTextarea {
-  resize: horizontal; /* Allow resizing only horizontally */
-  overflow-x: hidden; /* Hide horizontal scrollbar */
-  min-width: 100px; /* Minimum width of the textarea */
-  font-size: 16px; /* Set font size according to your design */
-  padding: 10px; /* Add padding to give space for text */
-  width: auto; /* Allow textarea width to adjust automatically */
-  border: 1px solid #ccc; /* Add some basic styling for the border */
-}

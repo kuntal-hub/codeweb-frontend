@@ -1,12 +1,16 @@
 import React, { useState, memo } from 'react'
 import { likeSearvice } from '../../apiServices/like';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addNotification } from '../../store/notificationSlice';
+import { assetService } from '../../apiServices/asset';
+import UpdateAsset from './UpdateAsset';
 
-export default memo(function VideoAssetCard({ video }) {
+export default memo(function VideoAssetCard({ video, copyOnly = false, getPublicAssets }) {
     const [isLikedByMe, setIsLikedByMe] = useState(video.isLikedByMe);
     const [likesCount, setLikesCount] = useState(video.likesCount);
+    const [showUpdateAsset, setShowUpdateAsset] = useState(false);
+    const user = useSelector(state => state.auth.userData);
     const dispatch = useDispatch();
 
     const toggleLike = async () => {
@@ -21,9 +25,23 @@ export default memo(function VideoAssetCard({ video }) {
         }
     }
 
-    const copyToClipBord = ()=>{
+    const copyToClipBord = () => {
         window.navigator.clipboard.writeText(video.assetURL)
-        dispatch(addNotification({text:"URL coppid Succesfully!",type:"success"}))
+        dispatch(addNotification({ text: "URL coppid Succesfully!", type: "success" }))
+    }
+
+    const deleteAsset = async () => {
+        if (copyOnly) return;
+        if (!window.confirm("Are you sure you want to delete this asset?")) return
+        const response = await assetService.deleteAssetById({ assetId: video._id })
+        if (response.status < 400 && response.data) {
+            dispatch(addNotification({ text: "Asset Deleted Succesfully!", type: "success" }))
+            if (getPublicAssets) {
+                getPublicAssets(1)
+            } else {
+                window.location.reload()
+            }
+        }
     }
 
     return (
@@ -34,10 +52,28 @@ export default memo(function VideoAssetCard({ video }) {
                     className='w-full h-auto transition-transform duration-300 ease-in-out cursor-pointer block rounded-lg'
                     src={video.assetURL.replace("upload/", "upload/q_80/")}></video>
                 <button onClick={copyToClipBord} title='Copy URL'
-                    className='material-symbols-outlined hidden absolute top-2 right-2 text-3xl text-white copyBtn'
+                    className='material-symbols-outlined hidden absolute top-2 right-2 text-3xl text-white copyBtn bg-gray-700 p-2 rounded-md'
                 >
                     content_copy
                 </button>
+                {
+                    !copyOnly && user && user._id === video.owner._id &&
+                    <button title='Edit Asset' onClick={() => setShowUpdateAsset(true)}
+                        className='material-symbols-outlined hidden absolute top-10 scale-50 hover:scale-75 right-2 text-3xl 
+         text-white copyBtn bg-gray-700 p-2 rounded-md'
+                    >
+                        edit
+                    </button>
+                }
+                {
+                    !copyOnly && user && user._id === video.owner._id &&
+                    <button title='Delete Asset' onClick={deleteAsset}
+                        className='material-symbols-outlined hidden absolute top-[68px] scale-50 hover:scale-75 right-2
+         text-3xl bg-gray-700 p-2 rounded-md text-white copyBtn'
+                    >
+                        delete
+                    </button>
+                }
             </div>
             <div className='w-full flex justify-between flex-nowrapn p-2'>
                 <div className=' flex flex-col'>
@@ -78,6 +114,12 @@ export default memo(function VideoAssetCard({ video }) {
                 </div>
 
             </div>
+            {showUpdateAsset && !copyOnly &&
+                <UpdateAsset 
+                showUpdateAsset={showUpdateAsset} 
+                setShowUpdateAsset={setShowUpdateAsset} 
+                asset={video} 
+                getPublicAssets={getPublicAssets} />}
         </div>
     )
 })

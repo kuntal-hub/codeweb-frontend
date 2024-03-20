@@ -7,6 +7,7 @@ export default function ShowMyVideoAssets({
     videoCurrentPage, 
     videoResData, 
     getVideoAssets,
+    copyOnly=false,
     height,
  }) {
     const infiniteScrollHeight = window.innerWidth < 1024 ? window.innerHeight - 166 : window.innerHeight - 112
@@ -27,7 +28,7 @@ export default function ShowMyVideoAssets({
 
                         {
                             videos.map((video, index) => (
-                                <VideoAssetCard key={index} video={video} />
+                                <VideoAssetCard key={index} video={video} copyOnly={copyOnly} getPublicAssets={getVideoAssets} />
                             ))
                         }
 

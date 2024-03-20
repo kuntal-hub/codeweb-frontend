@@ -202,16 +202,16 @@ export default function ImageAssets() {
             >
         <div className="row"> 
         <div className="column">
-            {colum1.map((image,index) => <ImageAssetCard key={index} image={image} />)}
+            {colum1.map((image,index) => <ImageAssetCard key={index} image={image} getPublicAssets={getPublicAssets} />)}
         </div>
         <div className="column">
-            {colum2.map((image,index) => <ImageAssetCard key={index} image={image} />)}
+            {colum2.map((image,index) => <ImageAssetCard key={index} image={image} getPublicAssets={getPublicAssets} />)}
         </div>  
         <div className="column">
-            {colum3.map((image,index) => <ImageAssetCard key={index} image={image} />)}
+            {colum3.map((image,index) => <ImageAssetCard key={index} image={image} getPublicAssets={getPublicAssets} />)}
         </div>
         <div className="column">
-            {colum4.map((image,index) => <ImageAssetCard key={index} image={image} />)}
+            {colum4.map((image,index) => <ImageAssetCard key={index} image={image} getPublicAssets={getPublicAssets} />)}
         </div>
       </div>
             </InfiniteScroll> : 

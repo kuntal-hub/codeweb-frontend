@@ -39,6 +39,7 @@ export default function Videos() {
             videoResData={videoResData}
             getVideoAssets={getVideoAssets}
             height={window.innerHeight - 112}
+            copyOnly={true}
         />
     </div>
   )

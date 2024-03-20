@@ -102,7 +102,7 @@ export default function VideoAssets() {
                 
                     {
                         videos.map((video,index)=>(
-                            <VideoAssetCard key={index} video={video} />
+                            <VideoAssetCard key={index} video={video} getPublicAssets={getPublicAssets} />
                         ))
                     }
                 
