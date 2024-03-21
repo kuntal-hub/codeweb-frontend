@@ -100,7 +100,8 @@ export default function Audios() {
                                     setIsPlaying={setIsPlaying}
                                     playingAudio={playingAudio}
                                     setPlayingAudio={setPlayingAudio}
-                                    audioEleRef={audioEleRef} />
+                                    audioEleRef={audioEleRef}
+                                    copyOnly = {true} />
                             })
                         }
 

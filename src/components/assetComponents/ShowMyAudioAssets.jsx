@@ -65,7 +65,8 @@ export default function ShowMyAudioAssets({getAudioAssets,audios,audioResData,au
                             setIsPlaying={setIsPlaying}
                             playingAudio={playingAudio}
                             setPlayingAudio={setPlayingAudio}
-                            audioEleRef={audioEleRef} />
+                            audioEleRef={audioEleRef}
+                            getPublicAssets={getAudioAssets} />
                         })
                     }
                 

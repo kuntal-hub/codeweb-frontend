@@ -146,7 +146,8 @@ export default function AudioAssets() {
                             setIsPlaying={setIsPlaying}
                             playingAudio={playingAudio}
                             setPlayingAudio={setPlayingAudio}
-                            audioEleRef={audioEleRef} />
+                            audioEleRef={audioEleRef}
+                            getPublicAssets={getPublicAssets} />
                         })
                     }
                 
