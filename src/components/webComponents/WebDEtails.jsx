@@ -1,14 +1,13 @@
-import React,{useEffect,useState,useRef} from 'react'
+import React,{useEffect,useState,useRef,useCallback} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { addNotification } from '../../store/notificationSlice';
-import { useForm } from "react-hook-form"
 import {commentService} from "../../apiServices/comment"
 import CommentCard from './CommentCard';
+import { Link } from 'react-router-dom';
 
 export default function WebDEtails({web}) {
     const dispatch = useDispatch();
-    const {register,handleSubmit} = useForm()
     const createDate = new Date(web.createdAt).toDateString();
     const updateDate = new Date(web.updatedAt).toDateString();
     const [comments,setComments] = useState([])
@@ -30,12 +29,17 @@ export default function WebDEtails({web}) {
             response.data.likesCount = 0
             response.data.isLikedByMe = false
             setComments((prev)=>[response.data,...prev])
+            setResData((prev)=>{return {...prev,totalDocs:prev.totalDocs+1}} )
             dispatch(addNotification({type:"success",text:"Comment Added Successfully!"}))
             setCommentInputVal("")
         } else {
             dispatch(addNotification({type:"error",text:response.message}))
         }
     }
+
+    const updateTotalCommentSCount = useCallback((value)=>{
+        setResData((prev)=>{return {...prev,totalDocs:prev.totalDocs+value}} )
+    },[])
 
     const getComments = async (page)=>{
         const limit = 20;
@@ -60,9 +64,10 @@ export default function WebDEtails({web}) {
     },[])
 
     const resizeTextArea = () => {
+        if (textAreaRef.current === null) return;
         textAreaRef.current.style.height = "auto";
         textAreaRef.current.style.height = textAreaRef.current.scrollHeight + "px";
-      };
+    };
     
       useEffect(resizeTextArea, [commentInputVal]);
 
@@ -107,9 +112,10 @@ export default function WebDEtails({web}) {
             </div>
         </div>
         <p className='text-lx font-bold text-white w-full px-5 sm:px-8 py-3'>
-            {resData? comments.length : web.commentsCount} Comments
+            {resData? resData.totalDocs : web.commentsCount} Comments
         </p>
-
+        { /* Comment Section */ 
+           user ? <>
         <div className='mx-1 sm:mx-5 rounded-md p-2'>
             <div className='w-full flex flex-nowrap justify-start'>
             <img src={user.avatar.replace("upload/", "upload/ar_1.0,g_face,c_fill,w_40/")} alt="avatar" className='w-10 h-10 rounded-full' />
@@ -141,19 +147,31 @@ export default function WebDEtails({web}) {
             hasMore={resData.hasNextPage}
             loader={<h4 className='w-full text-center font-bold text-lg'>Loading...</h4>}
             endMessage={
-              <p className='w-full text-center font-semibold my-4'>No More Data</p>
+                <p className='w-full text-center font-semibold my-4'>No More Data</p>
             }
             >
                 
                 {
                     comments.map((comment,index)=>{
-                        return <CommentCard key={index} comment={comment} setComments={setComments} index={index} />
+                        return <CommentCard 
+                        key={index} 
+                        comment={comment} 
+                        setComments={setComments} 
+                        index={index}
+                        updateTotalCommentSCount={updateTotalCommentSCount} />
                     })
                 }
     
             </InfiniteScroll> : 
             <h1 className='text-center font-bold text-2xl text-white my-14'>😵 No Comments Found</h1> :
             <h1 className='text-center font-bold text-2xl text-white my-14'>Loading...</h1>
+        }
+            </> :
+            <div className='w-full py-10 flex flex-nowrap justify-center'>
+                Please &nbsp;
+                <Link to="/login" className='text-blue-500 hover:underline font-semibold text-lg'>Login</Link> 
+                &nbsp; to comment on this post
+            </div>
         }
     </div>
   )

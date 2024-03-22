@@ -7,7 +7,7 @@ import { likeSearvice } from '../../apiServices/like'
 import { Link } from 'react-router-dom'
 import ReplyCard from './ReplyCard'
 
-export default memo(function CommentCard({ comment, setComments, index }) {
+export default memo(function CommentCard({ comment, setComments, index, updateTotalCommentSCount }) {
     const [commentInputVal, setCommentInputVal] = useState("")
     const [replyInputVal, setReplyInputVal] = useState(`@${comment.owner.username} `)
     const [readOnly, setReadOnly] = useState(true)
@@ -27,6 +27,7 @@ export default memo(function CommentCard({ comment, setComments, index }) {
         const response = await commentService.deleteComment({ commentId: comment._id })
         if (response.status < 400 && response.data) {
             setComments((prev) => prev.filter((c, i) => i !== index))
+            updateTotalCommentSCount(-1)
             dispatch(addNotification({ type: "success", text: response.message }))
         } else {
             dispatch(addNotification({ type: "error", text: response.message }))
