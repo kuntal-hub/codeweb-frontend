@@ -65,14 +65,15 @@ export default memo(function WebHeader({setIndentationNo,hendleSaveWeb,web}) {
             className='h-[48px] block' />
         </button>
         <div className='m-0 p-0'>
-          <button className='block text-white text-[20px] md:text[24px] font-bold ml-1 mt-3 mb-1 md:ml-2 line-height-10-imp'
+          <button className='block text-white text-[12px] min-[420px]:text-[14px] min-[450px]:text-[16px] sm:text-[20px]
+           md:text[24px] font-bold ml-1 mt-3 mb-1 md:ml-2 line-height-10-imp'
           onClick={()=>setShowTitleDescpiption(true)}
           disabled={!user || user._id !== web.owner._id}
           >{webTitle}</button>
 
           <div className='flex flex-nowrap justify-start mt-3  ml-1 md:ml-2'>
             <button onClick={()=>navigate(`/${web.owner.username}`)}
-            className='text-gray-300 text-[12px] block'>
+            className='text-gray-300 text-[10px] min-[450px]:text-[12px] block'>
               {web.owner.fullName}
             </button>
             {user && user._id !== web.owner._id && 

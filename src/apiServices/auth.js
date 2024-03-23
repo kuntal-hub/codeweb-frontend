@@ -301,12 +301,10 @@ export class AuthServices {
 
             const responce = await axios.patch(`/api/v1/users/add-to-pined/${webId}`);
 
-            if (!responce) throw new Error("responce is null");
-
-            return true;
+            return responce.data;
         } catch (error) {
             console.log("authServices.addToPinedItems error: ", error);
-            return false;
+            return {status:error.status,message:error.message,data:null};
         }
     
     }
@@ -317,12 +315,10 @@ export class AuthServices {
 
             const responce = await axios.patch(`/api/v1/users/remove-pined/${webId}`);
 
-            if (!responce) throw new Error("responce is null");
-
-            return true;
+            return responce.data;
         } catch (error) {
             console.log("authServices.removePinedItem error: ", error);
-            return false;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 

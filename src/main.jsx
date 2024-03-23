@@ -26,6 +26,11 @@ import {
   AudioAssets,
   MyAssets,
   LikedAssets,
+  WebDetails,
+  Home,
+  Trending,
+  Following,
+  YourWork,
 } from "./index.js";
 
 const routes = createBrowserRouter(
@@ -128,7 +133,27 @@ const routes = createBrowserRouter(
 
       <Route path='web/:webId' element={<EditWeb />} />
 
+      <Route path='details/:webId' element={<WebDetails />} />
+
       <Route path='view-full/:webId' element={<ViewFullWeb />} />
+
+      <Route path='' element={<Home />} >
+              
+            <Route path='' element={<Trending />} />
+
+            <Route path='following' element={
+              <AuthLayout authentication={true}>
+                <Following/>
+              </AuthLayout>
+            } />
+  
+            <Route path='your-work' element={
+              <AuthLayout authentication={true}>
+                <YourWork/>
+              </AuthLayout>
+            } />
+
+      </Route>
 
     </Route>
   )

@@ -9,6 +9,7 @@ import WebAddons from './WebAddons';
 import SetTitleDescpiption from './SetTitleDescpiption';
 import JSZip from 'jszip';
 import Comments from './Comments';
+import AddToCollection from '../CollectionComponents/AddToCollection';
 
 export default function WebFooter({ web }) {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ export default function WebFooter({ web }) {
   const [showAddons, setShowAddons] = useState(false);
   const [showTitleDescpiption, setShowTitleDescpiption] = useState(false);
   const [showComments, setShowComments] = useState(false);
+  const [showAddToCollection, setShowAddToCollection] = useState(false);
   const safeNavigate = useSafeNavigate();
 
   const forkWeb = useCallback(async (title, description, isPublic) => {
@@ -130,11 +132,22 @@ export default function WebFooter({ web }) {
         className='h-full text-white px-2 text-[12px] bg-gray-700 hover:bg-gray-600 mx-[2px]'>
         Export
       </button>
+          {
+            user && web &&
+            <button onClick={() => setShowAddToCollection(true)}
+              className='h-full text-white px-2 text-[12px] bg-gray-700 hover:bg-gray-600 mx-[2px]'>
+              Add To Collection
+            </button>
+          }
       {showAsset && <ShowAsset setShowAsset={setShowAsset} showAsset={showAsset} />}
       {showAddons && <WebAddons setShowAddons={setShowAddons} showAddons={showAddons}
         owner={web ? web.owner : null} />}
       {showComments && <Comments web={web} setShowComments={setShowComments} showComments={showComments} />}
       {showTitleDescpiption && <SetTitleDescpiption setShowTitleDescpiption={setShowTitleDescpiption} showTitleDescpiption={showTitleDescpiption} forkWeb={forkWeb} />}
+      {showAddToCollection && 
+      <AddToCollection 
+      setShowAddToCollection={setShowAddToCollection} 
+      showAddToCollection={showAddToCollection} webId={web._id} />}
     </div>
   )
 }

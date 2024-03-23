@@ -50,7 +50,7 @@ export default memo(function VideoAssetCard({ video, copyOnly = false, getPublic
                 <video
                     controls={true}
                     className='w-full h-auto transition-transform duration-300 ease-in-out cursor-pointer block rounded-lg'
-                    src={video.assetURL.replace("upload/", "upload/q_80/")}></video>
+                    src={video.assetURL}></video>
                 <button onClick={copyToClipBord} title='Copy URL'
                     className='material-symbols-outlined hidden absolute top-2 right-2 text-3xl text-white copyBtn bg-gray-700 p-2 rounded-md'
                 >

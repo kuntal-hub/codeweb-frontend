@@ -7,14 +7,17 @@ export default function Assets() {
     document.title = "Assets";
 
     useEffect(() => {
-        if (window.location.pathname === "/assets" || window.location.pathname === "/assets/") {
-            navigate('/assets/images');
-        }
         const script = document.createElement("script");
         script.src = "https://upload-widget.cloudinary.com/global/all.js";
         script.type = "text/javascript";
         document.body.appendChild(script);
     }, []);
+
+    useEffect(() => {
+        if (window.location.pathname === "/assets" || window.location.pathname === "/assets/") {
+            navigate('/assets/images');
+        }
+    },[window.location.pathname])
 
     return (
         <MainContainer>

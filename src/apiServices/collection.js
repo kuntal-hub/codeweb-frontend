@@ -8,12 +8,10 @@ export class CollectionService {
 
             const response = await axios.post("/api/v1/collections/create",{name,description,isPublic});
 
-            if(!response) throw new Error("Response is null");
-
             return response.data;
         } catch (error) {
             console.log("Error in collectionService.createCollection",error);
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
@@ -25,12 +23,10 @@ export class CollectionService {
 
             const response = await axios.patch(`/api/v1/collections/update/${collectionId}`,{name,description});
 
-            if(!response) throw new Error("Response is null");
-
             return response.data;
         } catch (error) {
             console.log("Error in collectionService.updateCollection",error);
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     
     }
@@ -41,12 +37,10 @@ export class CollectionService {
 
             const response = await axios.delete(`/api/v1/collections/delete/${collectionId}`);
 
-            if(!response) throw new Error("Response is null");
-
-            return true;
+            return response.data;
         } catch (error) {
             console.log("Error in collectionService.deleteCollection",error);
-            return false;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
@@ -56,12 +50,10 @@ export class CollectionService {
 
             const response = await axios.patch(`/api/v1/collections/add-web/${collectionId}/${webId}`);
 
-            if(!response) throw new Error("Response is null");
-
             return response.data;
         } catch (error) {
             console.log("Error in collectionService.addWebToCollection",error);
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
@@ -71,12 +63,10 @@ export class CollectionService {
 
             const response = await axios.patch(`/api/v1/collections/remove-web/${collectionId}/${webId}`);
 
-            if(!response) throw new Error("Response is null");
-
             return response.data;
         } catch (error) {
             console.log("Error in collectionService.removeWebFromCollection",error);
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
@@ -86,12 +76,10 @@ export class CollectionService {
 
             const response = await axios.patch(`/api/v1/collections/toggle-publish-status/${collectionId}`);
 
-            if(!response) throw new Error("Response is null");
-
             return response.data;
         } catch (error) {
             console.log("Error in collectionService.togglePublishStatus",error);
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     
     }
@@ -102,12 +90,10 @@ export class CollectionService {
 
             const response = await axios.patch(`/api/v1/collections/inc-view/${collectionId}`);
 
-            if(!response) throw new Error("Response is null");
-
-            return true;
+            return response.data;
         } catch (error) {
             console.log("Error in collectionService.incresaseViewCount",error);
-            return false;
+            return {status:error.status,message:error.message,data:null};
         }
     
     }
@@ -118,12 +104,10 @@ export class CollectionService {
 
             const response = await axios.get(`/api/v1/collections/get/${collectionId}`);
 
-            if(!response) throw new Error("Response is null");
-
             return response.data;
         } catch (error) {
             console.log("Error in collectionService.getCollection",error);
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     
     }
@@ -134,12 +118,10 @@ export class CollectionService {
 
             const response = await axios.get(`/api/v1/collections/get-webs/${collectionId}?page=${page}&limit=${limit}`);
 
-            if(!response) throw new Error("Response is null");
-
             return response.data;
         } catch (error) {
             console.log("Error in collectionService.getCollectionWebss",error);
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     
     }
@@ -153,12 +135,10 @@ export class CollectionService {
 
             const response = await axios.get(`/api/v1/collections/user-collection/${username}?${queryParameters}`);
 
-            if(!response) throw new Error("Response is null");
-
             return response.data;
         } catch (error) {
             console.log("Error in collectionService.getCollectionsByUserId",error);
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     
     }
@@ -170,12 +150,10 @@ export class CollectionService {
             // sortBy = views,likesCount,websCount,createdAt;
             const response = await axios.get(`/api/v1/collections/my-collections?${queryParameters}`);
 
-            if(!response) throw new Error("Response is null");
-
             return response.data;
         } catch (error) {
             console.log("Error in collectionService.getCollectionsCreatedByMe",error);
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
@@ -188,12 +166,10 @@ export class CollectionService {
 
             const response = await axios.get(`/api/v1/collections/liked/${username}?${queryParameters}`);
 
-            if(!response) throw new Error("Response is null");
-
             return response.data;
         } catch (error) {
             console.log("Error in collectionService.getLikedCollectionsByUserId",error);
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
@@ -203,12 +179,10 @@ export class CollectionService {
 
             const response = await axios.get(`/api/v1/collections/search/all-collections?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}`);
 
-            if(!response) throw new Error("Response is null");
-
             return response.data;
         } catch (error) {
             console.log("Error in collectionService.searchFromAllCollections",error);
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     
     }
@@ -219,12 +193,10 @@ export class CollectionService {
 
             const response = await axios.get(`/api/v1/collections/search/my-collections?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}`);
 
-            if(!response) throw new Error("Response is null");
-
             return response.data;
         } catch (error) {
             console.log("Error in collectionService.searchFromMyCollections",error);
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     
     }
@@ -235,17 +207,13 @@ export class CollectionService {
 
             const response = await axios.get(`/api/v1/collections/check-name-availability/${name.trim().replaceAll(" ","-")}`);
 
-            if(!response) throw new Error("Response is null");
-
-            return true;
+            return response.data;
         } catch (error) {
             console.log("Error in collectionService.checkCollectionName",error);
-            return false;
+            return {status:error.status,message:error.message,data:null};
         }
     
     }
-
-
 }
 
 export const collectionService = new CollectionService();

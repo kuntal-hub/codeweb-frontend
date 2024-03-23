@@ -386,6 +386,16 @@
 .hoverableEle:hover .showingEle{
   display: block;
 }
+
+.normHoverableEle:hover .normShowingEle{
+  display: block;
+  visibility: visible;
+}
+
+.normShowingEle{
+  visibility: hidden;
+}
+
 .showingEle{
   position: absolute;
   display: none;

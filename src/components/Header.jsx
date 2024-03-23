@@ -5,15 +5,16 @@ import "../cssFiles/utils.css";
 import { authServices } from "../apiServices/auth.js"
 import { logout } from '../store/authSlice';
 import { addNotification } from '../store/notificationSlice.js';
+import { useForm } from 'react-hook-form';
 
 export default function Header() {
   const [showLeftMenu, setShowLeftMenu] = useState(false);
   const [showRightMenu, setShowRightMenu] = useState(false);
-  const [search, setSearch] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const authStatus = useSelector(state => state.auth.status);
   const user = useSelector(state => state.auth.userData);
+  const { register, handleSubmit } = useForm();
 
   const toggleLeftMenu = () => {
     setShowLeftMenu(!showLeftMenu);
@@ -30,11 +31,8 @@ export default function Header() {
     }
   };
 
-  const handleSearch = (event) => {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      navigate(`/search?q=${search.trim().replaceAll(" ", "+")}`);
-    }
+  const handleSearch = (data) => {
+    navigate(`/search?q=${data.search.trim().replaceAll(" ", "+")}`);
   }
 
   const logoutUser = async () => {
@@ -78,14 +76,17 @@ export default function Header() {
           <img src={showLeftMenu ? "https://res.cloudinary.com/dvrpvl53d/image/upload/q_20/v1707477839/cross_qb9y0k.png" : "https://res.cloudinary.com/dvrpvl53d/image/upload/q_20/v1707477839/pngtree-list-vector-icon-png-image_4279414-removebg-preview-min_hnf1ts.png"} alt="menu" />
         </button>
 
-        <div className='flex flex-nowrap justify-center py-2 rounded-lg md:min-w-[55vw] min-w-[50vw]'>
+        <form onSubmit={handleSubmit(handleSearch)}
+        className='flex flex-nowrap justify-center py-2 rounded-lg md:min-w-[55vw] min-w-[50vw]'>
           <label htmlFor="searchbox1" className='hidden sm:block sm:w-[15%] material-symbols-outlined text-white rounded-l-xl px-2 pt-3 bg-gray-600 md:w-[8%]'>search</label>
           <input className=' bg-gray-600 text-white rounded-r-xl outline-none px-2 sm:px-0 w-[85%] md:w-[92%] rounded-l-xl sm:rounded-l-none'
-            type="search" name="search" value={search} id='searchbox1'
-            onChange={(event) => setSearch(event.target.value)}
-            onKeyDown={handleSearch} placeholder="Search..."
+            type="search" 
+            name="search" 
+            {...register('search')}
+            id='searchbox1'
+            placeholder="Search..."
           />
-        </div>
+        </form>
         {(!authStatus && !user) ?
           <div className='flex flex-nowrap py-2 justify-between mx-1 max-[390px]:w-[34vw]'>
             {(window.location.pathname !== '/signup' && window.location.pathname!=="/signup/") &&
@@ -122,7 +123,7 @@ export default function Header() {
                   className='gradient-border-item block rounded-md bg-black text-white py-4 px-6 font-bold text-center'
                 >Start Coding</span>
               </Link>
-              <Link to={"/trending"} className=' text-white font-semibold text-[16px] block mt-5 p-3 hover:bg-gray-950'>Trending</Link>
+              <Link to={"/"} className=' text-white font-semibold text-[16px] block mt-5 p-3 hover:bg-gray-950'>Trending</Link>
               <Link to={"/signup"} className=' text-white font-semibold text-[16px] block mb-5 p-3 hover:bg-gray-950'>Join Us</Link>
             </div> :
 
@@ -145,9 +146,9 @@ export default function Header() {
               </div>
               <Link to={"/your-work"} className=' text-white font-semibold text-[16px] block mt-5 py-2 px-3 hover:bg-gray-900'>Your Work</Link>
               <Link to={"/following"} className=' text-white font-semibold text-[16px] block py-2 px-3 hover:bg-gray-900'>Following</Link>
-              <Link to={"/trending"} className=' text-white font-semibold text-[16px] block py-2 px-3 hover:bg-gray-900'>Trending</Link>
+              <Link to={"/"} className=' text-white font-semibold text-[16px] block py-2 px-3 hover:bg-gray-900'>Trending</Link>
               <Link to={"/assets"} className=' text-white font-semibold text-[16px] block py-2 px-3 hover:bg-gray-900'>Assets</Link>
-              <Link to={"/following#interesting-people"} className=' text-white font-semibold text-[16px] block py-2 px-3 hover:bg-gray-900'>Interesting People</Link>
+              <Link to={"/explore-profiles"} className=' text-white font-semibold text-[16px] block py-2 px-3 hover:bg-gray-900'>Explore Profiles</Link>
               <button className=' text-white font-semibold text-[16px] block mb-5 px-3 py-2 hover:bg-gray-900'>Pined Items</button>
             </div>}
         </div>
@@ -156,9 +157,10 @@ export default function Header() {
 
       {(showRightMenu && authStatus && user) && (
         <div className='menu-container fixed top-[60px] z-30 right-0 w-[150px] h-auto shadow-xl bg-gray-800 py-5'>
-          <Link to={"/your-work"} 
-          className='text-white text-center font-semibold text-[16px] py-[6px] px-4 block hover:bg-black'>
-            Your Work
+          <Link to={`/${user.username}`}
+          className='text-white text-center font-semibold 
+           text-[16px] py-[6px] px-4 flex flex-nowrap justify-center hover:bg-black'>
+            <span className="material-symbols-outlined">account_circle</span>&nbsp;<span>My Profile</span>
           </Link>
 
           <Link to={"/your-work"} 
@@ -209,9 +211,10 @@ export default function Header() {
         </div>
         <Link to={"/your-work"} className=' text-white font-semibold text-[16px] block mt-5 py-2 px-6 hover:bg-gray-900'>Your Work</Link>
         <Link to={"/following"} className=' text-white font-semibold text-[16px] block py-2 px-6 hover:bg-gray-900'>Following</Link>
-        <Link to={"/trending"} className=' text-white font-semibold text-[16px] block py-2 px-6 hover:bg-gray-900'>Trending</Link>
+        <Link to={"/"} className=' text-white font-semibold text-[16px] block py-2 px-6 hover:bg-gray-900'>Trending</Link>
         <Link to={"/assets"} className=' text-white font-semibold text-[16px] block py-2 px-6 hover:bg-gray-900'>Assets</Link>
-        <Link to={"/following#interesting-people"} className=' text-white font-semibold text-[16px] block py-2 px-6 hover:bg-gray-900'>Interesting People</Link>
+        <Link to={"/explore-profiles"} className=' text-white font-semibold text-[16px] block py-2 px-6 hover:bg-gray-900'>
+        Explore Profiles</Link>
         <button className=' text-white font-semibold text-[16px] block mb-5 px-6 py-2 hover:bg-gray-900'>Pined Items</button>
         </>
           :
@@ -224,7 +227,7 @@ export default function Header() {
                   className='gradient-border-item block rounded-md bg-black text-white py-4 px-6 font-bold text-center'
                 >Start Coding</span>
               </Link>
-              <Link to={"/trending"} className=' text-white font-semibold text-[16px] ml-3 block mt-5 p-3 hover:bg-gray-950'>Trending</Link>
+              <Link to={"/"} className=' text-white font-semibold text-[16px] ml-3 block mt-5 p-3 hover:bg-gray-950'>Trending</Link>
               <Link to={"/signup"} className=' text-white font-semibold text-[16px] ml-3 block mb-5 p-3 hover:bg-gray-950'>Join Us</Link>
         </>
         }

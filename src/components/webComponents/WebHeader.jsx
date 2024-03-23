@@ -42,12 +42,13 @@ export default memo(function WebHeader({setIndentationNo,hendleSaveWeb}) {
             className='h-[48px] block' />
         </button>
         <div className='m-0 p-0'>
-          <button className='block text-white text-[20px] md:text[24px] font-bold ml-1 mt-4 mb-1 md:ml-2 line-height-10-imp'
+          <button className='block text-white text-[12px] min-[420px]:text-[14px] min-[450px]:text-[16px] sm:text-[20px] 
+           md:text[24px] font-bold ml-1 mt-4 mb-1 md:ml-2 line-height-10-imp'
           onClick={()=>setShowTitleDescpiption(true)}
           >{webTitle}</button>
           {user ? <button onClick={()=>navigate(`/${user.username}`)}
-           className='text-gray-300 text-[12px] pt-2 ml-1 md:ml-2 block'>{user.fullName}</button>
-            : <p className='text-gray-300 text-[12px] pt-3 ml-1 md:ml-2 inline'>Captain Anonymous</p>
+           className='text-gray-300  text-[10px] min-[450px]:text-[12px]  pt-2 ml-1 md:ml-2 block'>{user.fullName}</button>
+            : <p className='text-gray-300  text-[10px] min-[450px]:text-[12px]  pt-3 ml-1 md:ml-2 inline'>Captain Anonymous</p>
           }
         </div>
       </div>

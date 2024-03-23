@@ -17,6 +17,11 @@ import VideoAssets from "./pages/VideoAssets.jsx";
 import AudioAssets from "./pages/AudioAssets.jsx";
 import MyAssets from "./pages/MyAssets.jsx";
 import LikedAssets from "./pages/LikedAssets.jsx";
+import WebDetails from "./pages/WebDetails.jsx";
+import Home from "./pages/Home.jsx";
+import Trending from "./pages/Trending.jsx";
+import Following from "./pages/Following.jsx";
+import YourWork from "./pages/YourWork.jsx";
 
 export {
     ErrorPage,
@@ -38,4 +43,9 @@ export {
     AudioAssets,
     MyAssets,
     LikedAssets,
+    WebDetails,
+    Home,
+    Trending,
+    Following,
+    YourWork,
 };
