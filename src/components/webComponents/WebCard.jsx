@@ -6,6 +6,7 @@ import { followerSearvice } from '../../apiServices/follower'
 import { authServices } from '../../apiServices/auth'
 import {addNotification} from "../../store/notificationSlice"
 import AddToCollection from '../CollectionComponents/AddToCollection'
+import {setPinedItems,setIsNewItemAdded} from "../../store/pinedSlice"
 
 export default memo(function WebCard({ web, addPined = true, collectionId=null }) {
     const user = useSelector(state => state.auth.userData);
@@ -14,6 +15,7 @@ export default memo(function WebCard({ web, addPined = true, collectionId=null }
     const [likesCount, setLikesCount] = useState(0);
     const [addToPined, setAddToPined] = useState(true);
     const [showAddToCollection, setShowAddToCollection] = useState(false);
+    const pinedItems = useSelector(state => state.pinedItems.pinedItems);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -53,6 +55,7 @@ export default memo(function WebCard({ web, addPined = true, collectionId=null }
             if (response.status<400 && response.data) {
                 dispatch(addNotification({type:"success", text:"Web Added to Pined Items"}));
                 setAddToPined(false);
+                dispatch(setIsNewItemAdded(true));
             } else {
                 dispatch(addNotification({type:"error", text:response.message}));
             }
@@ -60,6 +63,9 @@ export default memo(function WebCard({ web, addPined = true, collectionId=null }
             const response = await authServices.removePinedItem({webId: web._id});
             if (response.status<400 && response.data) {
                 dispatch(addNotification({type:"success", text:"Web Removed from Pined Items"}));
+                if (!addPined) {
+                    return dispatch(setPinedItems(pinedItems.filter(item=>item._id !== web._id)));
+                }
                 setAddToPined(true);
             } else {
                 dispatch(addNotification({type:"error", text:response.message}));
@@ -81,7 +87,7 @@ export default memo(function WebCard({ web, addPined = true, collectionId=null }
                 <img src={web.owner.avatar.replace("upload/", "upload/ar_1.0,g_face,c_fill,w_50/")} alt="avatar"
                     className='rounded-lg w-10 min-[550px]:w-[50px] lg:w-10 xl:w-[50px] h-auto' />
                 <div className='flex flex-col ml-2 sm:ml-3'>
-                    <p className='text-sm min-[550px]:text-lg font-bold overflow-hidden'>{web.title}</p>
+                    <p className='text-sm min-[550px]:text-lg font-bold overflow-hidden h-6'>{web.title}</p>
                     <p className='flex flex-nowrap justify-start'>
                         <Link to={`/${web.owner.username}`}
                             className='text-[12px] text-gray-400'>{web.owner.fullName}</Link>
@@ -128,12 +134,12 @@ export default memo(function WebCard({ web, addPined = true, collectionId=null }
                         <div className='showingEle right-5 bottom-0 rounded-md bg-gray-700'>
                             {addPined &&
                             <button onClick={()=>setShowAddToCollection(true)}
-                                className='flex flex-nowrap justify-center text-[11px] font-semibold py-1 px-1 text-white hover:bg-gray-600 rounded-t-md w-full'>
+                                className='flex flex-nowrap justify-center text-[11px] font-semibold py-1 px-1 text-white hover:bg-gray-600 rounded-t-md w-full hover:rounded-md'>
                                 <span className="material-symbols-outlined scale-75">{!collectionId?"playlist_add":"remove_circle"}</span>
                                 <span className='block mt-[2px] '>{!collectionId?"Add To Collection":"Remove From Collection"}</span>
                             </button>}
                             <button onClick={togglePined}
-                                className='flex flex-nowrap justify-center text-[11px] font-semibold py-1 px-1 text-white hover:bg-gray-600 rounded-b-md w-[160px]'>
+                                className='flex flex-nowrap justify-center text-[11px] font-semibold py-1 px-1 text-white hover:bg-gray-600 rounded-b-md w-[160px] hover:rounded-md'>
                                 <span className="material-symbols-outlined scale-75">{addToPined ? "library_add" : "remove_circle"}</span>
                                 <span className='block mt-[2px]'>{addToPined ? "Add To Pined" : "Remove From Pined"}</span>
                             </button>

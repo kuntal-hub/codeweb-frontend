@@ -12,6 +12,7 @@ export default function Trending() {
     const trendings = useSelector(state => state.trending.trendings);
     const trendingResData = useSelector(state => state.trending.trendingResData);
     const [page,setPage] = useState(1);
+    document.title = "Codeweb - Trending";
 
     const getTrendingWebs = async (page)=>{
         const limit = 8;
@@ -48,13 +49,25 @@ export default function Trending() {
             hasMore={trendingResData.hasNextPage}
             loader={
                 <div className='flex flex-wrap justify-start lg:px-3 py-5 xl:px-6'>
-                <WebLoadingCard />
-                <WebLoadingCard />
-                <WebLoadingCard />
-                <WebLoadingCard />
-                <WebLoadingCard />
-                <WebLoadingCard />
-            </div>
+                <div className='w-[96%] mx-auto lg:w-[48%] xl:w-[32%]'>
+                  <WebLoadingCard />
+                </div>
+                <div className='w-[96%] mx-auto lg:w-[48%] xl:w-[32%]'>
+                  <WebLoadingCard />
+                </div>
+                <div className='w-[96%] mx-auto lg:w-[48%] xl:w-[32%]'>
+                  <WebLoadingCard />
+                </div>
+                <div className='w-[96%] mx-auto lg:w-[48%] xl:w-[32%]'>
+                  <WebLoadingCard />
+                </div>
+                <div className='w-[96%] mx-auto lg:w-[48%] xl:w-[32%]'>
+                  <WebLoadingCard />
+                </div>
+                <div className='w-[96%] mx-auto lg:w-[48%] xl:w-[32%]'>
+                  <WebLoadingCard />
+                </div>
+          </div>
             }
             endMessage={
               <p className='w-full text-center font-semibold my-4'>No More Data</p>
@@ -64,8 +77,8 @@ export default function Trending() {
                     {
                         trendings.map((web,index)=>{
                             return (
-                            <div className='w-[96%] mx-auto lg:w-[48%]'  
-                            key={index}>
+                            <div className='w-[96%] mx-auto lg:w-[48%] xl:w-[32%]'  
+                            key={web._id}>
                                 <WebCard web={web} />
                             </div>)
                         })
@@ -75,13 +88,25 @@ export default function Trending() {
             </InfiniteScroll> : 
             <h1 className='text-center font-bold text-2xl text-white mt-32'>😵 No Result Found</h1> :
             <div className='flex flex-wrap justify-start lg:px-3 py-5 xl:px-6'>
-                <WebLoadingCard />
-                <WebLoadingCard />
-                <WebLoadingCard />
-                <WebLoadingCard />
-                <WebLoadingCard />
-                <WebLoadingCard />
+            <div className='w-[96%] mx-auto lg:w-[48%] xl:w-[32%]'>
+              <WebLoadingCard />
             </div>
+            <div className='w-[96%] mx-auto lg:w-[48%] xl:w-[32%]'>
+              <WebLoadingCard />
+            </div>
+            <div className='w-[96%] mx-auto lg:w-[48%] xl:w-[32%]'>
+              <WebLoadingCard />
+            </div>
+            <div className='w-[96%] mx-auto lg:w-[48%] xl:w-[32%]'>
+              <WebLoadingCard />
+            </div>
+            <div className='w-[96%] mx-auto lg:w-[48%] xl:w-[32%]'>
+              <WebLoadingCard />
+            </div>
+            <div className='w-[96%] mx-auto lg:w-[48%] xl:w-[32%]'>
+              <WebLoadingCard />
+            </div>
+      </div>
         }
     </div>
   )

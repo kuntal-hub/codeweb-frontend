@@ -6,10 +6,14 @@ import { authServices } from "../apiServices/auth.js"
 import { logout } from '../store/authSlice';
 import { addNotification } from '../store/notificationSlice.js';
 import { useForm } from 'react-hook-form';
+import CreateCollection from './CollectionComponents/CreateCollection.jsx';
+import PinedItems from './webComponents/PinedItems.jsx';
 
 export default function Header() {
   const [showLeftMenu, setShowLeftMenu] = useState(false);
   const [showRightMenu, setShowRightMenu] = useState(false);
+  const [showCreateCollection, setShowCreateCollection] = useState(false);
+  const [showPinedItems, setShowPinedItems] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const authStatus = useSelector(state => state.auth.status);
@@ -100,7 +104,8 @@ export default function Header() {
           </div>
           :
           <div className='flex flex-nowrap py-[6px] justify-between mx-1'>
-            <button className='h-[48px] rounded-lg'>
+            <button onClick={() => setShowPinedItems(true)}
+            className='h-[48px] rounded-lg'>
               <img src="https://res.cloudinary.com/dvrpvl53d/image/upload/q_30/v1707463164/istockphoto-1219927783-612x612_fgnzjx.jpg" alt="img" className='w-full h-full rounded-lg' />
             </button>
             <button className='h-[48px] ml-[2px] sm:mx-2 rounded-lg menu-container' onClick={toggleRightMenu}>
@@ -138,7 +143,7 @@ export default function Header() {
                     className='block text-center py-2 bg-gray-700 rounded-t-lg text-white hover:bg-black font-semibold'>
                     Web
                   </Link>
-                  <button
+                  <button onClick={() => setShowCreateCollection(true)}
                     className='block w-full text-center py-2 bg-gray-700 rounded-b-lg text-white hover:bg-black font-semibold mt-1'>
                     Collection
                   </button>
@@ -149,7 +154,9 @@ export default function Header() {
               <Link to={"/"} className=' text-white font-semibold text-[16px] block py-2 px-3 hover:bg-gray-900'>Trending</Link>
               <Link to={"/assets"} className=' text-white font-semibold text-[16px] block py-2 px-3 hover:bg-gray-900'>Assets</Link>
               <Link to={"/explore-profiles"} className=' text-white font-semibold text-[16px] block py-2 px-3 hover:bg-gray-900'>Explore Profiles</Link>
-              <button className=' text-white font-semibold text-[16px] block mb-5 px-3 py-2 hover:bg-gray-900'>Pined Items</button>
+              <button onClick={() => setShowPinedItems(true)}
+              className=' text-white font-semibold w-full text-[16px] block mb-5 px-3 py-2 hover:bg-gray-900 text-left'>
+                Pined Items</button>
             </div>}
         </div>
       )}
@@ -168,14 +175,14 @@ export default function Header() {
             Your Work
           </Link><hr />
 
-          <Link to={"/your-work"} 
+          <Link to={"/"} 
           className='text-white text-center font-semibold text-[16px] py-[6px] px-4 block hover:bg-black'>
-            Your Work
+            Trending
           </Link>
 
-          <Link to={"/your-work"} 
+          <Link to={"/following"} 
           className='text-white mb-2 text-center font-semibold text-[16px] py-[6px] px-4 block hover:bg-black'>
-            Your Work
+            Following
           </Link><hr />
 
           <Link to={"/settings/profile"}
@@ -203,7 +210,7 @@ export default function Header() {
               className='block text-center py-2 bg-gray-700 rounded-t-lg text-white hover:bg-black font-semibold'>
               Web
             </Link>
-            <button
+            <button onClick={()=>setShowCreateCollection(true)}
               className='block w-full text-center py-2 bg-gray-700 rounded-b-lg text-white hover:bg-black font-semibold mt-1'>
               Collection
             </button>
@@ -215,7 +222,9 @@ export default function Header() {
         <Link to={"/assets"} className=' text-white font-semibold text-[16px] block py-2 px-6 hover:bg-gray-900'>Assets</Link>
         <Link to={"/explore-profiles"} className=' text-white font-semibold text-[16px] block py-2 px-6 hover:bg-gray-900'>
         Explore Profiles</Link>
-        <button className=' text-white font-semibold text-[16px] block mb-5 px-6 py-2 hover:bg-gray-900'>Pined Items</button>
+        <button onClick={()=>setShowPinedItems(true)}
+        className=' text-white font-semibold text-[16px] block mb-5 px-6 py-2 hover:bg-gray-900 w-full text-left'
+        >Pined Items</button>
         </>
           :
         <>
@@ -232,6 +241,15 @@ export default function Header() {
         </>
         }
       </nav>
+      {showCreateCollection && 
+      <CreateCollection
+      showCreateCollection={showCreateCollection}
+      setShowCreateCollection={setShowCreateCollection} />}
+      {showPinedItems &&
+      <PinedItems
+      showPinedItems={showPinedItems}
+      setShowPinedItems={setShowPinedItems}
+      />}
     </>
   )
 }

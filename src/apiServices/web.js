@@ -82,12 +82,10 @@ export class WebService {
 
             const response = await axios.get(`/api/v1/webs/user/${username}?${queryParameters}`)
 
-            if (!response) throw new Error("Response is null");
-
             return response.data;
         } catch (error) {
             console.log("webService.getWebs error: ", error);
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
@@ -100,12 +98,10 @@ export class WebService {
 
             const response = await axios.get(`/api/v1/webs/liked/${username}?${queryParameters}`)
 
-            if (!response) throw new Error("Response is null");
-
             return response.data;
         } catch (error) {
             console.log("webService.getLikedWebsByUserID error: ", error);
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
@@ -116,12 +112,10 @@ export class WebService {
             // sortBy = views, createdAt, likesCount, commentsCount
             const response = await axios.get(`/api/v1/webs/following?${queryParameters}`)
 
-            if (!response) throw new Error("Response is null");
-
             return response.data;
         } catch (error) {
             console.log("webService.getFollowingUsersWebs error: ", error)
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
@@ -129,12 +123,10 @@ export class WebService {
         try {
             const response = await axios.get(`/api/v1/webs/trending?page=${page}&limit=${limit}`)
 
-            if (!response) throw new Error("Response is null");
-
             return response.data;
         } catch (error) {
             console.log("webService.getTrendingWebs error: ", error)
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
@@ -144,12 +136,10 @@ export class WebService {
             // valid querys are sortBy, sortOrder, page, limit;
             const response = await axios.get(`/api/v1/webs/your-work?${queryParameters}`)
 
-            if (!response) throw new Error("Response is null");
-
             return response.data;
         } catch (error) {
             console.log("webService.getYourWorkWebs error: ", error)
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
@@ -159,12 +149,10 @@ export class WebService {
 
             const response = await axios.get(`/api/v1/webs/search/my-webs?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}`)
 
-            if (!response) throw new Error("Response is null");
-
             return response.data;
         } catch (error) {
             console.log("webService.searchFromMyWebs error: ", error)
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
@@ -172,12 +160,10 @@ export class WebService {
         try {
             const response = await axios.get(`/api/v1/webs/recomended-people?page=${page}&limit=${limit}`)
 
-            if (!response) throw new Error("Response is null");
-
             return response.data;
         } catch (error) {
             console.log("webService.showRecomendedPeople error: ", error)
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
@@ -214,12 +200,10 @@ export class WebService {
 
             const response = await axios.delete(`/api/v1/webs/delete/${webId}`)
 
-            if (!response) throw new Error("Response is null");
-
-            return true;
+            return response.data;
         } catch (error) {
             console.log("webService.deleteWeb error: ", error)
-            return false;
+            return {status:error.status,message:error.message,data:null};
         }
     }
 
@@ -229,12 +213,10 @@ export class WebService {
 
             const response = await axios.patch(`/api/v1/webs/toggle-publish-status/${webId}`)
 
-            if (!response) throw new Error("Response is null");
-
-            return true;
+            return response.data;
         } catch (error) {
             console.log("webService.togglePublishStatusOfWeb error: ", error)
-            return false;
+            return {status:error.status,message:error.message,data:null};
         }
     
     }
@@ -335,12 +317,10 @@ export class WebService {
 
             const response = await axios.patch(`/api/v1/webs/inc-view/${webId}`)
 
-            if (!response) throw new Error("Response is null");
-
-            return true;
+            return response.data;
         } catch (error) {
             console.log("webService.increaseViewsOfWeb error: ", error)
-            return false;
+            return {status:error.status,message:error.message,data:null};
         }
     
     }
@@ -352,12 +332,10 @@ export class WebService {
 
             const response = await axios.get(`/api/v1/webs/search/all-webs?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}`)
 
-            if (!response) throw new Error("Response is null");
-
             return response.data;
         } catch (error) {
             console.log("webService.searchFromAllWebs error: ", error)
-            return null;
+            return {status:error.status,message:error.message,data:null};
         }
     
     }

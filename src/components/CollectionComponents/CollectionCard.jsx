@@ -33,7 +33,7 @@ export default memo(function CollectionCard({collection,webId}) {
                 {collection.name}
             </h1>
             <p className='text-gray-400 text-[12px]'>
-                {collection.websCount} Webs
+                {collection.websCount? collection.websCount:0} Webs
             </p>
         </div>
         {isAdded ?
