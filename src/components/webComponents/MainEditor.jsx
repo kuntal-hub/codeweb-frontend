@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
-import EditorBox from './EditorBox'
 import { useSelector, useDispatch } from "react-redux";
 import { setEditorOption } from "../../store/editorOptionSlice.js"
 import RetroBG from "../backgrounds/RetroBG.jsx";
@@ -12,6 +11,9 @@ import { useNavigate } from 'react-router-dom';
 import { addNotification } from '../../store/notificationSlice.js';
 import WebFooter from './WebFooter.jsx';
 import Loader from '../backgrounds/Loader.jsx';
+import Indentation1 from './indentation1.jsx';
+import Indentation2 from './indentation2.jsx';
+import Indentation3 from './indentation3.jsx';
 
 export default function MainEditor() {
   document.title = 'new web - codeWeb.io'
@@ -26,8 +28,8 @@ export default function MainEditor() {
   const cssLinks = useSelector(state => state.webs.cssLinks);
   const jsLinks = useSelector(state => state.webs.jsLinks);
   const htmlLinks = useSelector(state => state.webs.htmlLinks);
+  const options = useSelector(state => state.editorOption.editorOption);
   const [loading, setLoading] = useState(true);
-  const [showResult, setShowResult] = useState(true);
   const [indentationNo, setIndentationNo] = useState(2);
   const [showRenderingIfream, setShowRenderingIfream] = useState(true);
   const [isCreating,setIsCreating] = useState(false);
@@ -37,7 +39,9 @@ export default function MainEditor() {
     webService.getEditorPreferences()
       .then(res => {
         dispatch(setEditorOption(res.data));
+        if (window.innerWidth >= 1024) {
         setIndentationNo(res.data.indentation);
+        }
         dispatch(chengeHtml(""));
         dispatch(chengeCss(""));
         dispatch(chengeJs(""));
@@ -70,6 +74,8 @@ export default function MainEditor() {
   window.addEventListener("resize",()=>{
     if (window.innerWidth < 1024) {
       setIndentationNo(2);
+    } else{
+      setIndentationNo(options.indentation);
     }
   })
 
@@ -119,51 +125,25 @@ export default function MainEditor() {
         </nav>
 
         {indentationNo === 1 &&
-          <div className='w-screen h-calc-screen-75px m-0 p-0 flex flex-nowrap'>
+          <div className='w-screen h-calc-screen-75px m-0 p-0'>
 
-            <div className={`${showResult ? "w-[40%]" : "w-full"} bg-gray-950 h-full`}>
-              <EditorBox showResult={showResult} setShowResult={setShowResult} />
-            </div>
-
-            {showResult &&
-              <div className='h-full m-0 p-0 w-[60%]'>
-                <Iframe />
-              </div>}
+            <Indentation1 />
 
           </div>
         }
 
         {indentationNo === 2 &&
-          <div className='w-screen h-calc-screen-75px m-0 p-0 md:flex md:flex-nowrap lg:block'>
+          <div className='w-screen h-calc-screen-75px m-0 p-0'>
 
-            <div className={`${showResult ? "h-[55%] md:w-[50%] md:h-full lg:w-full lg:h-[55%]" : "h-full md:w-[100%]"} 
-          m-0 p-0 flex flex-nowrap justify-center bg-gray-950`}>
-              <div className='w-[100vw]  md:w-[100%] lg:w-[50vw] min-h-full'>
-                <EditorBox showResult={showResult} setShowResult={setShowResult} />
-              </div>
-              {window.innerWidth >= 1024 &&
-                <div className='w-[50vw] min-h-full hidden lg:block'>
-                  <EditorBox showResult={showResult} setShowResult={setShowResult} />
-                </div>}
-            </div>
-
-            {showResult &&
-              <div className='h-[45%] m-0 p-0 md:w-[50%] md:h-full lg:w-full lg:h-[45%]'>
-                <Iframe />
-              </div>}
+            <Indentation2 />
 
           </div>}
 
         {indentationNo === 3 &&
-          <div className='w-screen h-calc-screen-75px m-0 p-0 flex flex-nowrap'>
-            {showResult &&
-              <div className='h-full m-0 p-0 w-[60%]'>
-                <Iframe />
-              </div>}
+          <div className='w-screen h-calc-screen-75px m-0 p-0'>
+            
+            <Indentation3 />
 
-            <div className={`${showResult ? "w-[40%]" : "w-full"} bg-gray-950 h-full`}>
-              <EditorBox showResult={showResult} setShowResult={setShowResult} />
-            </div>
           </div>
         }
         <div className='w-screen h-[25px]'>

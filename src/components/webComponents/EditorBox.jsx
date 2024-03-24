@@ -6,7 +6,7 @@ import { chengeHtml,chengeCss,chengeJs } from "../../store/webSlice.js";
 
 
 
-export default memo(function EditorBox({showResult ,setShowResult}) {
+export default memo(function EditorBox() {
     const dispatch = useDispatch();
     const html = useSelector(state => state.webs.html);
     const css = useSelector(state => state.webs.css);
@@ -71,22 +71,22 @@ export default memo(function EditorBox({showResult ,setShowResult}) {
 
     return (
         <div className='h-full w-full'>
-            <button className={`py-1 px-3 mx-[1px] ${fileName==="index.html"? "bg-gray-600":"bg-gray-700"} text-white text-sm`}
+            <button className={`py-1 px-5 mx-[1px] ${fileName==="index.html"? "bg-gray-800":"bg-gray-700"} text-white text-sm`}
              disabled={fileName === 'index.html'} onClick={() => setFileName('index.html')}>
                 html
             </button>
-            <button className={`py-1 px-3 mx-[1px] ${fileName==="style.css"? "bg-gray-600":"bg-gray-700"} text-white text-sm`}
+            <button className={`py-1 px-5 mx-[1px] ${fileName==="style.css"? "bg-gray-800":"bg-gray-700"} text-white text-sm`}
              disabled={fileName === 'style.css'} onClick={() => setFileName('style.css')}>
                 css
             </button>
-            <button className={`py-1 px-3 mx-[1px] ${fileName==="script.js"? "bg-gray-600":"bg-gray-700"} text-white text-sm`}
+            <button className={`py-1 px-5 mx-[1px] ${fileName==="script.js"? "bg-gray-800":"bg-gray-700"} text-white text-sm`}
              disabled={fileName === 'script.js'} onClick={() => setFileName('script.js')}>
                 javascript
             </button>
-            <button className={`py-1 px-3 mx-[1px] ${showResult? "bg-gray-600":"bg-gray-700"} text-white text-sm`}
+            {/* <button className={`py-1 px-3 mx-[1px] ${showResult? "bg-gray-600":"bg-gray-700"} text-white text-sm`}
              disabled={fileName === 'script.js'} onClick={() => setShowResult(!showResult)}>
                 Result
-            </button>
+            </button> */}
             <Editor
                 className='h-calc-100-28px'
                 width="100%"

@@ -4,7 +4,6 @@ import * as htmlToImage from 'html-to-image';
 import { useNavigate } from 'react-router-dom';
 import {chengeCss,chengeHtml,chengeJs,chengeTitleAndDesc,updateCssLinks,updateJsLinks,updateHtmlLinks} from "../store/webSlice.js";
 import { addNotification } from '../store/notificationSlice.js';
-import EditorBox from '../components/webComponents/EditorBox.jsx';
 import RetroBG from '../components/backgrounds/RetroBG.jsx';
 import Iframe from '../components/webComponents/Iframe';
 import { webService } from '../apiServices/web.js';
@@ -13,6 +12,9 @@ import {setEditorOption} from "../store/editorOptionSlice.js";
 import { useParams } from 'react-router-dom';
 import WebFooter from '../components/webComponents/WebFooter.jsx';
 import Loader from '../components/backgrounds/Loader.jsx';
+import Indentation1 from '../components/webComponents/indentation1.jsx';
+import Indentation2 from '../components/webComponents/indentation2.jsx';
+import Indentation3 from '../components/webComponents/indentation3.jsx';
 
 export default function EditWeb() {
   const navigate = useNavigate();
@@ -24,9 +26,9 @@ export default function EditWeb() {
   const webTitle = useSelector(state => state.webs.title);
   const webDescription = useSelector(state => state.webs.description);
   const webIsPublic = useSelector(state => state.webs.isPublic);
+  const options = useSelector(state => state.editorOption.editorOption);
   const [loading, setLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
-  const [showResult, setShowResult] = useState(true);
   const [indentationNo, setIndentationNo] = useState(2);
   const [web,setWeb] = useState(null);
   const [showRenderingIfream, setShowRenderingIfream] = useState(false);
@@ -39,7 +41,9 @@ export default function EditWeb() {
       let webOwnerId;
       const response1 = await webService.getEditorPreferences();
         dispatch(setEditorOption(response1.data));
-        setIndentationNo(response1.data.indentation)
+        if (window.innerWidth>=1024) {
+          setIndentationNo(response1.data.indentation)
+        }
       const response2 = await webService.getWebById({webId:webId});
         if (response2.status<400 && response2.data) {
           setWeb(response2.data);
@@ -88,6 +92,8 @@ export default function EditWeb() {
   window.addEventListener("resize",()=>{
     if (window.innerWidth < 1024) {
       setIndentationNo(2);
+    }else{
+      setIndentationNo(options.indentation);
     }
   })
 
@@ -148,51 +154,25 @@ export default function EditWeb() {
         </nav>
 
         {indentationNo === 1 &&
-          <div className='w-screen h-calc-screen-75px m-0 p-0 flex flex-nowrap'>
+          <div className='w-screen h-calc-screen-75px m-0 p-0'>
 
-            <div className={`${showResult ? "w-[40%]" : "w-full"} bg-gray-950 h-full`}>
-              <EditorBox showResult={showResult} setShowResult={setShowResult} />
-            </div>
-
-            {showResult &&
-              <div className='h-full m-0 p-0 w-[60%]'>
-                <Iframe />
-              </div>}
+            <Indentation1 />
 
           </div>
         }
 
         {indentationNo === 2 &&
-          <div className='w-screen h-calc-screen-75px m-0 p-0 md:flex md:flex-nowrap lg:block'>
+          <div className='w-screen h-calc-screen-75px m-0 p-0'>
 
-            <div className={`${showResult ? "h-[55%] md:w-[50%] md:h-full lg:w-full lg:h-[55%]" : "h-full md:w-[100%]"} 
-          m-0 p-0 flex flex-nowrap justify-center bg-gray-950`}>
-              <div className='w-[100vw]  md:w-[100%] lg:w-[50vw] min-h-full'>
-                <EditorBox showResult={showResult} setShowResult={setShowResult} />
-              </div>
-              {window.innerWidth >= 1024 &&
-                <div className='w-[50vw] min-h-full hidden lg:block'>
-                  <EditorBox showResult={showResult} setShowResult={setShowResult} />
-                </div>}
-            </div>
-
-            {showResult &&
-              <div className='h-[45%] m-0 p-0 md:w-[50%] md:h-full lg:w-full lg:h-[45%]'>
-                <Iframe />
-              </div>}
+            <Indentation2 />
 
           </div>}
 
         {indentationNo === 3 &&
-          <div className='w-screen h-calc-screen-75px m-0 p-0 flex flex-nowrap'>
-            {showResult &&
-              <div className='h-full m-0 p-0 w-[60%]'>
-                <Iframe />
-              </div>}
+          <div className='w-screen h-calc-screen-75px m-0 p-0'>
 
-            <div className={`${showResult ? "w-[40%]" : "w-full"} bg-gray-950 h-full`}>
-              <EditorBox showResult={showResult} setShowResult={setShowResult} />
-            </div>
+              <Indentation3 />
+
           </div>
         }
         <div className='w-screen h-[25px]'>

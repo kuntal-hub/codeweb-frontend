@@ -101,7 +101,7 @@ export default function WebFooter({ web }) {
   }
 
   return (
-    <div className='w-screen h-[25px] bg-gray-950 flex flex-nowrap overflow-x-auto justify-start px-1 fixed left-0 bottom-0 z-20'>
+    <div className='w-screen h-[25px] bg-gray-950 flex flex-nowrap overflow-x-auto overflow-y-hidden justify-start px-1 fixed left-0 bottom-0 z-20'>
       {user && web && user.username !== web.owner.username &&
         <button disabled={isForkButtonDisabled}
           onClick={() => setShowTitleDescpiption(true)}
@@ -118,7 +118,7 @@ export default function WebFooter({ web }) {
       </button>
       {web &&
         <button onClick={() => safeNavigate(`/view-full/${web?._id}`)}
-          className='h-full text-white px-2 text-[12px] bg-gray-700 hover:bg-gray-600 mx-[2px]'>
+          className='h-[25px] text-white px-2 text-[12px] bg-gray-700 hover:bg-gray-600 mx-[2px] min-w-16'>
           Full View
         </button>}
       {
@@ -135,7 +135,7 @@ export default function WebFooter({ web }) {
           {
             user && web &&
             <button onClick={() => setShowAddToCollection(true)}
-              className='h-full text-white px-2 text-[12px] bg-gray-700 hover:bg-gray-600 mx-[2px]'>
+              className='h-[25px] text-white px-2 text-[12px] bg-gray-700 hover:bg-gray-600 mx-[2px] min-w-28'>
               Add To Collection
             </button>
           }
