@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React, { memo, useEffect } from 'react'
 import {useDispatch} from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from "react-hook-form"
@@ -7,10 +7,24 @@ import { addNotification } from '../../store/notificationSlice'
 import { authServices } from '../../apiServices/auth'
 import Input from '../utilComponents/Input'
 
-export default memo(function DeleteAccount({ setIsDeleteAccountComponentRendered }) {
+export default memo(function DeleteAccount({ setIsDeleteAccountComponentRendered, isDeleteAccountComponentRendered }) {
   const { register, handleSubmit } = useForm()
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
+  const handleOutsideClick = (event) => {
+    if (isDeleteAccountComponentRendered && !event.target.closest('.menu-container')) {
+      setIsDeleteAccountComponentRendered(false);
+    }
+  };
+
+// Adding event listener for clicks outside menu
+useEffect(() => {
+document.addEventListener('mousedown', handleOutsideClick);
+return () => {
+  document.removeEventListener('mousedown', handleOutsideClick);
+};
+}, []);
 
   const onSubmit = async (data) => {
     const password = data.password.trim();
@@ -42,7 +56,7 @@ export default memo(function DeleteAccount({ setIsDeleteAccountComponentRendered
 
   return (
     <div className='w-screen h-screen fixed top-0 left-0 z-30 grid place-content-center half_transparent'>
-      <div className=' border-red-600 border-8 rounded-lg p-4 bg-black w-[90vw] sm:w-[80vw] md:w-[65vw] lg:w-[50vw]'>
+      <div className=' border-red-600 border-8 rounded-lg p-4 bg-black w-[90vw] sm:w-[80vw] md:w-[65vw] lg:w-[50vw] menu-container'>
         <h1 className='text-3xl font-bold font-mono'>MEGA Warning!</h1>
         <p className='mb-3'>
           You are going to delete absolutely everything you've ever done in CodeWeb. Webs, Hearts, Comments, your profile... everything. even your assets.
@@ -59,18 +73,14 @@ export default memo(function DeleteAccount({ setIsDeleteAccountComponentRendered
             required={true}
             {...register("password", { required: true })}
           />
-          <div className='flex justify-between flex-nowrap'>
             <button type='submit'
-              className='bg-red-600 rounded-lg py-3 px-5 text-white font-semibold hover:bg-red-500 mt-6 mb-3'
+              className='bg-red-600 rounded-lg py-3 px-5 float-left text-white font-semibold hover:bg-red-500 mt-6 mb-3'
             >I Understand, Please Delete My Account! 
             </button>
-
-            <button onClick={() => setIsDeleteAccountComponentRendered(false)}
-              className='bg-green-600 rounded-lg py-3 px-5 font-semibold hover:bg-green-500 mt-6 mb-3'
-            >Cancel</button>
-            
-          </div>
         </form>
+            <button onClick={() => setIsDeleteAccountComponentRendered(false)}
+              className='bg-green-600 rounded-lg py-3 px-5 font-semibold float-right hover:bg-green-500 mt-6 mb-3'
+            >Cancel</button>
       </div>
     </div>
   )

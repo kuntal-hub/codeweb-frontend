@@ -114,7 +114,7 @@ export default memo(function WebCard({ web, addPined = true, collectionId=null }
                             &nbsp;<span className='block mt-[2px]'>{likesCount}</span>
                         </button>
 
-                        <Link to={`/details/${web._id}#comments`}
+                        <Link to={`details/${web._id}#comments`}
                         className='flex flex-nowrap justify-start text-[12px] px-1 py-[2px] bg-gray-600 hover:bg-gray-700 rounded-md mx-1'>
                             <span className="material-symbols-outlined scale-75">comment</span>
                             &nbsp;<span className='block mt-[2px]'>{web.commentsCount}</span>

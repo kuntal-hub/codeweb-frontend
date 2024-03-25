@@ -6,6 +6,7 @@ import { webService } from '../apiServices/web'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import WebCard from '../components/webComponents/WebCard'
 import WebLoadingCard from '../components/webComponents/WebLoadingCard'
+import { Outlet } from 'react-router-dom'
 
 export default function Trending() {
   const dispatch = useDispatch();
@@ -108,6 +109,7 @@ export default function Trending() {
             </div>
           </div>
       }
+      <Outlet />
     </div>
   )
 }

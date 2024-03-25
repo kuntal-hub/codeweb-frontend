@@ -28,7 +28,8 @@ export default function ProfileSettings() {
             </div>
         </div>
           {isDeleteAccountComponentRendered && <DeleteAccount 
-          setIsDeleteAccountComponentRendered={setIsDeleteAccountComponentRendered}/>}
+          setIsDeleteAccountComponentRendered={setIsDeleteAccountComponentRendered}
+          isDeleteAccountComponentRendered={isDeleteAccountComponentRendered} />}
     </div>
   )
 }

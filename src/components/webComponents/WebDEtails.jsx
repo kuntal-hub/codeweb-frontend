@@ -72,10 +72,10 @@ export default function WebDEtails({web}) {
       useEffect(resizeTextArea, [commentInputVal]);
 
   return (
-    <div className='bg-gray-950 text-white w-full rounded-md pb-2'>
+    <div className='bg-gray-950 text-white w-full rounded-md pb-2 text-sm'>
         <div className='flex flex-wrap justify-between px-3 pt-3'>
             <div className='w-full md:w-[49%]'>
-                <h2 className='text-white font-bold text-lg sm:text-xl lg:text-2xl'>
+                <h2 className='text-white font-bold text-lg sm:text-xl'>
                     {web.title}
                 </h2>
                 <p className='text-gray-300 mt-2 text-[13px]'>
@@ -109,14 +109,32 @@ export default function WebDEtails({web}) {
                     <span className="material-symbols-outlined">visibility</span>
                     <span className='font-medium ml-2'>{web.views} Views</span>
                 </p>
+                {web.forkedFrom &&
+                <>
+                <p>
+                    Forked From
+                </p>
+                <div className='flex flex-nowrap justify-start text-blue-400 mt-2'>
+                    <img src={web.forkedFrom.owner.avatar.replace("upload/", "upload/ar_1.0,g_face,c_fill,w_40/")} 
+                    alt="avatar"
+                    className='w-10 h-10 rounded-md' />
+                    <p className='flex flex-col ml-2 w-[70%]'>
+                        <Link className='font-bold text-[16px]'
+                        to={`/web/${web.forkedFrom._id}`}>
+                        {web.forkedFrom.title}</Link>
+                        <Link className='text-[11px]'
+                        to={`/${web.forkedFrom.owner.username}`}>
+                        {web.forkedFrom.owner.fullName}</Link>
+                    </p>
+                </div></>}
             </div>
         </div>
-        <p className='text-lx font-bold text-white w-full px-5 sm:px-8 py-3'>
+        <p className='text-[16px] font-bold text-white w-full px-5 sm:px-8 py-3'>
             {resData? resData.totalDocs : web.commentsCount} Comments
         </p>
         { /* Comment Section */ 
            user ? <>
-        <div className='mx-1 sm:mx-5 rounded-md p-2'>
+        <div className='mx-1 sm:mx-5 rounded-md p-2' id='comments'>
             <div className='w-full flex flex-nowrap justify-start'>
             <img src={user.avatar.replace("upload/", "upload/ar_1.0,g_face,c_fill,w_40/")} alt="avatar" className='w-10 h-10 rounded-full' />
             <div className='flex flex-col w-[90%] ml-2'>
@@ -145,9 +163,9 @@ export default function WebDEtails({web}) {
             next={()=>getComments(page+1)}
             height={600}
             hasMore={resData.hasNextPage}
-            loader={<h4 className='w-full text-center font-bold text-lg'>Loading...</h4>}
+            loader={<h4 className='w-full text-center text-[18px] font-bold text-lg'>Loading...</h4>}
             endMessage={
-                <p className='w-full text-center font-semibold my-4'>No More Data</p>
+                <p className='w-full text-center text-[18px] font-semibold my-4'>No More Comments</p>
             }
             >
                 

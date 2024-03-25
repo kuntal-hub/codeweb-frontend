@@ -132,26 +132,40 @@ const routes = createBrowserRouter(
       <Route path='new-web' element={<NewWeb />} />
 
       <Route path='web/:webId' element={<EditWeb />} />
-
-      <Route path='details/:webId' element={<WebDetails />} />
-
+      
       <Route path='view-full/:webId' element={<ViewFullWeb />} />
 
       <Route path='' element={<Home />} >
               
-            <Route path='' element={<Trending />} />
+            <Route path='/' element={<Trending />} >
+                <Route path='details/:webId' element={<WebDetails />} />
+            </Route>
 
-            <Route path='following' element={
+
+            <Route path='following/' element={
               <AuthLayout authentication={true}>
                 <Following/>
               </AuthLayout>
-            } />
+            } >
+                <Route path='details/:webId' element={
+                  <AuthLayout authentication={true}>
+                    <WebDetails/>
+                  </AuthLayout>
+                } />
+            </Route>
   
-            <Route path='your-work' element={
+            <Route path='your-work/' element={
               <AuthLayout authentication={true}>
                 <YourWork/>
               </AuthLayout>
-            } />
+            } >
+                <Route path='web/details/:webId' element={
+                  <AuthLayout authentication={true}>
+                    <WebDetails/>
+                  </AuthLayout>
+                } />
+
+            </Route>
 
       </Route>
 

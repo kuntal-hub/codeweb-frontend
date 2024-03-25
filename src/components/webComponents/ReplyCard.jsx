@@ -134,7 +134,7 @@ export default memo(function ReplyCard({ reply, setReplies, index, showReplyCrea
                     </span>
 
                     <button onClick={()=>showReplyCreateForm(reply.owner.username)}
-                        className='flex bg-gray-800 hover:bg-gray-700 ml-5 flex-nowrap justify-start text-[10px] border rounded-full mt-1 h-5 py-[1px] px-2'>
+                        className='flex bg-gray-800 hover:bg-gray-700 ml-5 flex-nowrap justify-start text-[10px] border rounded-full mt-1 h-5  px-2'>
                         Reply
                     </button>
                 </div>

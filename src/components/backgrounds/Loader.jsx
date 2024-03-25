@@ -7,7 +7,7 @@ export default function Loader({texts=["Loading...","Please wait","Loading...", 
         const interval = setInterval(() => {
             setText(texts[i])
             i = (i+1) % texts.length
-        }, 1500);
+        }, 2500);
         return () => clearInterval(interval)
     },[texts])
   return (

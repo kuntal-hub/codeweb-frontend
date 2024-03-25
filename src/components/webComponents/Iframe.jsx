@@ -47,6 +47,11 @@ export default memo(forwardRef(function Iframe({web},ref) {
           }).join("")
         }
         <script>
+        document.addEventListener('click',(e)=>{
+          if (e.target.tagName === 'A' || e.target.tagName === 'a') {
+            e.preventDefault();
+          }
+        })
             ${javascript}
         </script>
       </body>
