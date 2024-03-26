@@ -49,7 +49,7 @@ return () => {
   }
 
   return (
-    <div className='w-screen h-screen fixed top-0 left-0 grid place-content-center half_transparent'>
+    <div className='w-screen h-screen fixed top-0 left-0 z-30 grid place-content-center half_transparent'>
       <div className=' border-red-600 border-8 rounded-lg p-4 bg-black w-[90vw] sm:w-[80vw] md:w-[65vw] lg:w-[50vw] menu-container'>
         <h1 className='text-3xl font-bold font-mono'>MEGA Warning!</h1>
         <p className='mb-3'>

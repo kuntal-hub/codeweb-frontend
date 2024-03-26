@@ -48,8 +48,8 @@ export default memo(function SetTitleDescpiption({ setShowTitleDescpiption,showT
     }
 
     return (
-        <div className='half_transparent h-screen w-screen fixed top-0 left-0 z-20 grid place-content-center'>
-            <div className='GB-cointainer p-1 overflow-y-auto menu-container'>
+        <div className='half_transparent h-screen w-screen fixed top-0 left-0 z-20 overflow-y-auto py-16'>
+            <div className='GB-cointainer p-1 menu-container block mx-auto w-[96vw] sm:w-[74vw] md:w-[54vw] lg:w-[40vw] xl:w-[34vw]'>
                 <div className='bg-gray-900 text-white p-5 overflow-auto rounded-lg'>
                     <h1 className='text-3xl md:text-[40px] text-center font-bold mb-3'>Hold Up!</h1>
                     <p className='text-gray-400 text-center'>

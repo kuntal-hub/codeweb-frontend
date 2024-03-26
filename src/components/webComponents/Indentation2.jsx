@@ -21,7 +21,7 @@ export default function Indentation2() {
   };
 
   const handleVerticalResize = (e) => {
-    const newHeight = e.clientY;
+    const newHeight = e.clientY-50;
     if (newHeight <= 100) {
       setEditorHeight(100);
     } else if (newHeight >= mainHeight - 100) {

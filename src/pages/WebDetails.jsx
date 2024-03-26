@@ -11,15 +11,41 @@ import AddToCollection from '../components/CollectionComponents/AddToCollection'
 import { authServices } from '../apiServices/auth'
 import { setIsNewItemAdded } from '../store/pinedSlice'
 import DeleteWeb from '../components/webComponents/DeleteWeb'
+import UpdateWebDetails from '../components/webComponents/UpdateWebDetails'
+import Editor from "@monaco-editor/react"
+import "../cssFiles/editor.css";
 
 export default function WebDetails() {
   const [webDetails, setWebDetails] = useState(null)
   const [showAddToCollection, setShowAddToCollection] = useState(false);
   const [showDeleteWebComponent,setShowDeleteWebCoponent] = useState(false);
+  const [showUpdateWebDetails, setShowUpdateWebDetails] = useState(false);
+  const [showCode, setShowCode] = useState(false);
+  const [fileName, setFileName] = useState('script.js');
   const navigate = useNavigate()
   const { webId } = useParams()
   const dispatch = useDispatch()
   const user = useSelector((state) => state.auth.userData)
+
+  const files = {
+    'script.js': {
+        name: 'script.js',
+        language: 'javascript',
+        value: webDetails? webDetails.js:"",
+    },
+    'style.css': {
+        name: 'style.css',
+        language: 'css',
+        value: webDetails? webDetails.css:"",
+    },
+    'index.html': {
+        name: 'index.html',
+        language: 'html',
+        value: webDetails? webDetails.html :"",
+    },
+};
+
+const file = files[fileName];
 
   const handleOutsideClick = (event) => {
     if (window.location.pathname.includes("details") && webId && !event.target.closest('.menu-container')) {
@@ -74,13 +100,13 @@ export default function WebDetails() {
 
   // Adding event listener for clicks outside menu
   useEffect(() => {
-    if (!showAddToCollection && !showDeleteWebComponent) {
+    if (!showAddToCollection && !showDeleteWebComponent && !showUpdateWebDetails) {
       document.addEventListener('mousedown', handleOutsideClick);
     }
     return () => {
       document.removeEventListener('mousedown', handleOutsideClick);
     };
-  }, [showAddToCollection,showDeleteWebComponent]);
+  }, [showAddToCollection,showDeleteWebComponent,showUpdateWebDetails]);
 
   useEffect(() => {
     if (!webId) {
@@ -101,8 +127,8 @@ export default function WebDetails() {
     <div className='w-screen one3_transparent h-screen overflow-y-auto text-white text-3xl fixed top-0 left-0'>
       <div className='GB-cointainer p-1 menu-container block mx-auto w-[94vw]  md:w-[80vw] lg:w-[70vw] my-24'>
         {webDetails ?
-          <div className=' bg-white rounded-lg max-h-screen'>
-            <div className='w-full p-2 bg-gray-800 rounded-t-md flex flex-nowrap justify-between'>
+          <div className=' bg-gray-700 rounded-lg max-h-screen'>
+            <div className='w-full p-2 bg-gray-800 rounded-t-md flex flex-wrap min-[500px]:flex-nowrap justify-between'>
 
               <div className='flex flex-nowrap justify-start'>
                 <Link to={`/${webDetails.owner.username}`}>
@@ -165,7 +191,7 @@ export default function WebDetails() {
                                 <span className='block mt-1'>Add To Pined</span>
                             </button>
                             {user && user._id === webDetails.owner._id && <>
-                            <button 
+                            <button onClick={() => setShowUpdateWebDetails(true)}
                                 className='flex flex-nowrap justify-center text-[11px] font-semibold py-1 px-1 text-white hover:bg-gray-800 rounded-b-md w-[160px] hover:rounded-md leading-3'>
                                 <span className="material-symbols-outlined scale-75">edit</span>
                                 <span className='block mt-1'>Edit Web</span>
@@ -190,6 +216,92 @@ export default function WebDetails() {
               </div>
 
             </div>
+
+                              
+            <div className='w-full h-[70vh] rounded-b-md mb-1'>
+              <div className='w-full flex flex-nowrap justify-between bg-gray-900 py-1 px-[2px]'>
+                  <div className='flex flex-nowrap justify-start'>
+                    <button onClick={()=>{
+                      if (showCode && fileName!=="index.html") {
+                        setFileName("index.html");
+                      } else if(showCode && fileName==="index.html") {
+                        setShowCode(false);
+                      } else {
+                        setShowCode(true);
+                        setFileName("index.html");
+                    }}}
+                    className={`${(fileName==="index.html" && showCode)? "bg-gray-800":"bg-gray-700"}
+                     text-[14px] px-2 rounded-md mx-[2px] w-16 hover:bg-gray-800`}>
+                          HTML
+                    </button>
+
+                    <button onClick={()=>{
+                      if (showCode && fileName!=="style.css") {
+                        setFileName("style.css");
+                      } else if(showCode && fileName==="style.css") {
+                        setShowCode(false);
+                      } else {
+                        setShowCode(true);
+                        setFileName("style.css");
+                    }}}
+                    className={`${(fileName==="style.css" && showCode)? "bg-gray-800":"bg-gray-700"}
+                    text-[14px] px-2 rounded-md mx-[2px] w-16 hover:bg-gray-800`}>
+                              CSS
+                    </button>
+                    
+                    <button onClick={()=>{
+                      if (showCode && fileName!=="script.js") {
+                        setFileName("script.js");
+                      } else if(showCode && fileName==="script.js") {
+                        setShowCode(false);
+                      } else {
+                        setShowCode(true);
+                        setFileName("script.js");
+                    }}}
+                    className={`${(fileName==="script.js" && showCode)? "bg-gray-800":"bg-gray-700"}
+                    text-[14px] px-2 rounded-md mx-[2px] w-16 hover:bg-gray-800`}>
+                              JS
+                    </button>
+                  </div>
+                  <button onClick={()=>setShowCode(!showCode)}
+                  className={` text-[14px] bg-gray-700 px-2 rounded-md mx-[2px] w-16 hover:bg-gray-800`}>
+                              Result
+                  </button>
+              </div>
+
+              <div className='w-full flex flex-nowrap justify-between h-[calc(100%-44px)]'>
+                    {showCode && 
+                    <div className='h-full w-full lg:w-[50%]'>
+                    <Editor
+                width="100%"
+                height="100%"
+                language={file.language}
+                theme={"vs-dark"}
+                value={file.value}
+                readOnly={true}
+                options={{
+                    domReadOnly: true,
+                    readOnly: true,
+                    fontFamily: "Source Code Pro, monospace",
+                    fontWeight: "500",
+                    fontSize: "12px",
+                    minimap: { enabled: false },
+                    copyWithSyntaxHighlighting: true,
+                    lineHeight: 18,
+                    mouseWheelZoom: true,
+                    showUnused: true,
+                    wordWrap: "on",
+                }}
+            />
+                    </div>}
+                    <div 
+                    className={`h-full w-full ${showCode? "hidden lg:block lg:w-[50%]":""}`}>
+                      <Iframe web={webDetails} />
+                    </div>
+              </div>
+            </div>
+
+
           </div>
           : <div className='bg-gray-800 grid place-content-center h-[80vh]'>
             <div className="loader"></div>
@@ -211,12 +323,21 @@ export default function WebDetails() {
             setShowAddToCollection={setShowAddToCollection} />
       </div>
             }
-      {showDeleteWebComponent && user && user._id === webDetails.owner._id &&
+      {webDetails && user && user._id === webDetails.owner._id &&
       <div className='text-sm'>
+        {showDeleteWebComponent && !showUpdateWebDetails &&
         <DeleteWeb 
             webId={webId} 
             showDeleteWebComponent={showDeleteWebComponent} 
-            setShowDeleteWebCoponent={setShowDeleteWebCoponent} />
+            setShowDeleteWebCoponent={setShowDeleteWebCoponent} />}
+        {
+          showUpdateWebDetails && !showDeleteWebComponent &&
+          <UpdateWebDetails 
+              web={webDetails} 
+              setWebDetails={setWebDetails}
+              showUpdateWebDetails={showUpdateWebDetails} 
+              setShowUpdateWebDetails={setShowUpdateWebDetails} />
+        }
       </div>
             }
     </div>
