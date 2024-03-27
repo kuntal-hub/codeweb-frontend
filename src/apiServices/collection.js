@@ -126,14 +126,14 @@ export class CollectionService {
     
     }
 
-    async getCollectionsByUsername({username,queryParameters="page=1&limit=4&collectionType=public"}) {
+    async getCollectionsByUsername({username,type="public",sortBy="createdAt",sortOrder="desc",page=1,limit=4}) {
         try {
             // queryParameters = string contains all querys of url
             // valid querys are page, limit , sortBy, sortOrder, collectionType;
             // collectionType can be public, private
             if(!username) throw new Error("UserId is undefined");
 
-            const response = await axios.get(`/api/v1/collections/user-collection/${username}?${queryParameters}`);
+            const response = await axios.get(`/api/v1/collections/user-collection/${username}?page=${page}&limit=${limit}&sortBy=${sortBy}&sortOrder=${sortOrder}&collectionType=${type}`);
 
             return response.data;
         } catch (error) {
@@ -187,11 +187,11 @@ export class CollectionService {
     
     }
 
-    async searchFromMyCollections({page=1,limit=4,search}) {
+    async searchFromMyCollections({page=1,limit=4,search,type="all"}) {
         try {
             if(!search) throw new Error("Search is undefined");
 
-            const response = await axios.get(`/api/v1/collections/search/my-collections?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}`);
+            const response = await axios.get(`/api/v1/collections/search/my-collections?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}&type=${type}`);
 
             return response.data;
         } catch (error) {

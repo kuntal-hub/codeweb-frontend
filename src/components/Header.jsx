@@ -149,7 +149,7 @@ export default function Header() {
                   </button>
                 </div>
               </div>
-              <Link to={"/your-work"} className=' text-white font-semibold text-[16px] block mt-5 py-2 px-3 hover:bg-gray-900'>Your Work</Link>
+              <Link to={"/your-work/webs"} className=' text-white font-semibold text-[16px] block mt-5 py-2 px-3 hover:bg-gray-900'>Your Work</Link>
               <Link to={"/following"} className=' text-white font-semibold text-[16px] block py-2 px-3 hover:bg-gray-900'>Following</Link>
               <Link to={"/"} className=' text-white font-semibold text-[16px] block py-2 px-3 hover:bg-gray-900'>Trending</Link>
               <Link to={"/assets"} className=' text-white font-semibold text-[16px] block py-2 px-3 hover:bg-gray-900'>Assets</Link>
@@ -170,7 +170,7 @@ export default function Header() {
             <span className="material-symbols-outlined">account_circle</span>&nbsp;<span>My Profile</span>
           </Link>
 
-          <Link to={"/your-work"} 
+          <Link to={"/your-work/webs"} 
           className='text-white mb-2 text-center font-semibold text-[16px] py-[6px] px-4 block hover:bg-black'>
             Your Work
           </Link><hr />
@@ -216,7 +216,7 @@ export default function Header() {
             </button>
           </div>
         </div>
-        <Link to={"/your-work"} className=' text-white font-semibold text-[16px] block mt-5 py-2 px-6 hover:bg-gray-900'>Your Work</Link>
+        <Link to={"/your-work/webs"} className=' text-white font-semibold text-[16px] block mt-5 py-2 px-6 hover:bg-gray-900'>Your Work</Link>
         <Link to={"/following"} className=' text-white font-semibold text-[16px] block py-2 px-6 hover:bg-gray-900'>Following</Link>
         <Link to={"/"} className=' text-white font-semibold text-[16px] block py-2 px-6 hover:bg-gray-900'>Trending</Link>
         <Link to={"/assets"} className=' text-white font-semibold text-[16px] block py-2 px-6 hover:bg-gray-900'>Assets</Link>

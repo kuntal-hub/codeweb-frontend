@@ -31,6 +31,8 @@ import {
   Trending,
   Following,
   YourWork,
+  YourWorkCollections,
+  YourWorkWebs,
 } from "./index.js";
 
 const routes = createBrowserRouter(
@@ -159,9 +161,21 @@ const routes = createBrowserRouter(
                 <YourWork/>
               </AuthLayout>
             } >
-                <Route path='web/details/:webId' element={
+                <Route path='webs/' element={
                   <AuthLayout authentication={true}>
-                    <WebDetails/>
+                    <YourWorkWebs/>
+                  </AuthLayout>
+                } >
+                    <Route path='details/:webId' element={
+                      <AuthLayout authentication={true}>
+                        <WebDetails/>
+                      </AuthLayout>
+                    } />
+                </Route>
+
+                <Route path='collections' element={
+                  <AuthLayout authentication={true}>
+                    <YourWorkCollections/>
                   </AuthLayout>
                 } />
 

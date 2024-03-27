@@ -121,6 +121,9 @@ const file = files[fileName];
           navigate('/404')
         }
       })
+      .then(() => {
+        webService.increaseViewsOfWeb({webId})
+      })
 
   }, [webId])
   return (

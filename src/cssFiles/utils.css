@@ -435,3 +435,29 @@
 .h-screen-72{
   height: calc(100vh - 72px);
 }
+
+.hdfkhdg .active{
+  background: #62606000;
+  border: none;
+  color: white;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #0e0d0d; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #4d4b4b; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #a49f9f; 
+}

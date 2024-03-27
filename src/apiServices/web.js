@@ -72,7 +72,7 @@ export class WebService {
         }
     }
 
-    async getWebsByUsername({username,queryParameters="page=1&limit=4&webType=public"}) {
+    async getWebsByUsername({username,webType = "public", sortBy="views", sortOrder="desc", page=1, limit=4}) {
         try {
         // queryParameters = string contains all querys of url
         // valid querys are  webType , sortBy, sortOrder, page, limit;
@@ -80,7 +80,7 @@ export class WebService {
         // webType = public, private, forked
             if (!username) throw new Error("username is null");
 
-            const response = await axios.get(`/api/v1/webs/user/${username}?${queryParameters}`)
+            const response = await axios.get(`/api/v1/webs/user/${username}?webType=${webType}&sortBy=${sortBy}&sortOrder=${sortOrder}&page=${page}&limit=${limit}`)
 
             return response.data;
         } catch (error) {
@@ -143,11 +143,12 @@ export class WebService {
         }
     }
 
-    async searchFromMyWebs({page=1,limit=4,search}){
+    async searchFromMyWebs({page=1,limit=4,search,webType="all"}){
         try {
             if (!search) throw new Error("search is null");
+            console.log(search)
 
-            const response = await axios.get(`/api/v1/webs/search/my-webs?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}`)
+            const response = await axios.get(`/api/v1/webs/search/my-webs?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}&webType=${webType}`)
 
             return response.data;
         } catch (error) {

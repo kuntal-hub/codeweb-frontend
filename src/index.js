@@ -22,6 +22,8 @@ import Home from "./pages/Home.jsx";
 import Trending from "./pages/Trending.jsx";
 import Following from "./pages/Following.jsx";
 import YourWork from "./pages/YourWork.jsx";
+import YourWorkWebs from "./pages/YourWorkWebs.jsx";
+import YourWorkCollections from "./pages/YourWorkCollections.jsx";
 
 export {
     ErrorPage,
@@ -48,4 +50,6 @@ export {
     Trending,
     Following,
     YourWork,
+    YourWorkCollections,
+    YourWorkWebs,
 };

@@ -6,6 +6,7 @@ import editorOptionSlice from "./editorOptionSlice";
 import trendingSlice from "./trendingSlice";
 import followingSlice from "./followingSlice";
 import pinedSlice from "./pinedSlice";
+import yourWorkSlice from "./yourWorkSlice";
 
 const store = configureStore({
     reducer:{
@@ -15,7 +16,8 @@ const store = configureStore({
         editorOption:editorOptionSlice,
         trending:trendingSlice,
         following:followingSlice,
-        pinedItems:pinedSlice
+        pinedItems:pinedSlice,
+        yourWork:yourWorkSlice,
     }
 });
 
