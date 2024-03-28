@@ -84,8 +84,9 @@ export default memo(function WebCard({ web, addPined = true, collectionId=null }
                 </Link>
             </div>
             <div className='flex flex-nowrap justify-start py-4'>
+                <Link to={`/${web.owner.username}`}>
                 <img src={web.owner.avatar.replace("upload/", "upload/ar_1.0,g_face,c_fill,w_50/")} alt="avatar"
-                    className='rounded-lg w-10 min-[550px]:w-[50px] lg:w-10 xl:w-[50px] h-auto' />
+                    className='rounded-lg w-10 min-[550px]:w-[50px] lg:w-10 xl:w-[50px] h-auto' /></Link>
                 <div className='flex flex-col ml-2 sm:ml-3'>
                     <p className='text-sm min-[550px]:text-lg font-bold overflow-hidden h-6'>{web.title}</p>
                     <p className='flex flex-nowrap justify-start'>

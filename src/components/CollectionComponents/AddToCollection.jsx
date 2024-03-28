@@ -31,7 +31,7 @@ export default function AddToCollection({showAddToCollection,setShowAddToCollect
 
   const getCollections = async (page)=>{
     const limit = 8;
-    const response = await collectionService.getCollectionsCreatedByMe({queryParameters:`page=${page}&limit=${limit}`});
+    const response = await collectionService.getCollectionsCreatedByMe({page,limit});
     if (response.status<400 && response.data) {
         setResData(response.data);
         if (page === 1) {

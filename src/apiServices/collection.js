@@ -126,14 +126,14 @@ export class CollectionService {
     
     }
 
-    async getCollectionsByUsername({username,type="public",sortBy="createdAt",sortOrder="desc",page=1,limit=4}) {
+    async getCollectionsByUsername({username,sortBy="createdAt",sortOrder="desc",page=1,limit=4}) {
         try {
             // queryParameters = string contains all querys of url
             // valid querys are page, limit , sortBy, sortOrder, collectionType;
             // collectionType can be public, private
             if(!username) throw new Error("UserId is undefined");
 
-            const response = await axios.get(`/api/v1/collections/user-collection/${username}?page=${page}&limit=${limit}&sortBy=${sortBy}&sortOrder=${sortOrder}&collectionType=${type}`);
+            const response = await axios.get(`/api/v1/collections/user-collection/${username}?page=${page}&limit=${limit}&sortBy=${sortBy}&sortOrder=${sortOrder}`);
 
             return response.data;
         } catch (error) {
@@ -143,12 +143,12 @@ export class CollectionService {
     
     }
 
-    async getCollectionsCreatedByMe({queryParameters="page=1&limit=4"}) {
+    async getCollectionsCreatedByMe({ sortBy="createdAt",sortOrder="desc",page=1,limit=4,type="all"}) {
         try {
             // queryParameters = string contains all querys of url
             // valid querys are page, limit , sortBy, sortOrder;
             // sortBy = views,likesCount,websCount,createdAt;
-            const response = await axios.get(`/api/v1/collections/my-collections?${queryParameters}`);
+            const response = await axios.get(`/api/v1/collections/my-collections?page=${page}&limit=${limit}&sortBy=${sortBy}&sortOrder=${sortOrder}&type=${type}`);
 
             return response.data;
         } catch (error) {

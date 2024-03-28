@@ -146,10 +146,9 @@ export class WebService {
     async searchFromMyWebs({page=1,limit=4,search,webType="all"}){
         try {
             if (!search) throw new Error("search is null");
-            console.log(search)
 
             const response = await axios.get(`/api/v1/webs/search/my-webs?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}&webType=${webType}`)
-
+            
             return response.data;
         } catch (error) {
             console.log("webService.searchFromMyWebs error: ", error)

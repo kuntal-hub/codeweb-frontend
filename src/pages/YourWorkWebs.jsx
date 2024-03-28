@@ -89,6 +89,8 @@ export default function YourWorkWebs() {
                     <input type="text"
                         className='text-gray-300 text-[12px] font-semibold bg-gray-800 w-[200px] px-2 py-[6px] rounded-l-md border border-gray-700 focus:outline-none border-r-0 '
                         id="jhfgvjdhbj"
+                        placeholder='Search Here...'
+                        required={true}
                         defaultValue={yourWorkWebsENV.search}
                         {...register("search")} />
                     <input type="submit" value="search"
