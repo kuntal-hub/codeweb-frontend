@@ -461,3 +461,8 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #a49f9f; 
 }
+
+.hbl:hover .cngcolor {
+  color: #00ff40;
+}
+

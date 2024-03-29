@@ -1,51 +1,51 @@
-import React,{useEffect,useState} from 'react'
-import MainContainer from '../components/MainContainer'
-import { webService } from '../apiServices/web'
-import ExplorePeopleCard from '../components/userComponents/ExplorePeopleCard'
+import React,{useState,useEffect} from 'react'
+import { authServices } from "../apiServices/auth"
+import { useDispatch } from 'react-redux'
+import { addNotification } from '../store/notificationSlice'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import ExploreProfileLoadingCard from '../components/userComponents/ExploreProfileLoadingCard'
+import ExplorePeopleCard from './userComponents/ExplorePeopleCard'
+import ExploreProfileLoadingCard from './userComponents/ExploreProfileLoadingCard'
 
-export default function ExplorePeople() {
-    const [profiles, setProfiles] = useState([])
-    const [resData, setResData] = useState(null)
-    const [page, setPage] = useState(1)
+export default function SearchUser() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const dispatch = useDispatch();
+    const [page,setPage] = useState(1);
+    const [profiles,setProfiles] = useState([]);
+    const [userResData,setUserResData] = useState(null);
 
-    const getProfiles = async (page) => {
+    const getUsers = async (page)=>{
         const limit = 10;
-        const response = await webService.showRecomendedPeople({page,limit})
-        if (response.status < 400 && response.data) {
-            setResData(response.data)
+        const response = await authServices.searchUsers({page,limit,search:urlParams.get('q')});
+        if (response.status<400 && response.data) {
+            setUserResData(response.data);
             if (page === 1) {
-                setProfiles(response.data.docs)
+                setProfiles(response.data.docs);
             } else {
-                setProfiles([...profiles, ...response.data.docs])
+                setProfiles([...profiles,...response.data.docs]);
             }
-            setPage(page)
+            setPage(page);
         } else {
-
+            dispatch(addNotification({type:"error",text:response.message}))
         }
     }
 
     useEffect(() => {
-        getProfiles(1)
-    }, [])
+        if (urlParams.get('q')) {
+            getUsers(1);
+        } else {
+            setProfiles([]);
+        }
+    },[urlParams.get('q')]);
 
   return (
-    <MainContainer>
-        <div className='bg-gray-950 w-full h-full'>
-            <div className='w-full border-b-2 border-b-green-600 px-3 pt-3 pb-1'>
-                    <h1 className='text-white text-xl font-semibold px-3 w-auto'>
-                        Explore People</h1>
-            </div>
-
-            <div className='w-full bg-gray-950'>
-            {
-        resData ? profiles.length > 0 ?
+    <div className='text-white w-full m-0 p-0 bg-gray-950'>
+         {
+        userResData ? profiles.length > 0 ?
           <InfiniteScroll
             dataLength={profiles.length}
-            next={() => getProfiles(page + 1)}
+            next={() => getUsers(page + 1)}
             height={window.innerHeight - 110}
-            hasMore={resData.hasNextPage}
+            hasMore={userResData.hasNextPage}
             loader={
               <div className='flex flex-wrap justify-start lg:px-3 py-5 xl:px-6'>
                 <div className='w-[96%] mx-auto lg:w-[48%] xl:w-[32%]'>
@@ -107,8 +107,6 @@ export default function ExplorePeople() {
             </div>
           </div>
       }
-            </div>
-        </div>
-    </MainContainer>
+    </div>
   )
 }

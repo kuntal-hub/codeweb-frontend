@@ -3,6 +3,7 @@ import { NavLink, Outlet,useNavigate } from "react-router-dom"
 
 export default function YourWork() {
   const navigate = useNavigate()
+  document.title = 'CodeWeb - Your Work'
 
   useEffect(() => {
     if (window.location.pathname === '/your-work' || window.location.pathname === '/your-work/') {

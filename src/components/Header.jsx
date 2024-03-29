@@ -19,6 +19,7 @@ export default function Header() {
   const authStatus = useSelector(state => state.auth.status);
   const user = useSelector(state => state.auth.userData);
   const { register, handleSubmit } = useForm();
+  const urlParams = new URLSearchParams(window.location.search);
 
   const toggleLeftMenu = () => {
     setShowLeftMenu(!showLeftMenu);
@@ -36,7 +37,12 @@ export default function Header() {
   };
 
   const handleSearch = (data) => {
-    navigate(`/search?q=${data.search.trim().replaceAll(" ", "+")}`);
+    if (window.location.pathname === '/search' || window.location.pathname === '/search/') {
+        urlParams.set('q', data.search.trim());
+        navigate(`/search?${urlParams.toString()}`);
+    } else {
+        navigate(`/search?q=${data.search.trim().replaceAll(" ", "+")}`);
+    }
   }
 
   const logoutUser = async () => {
