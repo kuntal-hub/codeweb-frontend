@@ -15,13 +15,13 @@ export class CollectionService {
         }
     }
 
-    async updateCollection({collectionId,name,description}) {
+    async updateCollection({collectionId,name,description,isPublic=true}) {
         try {
             if(!collectionId) throw new Error("CollectionId is undefined");
 
             if(!name && !description) throw new Error("Name and description both are undefined");
 
-            const response = await axios.patch(`/api/v1/collections/update/${collectionId}`,{name,description});
+            const response = await axios.patch(`/api/v1/collections/update/${collectionId}`,{name,description,isPublic});
 
             return response.data;
         } catch (error) {

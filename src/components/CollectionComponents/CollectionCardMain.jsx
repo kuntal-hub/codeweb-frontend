@@ -6,18 +6,19 @@ import { followerSearvice } from '../../apiServices/follower'
 import { savedCollectionService } from '../../apiServices/savedCollection'
 import {addNotification} from "../../store/notificationSlice"
 
-export default memo(function CollectionCardMain({ collection, addsaved = true }) {
+export default memo(function CollectionCardMain({ collection }) {
     const user = useSelector(state => state.auth.userData);
     const [isFollowedByMe, setIsFollowedByMe] = useState(false);
     const [isLikedByMe, setIsLikedByMe] = useState(false);
     const [likesCount, setLikesCount] = useState(0);
-    const [showOptions, setShowOptions] = useState(true);
+    const [isSaved, setIsSaved] = useState(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
         setIsFollowedByMe(collection.owner.isFollowedByMe);
         setIsLikedByMe(collection.isLikedByMe);
         setLikesCount(collection.likesCount);
+        setIsSaved(collection.isSaved);
     }, []);
 
     const toggleLike = async () => {
@@ -43,35 +44,14 @@ export default memo(function CollectionCardMain({ collection, addsaved = true })
         }
     }
 
-    const saveCollection = async () => {
+    const toggleSaved = async () => {
         if(!user) return alert("Please login to save");
-        if(!addsaved) return ;
-        const response = await savedCollectionService.saveCollection({collectionId: collection._id});
+        const response = await savedCollectionService.toggleSavedCollection({collectionId: collection._id});
         if (response.status < 400 && response.data) {
-            dispatch(addNotification({type:"success", text:"Collection Saved"}));
-            setShowOptions(false);
+            dispatch(addNotification({type:"success", text:isSaved ? "Collection Unsaved" : "Collection Saved"}));
+            setIsSaved(!isSaved);
         } else {
             dispatch(addNotification({type:"error", text:response.message}));
-        }
-    }
-
-    const unsaveCollection = async () => {
-        if(!user) return alert("Please login to unsave");
-        if(addsaved) return ;
-        const response = await savedCollectionService.unsaveCollection({collectionId: collection._id});
-        if (response.status < 400 && response.data) {
-            dispatch(addNotification({type:"success", text:"Collection Unsaved"}));
-            setShowOptions(false);
-        } else {
-            dispatch(addNotification({type:"error", text:response.message}));
-        }
-    }
-
-    const toggleSaved = () => {
-        if(addsaved){
-            saveCollection();
-        } else {
-            unsaveCollection();
         }
     }
 
@@ -156,15 +136,15 @@ export default memo(function CollectionCardMain({ collection, addsaved = true })
                     </div>
 
 
-                {user && showOptions &&
+                {user &&
                     <div className='flex flex-col justify-center hoverableEle'>
                         <button className='material-symbols-outlined'>more_vert</button>
                         <div className='showingEle right-5 bottom-0 rounded-md bg-gray-700'>
                             
                             <button onClick={toggleSaved}
                                 className='flex flex-nowrap justify-center text-[11px] font-semibold py-1 px-1 text-white hover:bg-gray-600 rounded-b-md w-[160px] hover:rounded-md'>
-                                <span className="material-symbols-outlined scale-75">{addsaved ? "library_add" : "remove_circle"}</span>
-                                <span className='block mt-[2px]'>{addsaved ? "Save Collection" : "unsave Collection"}</span>
+                                <span className="material-symbols-outlined scale-75">{!isSaved ? "library_add" : "remove_circle"}</span>
+                                <span className='block mt-[2px]'>{!isSaved ? "Save Collection" : "unsave Collection"}</span>
                             </button>
                         </div>
                     </div>}

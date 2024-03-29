@@ -5,6 +5,7 @@ import { addNotification } from '../../store/notificationSlice'
 import { setTrendings } from '../../store/trendingSlice'
 import { useForm } from 'react-hook-form'
 import Input from '../utilComponents/Input'
+import {resetYourWorkWebs} from "../../store/yourWorkSlice"
 
 export default function UpdateWebDetails({ web, setWebDetails, setShowUpdateWebDetails, showUpdateWebDetails }) {
     const dispatch = useDispatch();
@@ -77,6 +78,8 @@ export default function UpdateWebDetails({ web, setWebDetails, setShowUpdateWebD
                         })
                     ))
                 }
+            } else {
+                dispatch(resetYourWorkWebs());
             }
             setShowUpdateWebDetails(false);
         } else {

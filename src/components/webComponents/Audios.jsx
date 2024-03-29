@@ -81,7 +81,7 @@ export default function Audios() {
                 resData ? audios.length > 0 ?
                     <InfiniteScroll
                         dataLength={audios.length}
-                        next={() => getPublicAssets(page + 1)}
+                        next={() => getPublicAudios(page + 1)}
                         height={window.innerHeight - 112}
                         hasMore={resData.hasNextPage}
                         loader={<h4 className='w-full text-center font-bold text-lg'>Loading...</h4>}

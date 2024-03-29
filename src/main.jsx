@@ -33,6 +33,7 @@ import {
   YourWork,
   YourWorkCollections,
   YourWorkWebs,
+  ViewCollection,
 } from "./index.js";
 
 const routes = createBrowserRouter(
@@ -136,6 +137,10 @@ const routes = createBrowserRouter(
       <Route path='web/:webId' element={<EditWeb />} />
       
       <Route path='view-full/:webId' element={<ViewFullWeb />} />
+
+      <Route path='collection/:collectionId/' element={<ViewCollection />} >
+          <Route path='details/:webId' element={<WebDetails />} />
+      </Route>
 
       <Route path='' element={<Home />} >
               

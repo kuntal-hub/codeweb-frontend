@@ -14,6 +14,7 @@ import Loader from '../backgrounds/Loader.jsx';
 import Indentation1 from './indentation1.jsx';
 import Indentation2 from './indentation2.jsx';
 import Indentation3 from './indentation3.jsx';
+import {resetYourWorkWebs} from "../../store/yourWorkSlice"
 
 export default function MainEditor() {
   document.title = 'new web - codeWeb.io'
@@ -108,6 +109,7 @@ export default function MainEditor() {
     if(response.status<400 && response.data){
       dispatch(addNotification({ text: response.message, type: "success" }));
       setIsCreating(false);
+      dispatch(resetYourWorkWebs());
       navigate(`/web/${response.data._id}`);
     } else if(response.status>=400 && !response.data){
       dispatch(addNotification({ text: response.message, type: "error" }));

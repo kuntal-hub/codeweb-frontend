@@ -15,6 +15,7 @@ import Loader from '../components/backgrounds/Loader.jsx';
 import Indentation1 from '../components/webComponents/indentation1.jsx';
 import Indentation2 from '../components/webComponents/indentation2.jsx';
 import Indentation3 from '../components/webComponents/indentation3.jsx';
+import {resetYourWorkWebs} from "../store/yourWorkSlice"
 
 export default function EditWeb() {
   const navigate = useNavigate();
@@ -135,6 +136,7 @@ export default function EditWeb() {
       dispatch(addNotification({ text: response.message, type: "success" }));
       setWeb({...web,html:webHtml,css:webCss,js:webJs,title:webTitle,description:webDescription,isPublic:webIsPublic});
       setIsSaving(false);
+      dispatch(resetYourWorkWebs())
     } else if(response.status>=400 || !response.data){
       dispatch(addNotification({ text: response.message, type: "error" }));
       setIsSaving(false);
