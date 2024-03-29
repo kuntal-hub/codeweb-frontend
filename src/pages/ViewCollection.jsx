@@ -12,6 +12,7 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import { savedCollectionService } from '../apiServices/savedCollection';
 import UpdateCollection from '../components/CollectionComponents/UpdateCollection';
 import DeleteCollection from '../components/CollectionComponents/DeleteCollection';
+import CollectionDetails from '../components/CollectionComponents/CollectionDetails';
 
 export default function ViewCollection() {
     const { collectionId } = useParams();
@@ -21,6 +22,7 @@ export default function ViewCollection() {
     const [page, setPage] = useState(1);
     const [showUpdateCollection, setShowUpdateCollection] = useState(false);
     const [showDeleteCollectionComponent, setShowDeleteCollectionCoponent] = useState(false);
+    const [showDetails,setShowDetails] = useState(false)
     const user = useSelector((state) => state.auth.userData)
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -123,7 +125,8 @@ export default function ViewCollection() {
                                     className='w-10 h-10 rounded-md' />
                             </Link>
                             <div className='mx-2'>
-                                <button className='text-lg block font-bold md:text-[20px] leading-3' >
+                                <button onClick={()=>setShowDetails(true)}
+                                className='text-lg block font-bold md:text-[20px] leading-3' >
                                     {collection.name}
                                 </button>
                                 <div className='flex flex-nowrap justify-start mt-2'>
@@ -164,6 +167,11 @@ export default function ViewCollection() {
            hover:bg-gray-900 transition-all duration-300 ease-in-out mx-1 md:mx-2'>
                                         more_horiz</button>
                                     <div className='showingEle right-3 top-10 rounded-md bg-gray-700'>
+                                        <button onClick={()=>setShowDetails(true)}
+                                            className='flex flex-nowrap justify-center text-[11px] font-semibold py-1 px-1 text-white hover:bg-gray-600 rounded-b-md w-[160px] hover:rounded-md'>
+                                            <span className="material-symbols-outlined scale-75">description</span>
+                                            <span className='block mt-[2px]'>Description</span>
+                                        </button>
                                         <button onClick={toggleSaved}
                                             className='flex flex-nowrap justify-center text-[11px] font-semibold py-1 px-1 text-white hover:bg-gray-600 rounded-b-md w-[160px] hover:rounded-md'>
                                             <span className="material-symbols-outlined scale-75">{!collection.isSaved ? "library_add" : "remove_circle"}</span>
@@ -271,6 +279,11 @@ export default function ViewCollection() {
                         collectionId={collectionId}
                         showDeleteCollectionComponent={showDeleteCollectionComponent}
                         setShowDeleteCollectionCoponent={setShowDeleteCollectionCoponent} />}
+                {showDetails && 
+                <CollectionDetails
+                showDetails={showDetails}
+                setShowDetails={setShowDetails}
+                collection={collection} />}
             </div>
             <Outlet />
         </MainContainer>
