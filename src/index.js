@@ -25,6 +25,7 @@ import YourWork from "./pages/YourWork.jsx";
 import YourWorkWebs from "./pages/YourWorkWebs.jsx";
 import YourWorkCollections from "./pages/YourWorkCollections.jsx";
 import ViewCollection from "./pages/ViewCollection.jsx";
+import ExplorePeople from "./pages/ExplorePeople.jsx";
 
 export {
     ErrorPage,
@@ -54,4 +55,5 @@ export {
     YourWorkCollections,
     YourWorkWebs,
     ViewCollection,
+    ExplorePeople,
 };

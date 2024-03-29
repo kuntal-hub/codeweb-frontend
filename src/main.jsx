@@ -34,6 +34,7 @@ import {
   YourWorkCollections,
   YourWorkWebs,
   ViewCollection,
+  ExplorePeople,
 } from "./index.js";
 
 const routes = createBrowserRouter(
@@ -137,6 +138,12 @@ const routes = createBrowserRouter(
       <Route path='web/:webId' element={<EditWeb />} />
       
       <Route path='view-full/:webId' element={<ViewFullWeb />} />
+
+      <Route path='explore-profiles' element={
+        <AuthLayout authentication={true}>
+          <ExplorePeople/>
+        </AuthLayout>
+      } />
 
       <Route path='collection/:collectionId/' element={<ViewCollection />} >
           <Route path='details/:webId' element={<WebDetails />} />
