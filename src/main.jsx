@@ -35,7 +35,8 @@ import {
   YourWorkWebs,
   ViewCollection,
   ExplorePeople,
-  Search
+  Search,
+  Profile,
 } from "./index.js";
 
 const routes = createBrowserRouter(
@@ -77,6 +78,12 @@ const routes = createBrowserRouter(
         </AuthLayout>
       }> 
 
+          <Route path='' element={
+            <AuthLayout authentication={true}>
+              <ProfileSettings/>
+            </AuthLayout>
+          } />
+
           <Route path='profile' element={
             <AuthLayout authentication={true}>
               <ProfileSettings/>
@@ -102,6 +109,12 @@ const routes = createBrowserRouter(
         </AuthLayout>
       } >
           
+            <Route path='' element={
+              <AuthLayout authentication={true}>
+                <ImageAssets/>
+              </AuthLayout>
+            } />
+
             <Route path='images' element={
               <AuthLayout authentication={true}>
                 <ImageAssets/>
@@ -144,6 +157,9 @@ const routes = createBrowserRouter(
           <Route path='details/:webId' element={<WebDetails />} />
       </Route>
 
+      <Route path=':username' element={<Profile />} />
+      
+
       <Route path='explore-profiles' element={
         <AuthLayout authentication={true}>
           <ExplorePeople/>
@@ -156,7 +172,7 @@ const routes = createBrowserRouter(
 
       <Route path='' element={<Home />} >
               
-            <Route path='/' element={<Trending />} >
+            <Route path='' element={<Trending />} >
                 <Route path='details/:webId' element={<WebDetails />} />
             </Route>
 

@@ -7,6 +7,7 @@ import trendingSlice from "./trendingSlice";
 import followingSlice from "./followingSlice";
 import pinedSlice from "./pinedSlice";
 import yourWorkSlice from "./yourWorkSlice";
+import profileSlice from "./profileSlice";
 
 const store = configureStore({
     reducer:{
@@ -18,6 +19,7 @@ const store = configureStore({
         following:followingSlice,
         pinedItems:pinedSlice,
         yourWork:yourWorkSlice,
+        profile:profileSlice
     }
 });
 

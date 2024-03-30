@@ -27,6 +27,7 @@ import YourWorkCollections from "./pages/YourWorkCollections.jsx";
 import ViewCollection from "./pages/ViewCollection.jsx";
 import ExplorePeople from "./pages/ExplorePeople.jsx";
 import Search from "./pages/Search.jsx";
+import Profile from "./pages/Profile.jsx";
 
 export {
     ErrorPage,
@@ -58,4 +59,5 @@ export {
     ViewCollection,
     ExplorePeople,
     Search,
+    Profile,
 };
