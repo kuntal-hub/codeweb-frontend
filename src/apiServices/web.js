@@ -89,14 +89,14 @@ export class WebService {
         }
     }
 
-    async getLikedWebsByUsername({username,queryParameters="page=1&limit=4"}) {
+    async getLikedWebsByUsername({username,page=1,limit=4}) {
         try {
             // queryParameters = string contains all querys of url
             // valid querys are sortBy, sortOrder, page, limit;
             // sortBy = views, createdAt, likesCount, commentsCount
             if (!username) throw new Error("username is null");
 
-            const response = await axios.get(`/api/v1/webs/liked/${username}?${queryParameters}`)
+            const response = await axios.get(`/api/v1/webs/liked/${username}?page=${page}&limit=${limit}`)
 
             return response.data;
         } catch (error) {

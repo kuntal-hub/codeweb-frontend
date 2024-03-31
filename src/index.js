@@ -28,6 +28,13 @@ import ViewCollection from "./pages/ViewCollection.jsx";
 import ExplorePeople from "./pages/ExplorePeople.jsx";
 import Search from "./pages/Search.jsx";
 import Profile from "./pages/Profile.jsx";
+import ProfileWebs from "./pages/ProfileWebs.jsx";
+import ProfileCollections from "./pages/ProfileCollections.jsx";
+import ProfilePopularWebs from "./pages/ProfilePopularWebs.jsx";
+import ProfilePublicWebs from "./pages/ProfilePublicWebs.jsx";
+import ProfilePrivateWeb from "./pages/ProfileprivateWeb.jsx";
+import ProfileForkedWeb from "./pages/ProfileForkedWeb.jsx";
+import PrifileLikedWeb from "./pages/PrifileLikedWeb.jsx";
 
 export {
     ErrorPage,
@@ -60,4 +67,11 @@ export {
     ExplorePeople,
     Search,
     Profile,
+    ProfileWebs,
+    ProfileCollections,
+    ProfilePopularWebs,
+    ProfilePublicWebs,
+    ProfilePrivateWeb,
+    ProfileForkedWeb,
+    PrifileLikedWeb,
 };

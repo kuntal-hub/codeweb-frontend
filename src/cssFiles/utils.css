@@ -466,3 +466,9 @@
   color: #00ff40;
 }
 
+.profileNavlinks .active{
+  background: none;
+  border: none;
+  color: white;
+}
+
