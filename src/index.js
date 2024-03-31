@@ -35,6 +35,11 @@ import ProfilePublicWebs from "./pages/ProfilePublicWebs.jsx";
 import ProfilePrivateWeb from "./pages/ProfileprivateWeb.jsx";
 import ProfileForkedWeb from "./pages/ProfileForkedWeb.jsx";
 import PrifileLikedWeb from "./pages/PrifileLikedWeb.jsx";
+import ProfilepopularCollection from "./pages/ProfilepopularCollection.jsx";
+import ProfilePublicCollections from "./pages/ProfilePublicCollections.jsx";
+import ProfilePrivateCollections from "./pages/ProfilePrivateCollections.jsx";
+import ProfileLikedColection from "./pages/ProfileLikedColection.jsx";
+import OrganizeShowcase from "./pages/OrganizeShowcase.jsx";
 
 export {
     ErrorPage,
@@ -74,4 +79,9 @@ export {
     ProfilePrivateWeb,
     ProfileForkedWeb,
     PrifileLikedWeb,
+    ProfilepopularCollection,
+    ProfilePublicCollections,
+    ProfilePrivateCollections,
+    ProfileLikedColection,
+    OrganizeShowcase,
 };

@@ -36,7 +36,7 @@ export default function ProfilePrivateWeb() {
     }
 
     useEffect(() => {
-        if (user.username !== username) {
+        if (!user || user.username !== username) {
           return navigate(`/${username}/public`, { replace: true });
         }
         if (!privateWebResData) {

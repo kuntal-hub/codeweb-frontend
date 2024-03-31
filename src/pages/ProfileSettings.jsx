@@ -29,7 +29,7 @@ export default function ProfileSettings() {
         <div className='w-full flex flex-col lg:flex-nowrap lg:flex-row p-5'>
             <div className='lg:w-[35%] w-full capitalize pr-4'>
                 <h2 className=' w-full text-xl font-bold mb-1'>Organize Showcase</h2>
-                <p>You can choose and arrange the Pens displayed on your profile.</p>
+                <p>You can choose and arrange the Webs displayed on your profile.</p>
             </div>
             <div className='lg:w-[65%] w-full mt-5 lg:mt-0 p-4 flex flex-col bg-gray-800 rounded-lg'>
               <Link to={`/organize-showcase`}

@@ -34,7 +34,7 @@ export default function ProfileWebs() {
                 }}
                  text-[16px] text-gray-500 font-semibold block px-3 py-[6px]`}>Public</NavLink>
 
-                {user.username === username && <NavLink to='private' className={`${({ isActive, isPending }) => {
+                {user && user.username === username && <NavLink to='private' className={`${({ isActive, isPending }) => {
                     return isPending ? "pending" : isActive ? "active" : ""
                 }}
                  text-[16px] text-gray-500 font-semibold block px-3 py-[6px]`}>Private</NavLink>}

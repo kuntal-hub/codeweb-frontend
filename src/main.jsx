@@ -44,6 +44,11 @@ import {
   ProfilePrivateWeb,
   ProfileForkedWeb,
   PrifileLikedWeb,
+  ProfilepopularCollection,
+  ProfilePublicCollections,
+  ProfilePrivateCollections,
+  ProfileLikedColection,
+  OrganizeShowcase,
 } from "./index.js";
 
 const routes = createBrowserRouter(
@@ -214,10 +219,28 @@ const routes = createBrowserRouter(
 
         </Route>
 
+
+
         <Route path='collections/' element={<ProfileCollections />} >
 
+            <Route path='popular' element={<ProfilepopularCollection />} />
+
+            <Route path='public/' element={<ProfilePublicCollections />} />
+
+            <Route path='private/' element={<ProfilePrivateCollections />} />
+
+            <Route path='liked/' element={<ProfileLikedColection />} />
+
         </Route>
+
       </Route>
+
+
+      <Route path='organize-showcase' element={
+        <AuthLayout authentication={true}>
+          <OrganizeShowcase />
+        </AuthLayout>
+      } />
 
 
       <Route path='explore-profiles' element={

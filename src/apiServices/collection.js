@@ -157,14 +157,14 @@ export class CollectionService {
         }
     }
 
-    async getLikedCollectionsByUsername({username,queryParameters="page=1&limit=4"}) {
+    async getLikedCollectionsByUsername({username,page=1,limit=4}) {
         try {
             // queryParameters = string contains all querys of url
             // valid querys are page, limit , sortBy, sortOrder;
             // sortBy = views,likesCount,websCount,createdAt;
             if(!username) throw new Error("UserId is undefined");
 
-            const response = await axios.get(`/api/v1/collections/liked/${username}?${queryParameters}`);
+            const response = await axios.get(`/api/v1/collections/liked/${username}?page=${page}&limit=${limit}`);
 
             return response.data;
         } catch (error) {
