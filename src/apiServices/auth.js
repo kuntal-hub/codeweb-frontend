@@ -33,7 +33,7 @@ export class AuthServices {
             const responce = await axios.post("https://codeweb.onrender.com/api/v1/users/login", {
                 identifier,
                 password
-            },{withCredentials:true,credentials: 'include'});
+            },{withCredentials:true});
 
             if (responce.data.status>=400){
                 return {message:responce.data.message,status:responce.data.status,data:null};
@@ -49,8 +49,7 @@ export class AuthServices {
     async logout ({fromAllDevices=true}) {
         try {
             const responce = await axios.post(`https://codeweb.onrender.com/api/v1/users/logout?fromAllDevices=${fromAllDevices}`,{},{
-                withCredentials:true,
-                credentials: 'include'
+                withCredentials:true
             });
 
             if (responce.data.status>=400) return false;
@@ -65,8 +64,7 @@ export class AuthServices {
     async refreshAccessToken () {
         try {
             const responce = await axios.post("https://codeweb.onrender.com/api/v1/users/refresh-token",{},{
-                withCredentials:true,
-                credentials: 'include'
+                withCredentials:true
             });
 
             if (responce.data.status>=400){
