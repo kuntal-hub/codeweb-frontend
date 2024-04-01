@@ -6,7 +6,7 @@ export class AuthServices {
         try {
             if (!username || !email || !password || !fullName) throw new Error("username or email or password or fullName is null");
 
-            const responce = await axios.post("/api/v1/users/register", {
+            const responce = await axios.post("https://codeweb.onrender.com/api/v1/users/register", {
                 username,
                 email,
                 password,
@@ -30,7 +30,7 @@ export class AuthServices {
         try {
             if (!identifier || !password) throw new Error("identifier or password is null");
 
-            const responce = await axios.post("/api/v1/users/login", {
+            const responce = await axios.post("https://codeweb.onrender.com/api/v1/users/login", {
                 identifier,
                 password
             });
@@ -48,7 +48,7 @@ export class AuthServices {
 
     async logout ({fromAllDevices=true}) {
         try {
-            const responce = await axios.post(`/api/v1/users/logout?fromAllDevices=${fromAllDevices}`);
+            const responce = await axios.post(`https://codeweb.onrender.com/api/v1/users/logout?fromAllDevices=${fromAllDevices}`);
 
             if (responce.data.status>=400) return false;
 
@@ -61,7 +61,7 @@ export class AuthServices {
 
     async refreshAccessToken () {
         try {
-            const responce = await axios.post("/api/v1/users/refresh-token");
+            const responce = await axios.post("https://codeweb.onrender.com/api/v1/users/refresh-token");
 
             if (responce.data.status>=400){
                 return {status:responce.data.status,message:responce.data.message,data:null};
@@ -76,7 +76,7 @@ export class AuthServices {
 
     async getCurrentUser () {
         try {
-            const responce = await axios.get("/api/v1/users/me");
+            const responce = await axios.get("https://codeweb.onrender.com/api/v1/users/me");
             if (responce.data.status>=400){
                 return {status:responce.data.status,message:responce.data.message,data:null};
             }
@@ -91,7 +91,7 @@ export class AuthServices {
 
     async requestVeryficationEmail ({verificationURL="http://localhost:5173/verify-email"}) {
         try {
-            const responce = await axios.post("/api/v1/users/request-verify-email", {
+            const responce = await axios.post("https://codeweb.onrender.com/api/v1/users/request-verify-email", {
                 verificationURL
             });
 
@@ -109,7 +109,7 @@ export class AuthServices {
         try {
             if (!token) throw new Error("token is null");
 
-            const responce = await axios.post("/api/v1/users/verify-email", {
+            const responce = await axios.post("https://codeweb.onrender.com/api/v1/users/verify-email", {
                 token
             });
 
@@ -127,7 +127,7 @@ export class AuthServices {
         try {
             if (!email) throw new Error("email is null");
 
-            const responce = await axios.post("/api/v1/users/request-forgot-password-email", {
+            const responce = await axios.post("https://codeweb.onrender.com/api/v1/users/request-forgot-password-email", {
                 email,
                 resetPasswordURL
             });
@@ -146,7 +146,7 @@ export class AuthServices {
         try {
             if (!token || !newPassword) throw new Error("token or newPassword is null");
 
-            const responce = await axios.post("/api/v1/users/reset-password", {
+            const responce = await axios.post("https://codeweb.onrender.com/api/v1/users/reset-password", {
                 token,
                 newPassword
             });
@@ -166,7 +166,7 @@ export class AuthServices {
         try {
             if (!data) throw new Error("data is null");
 
-            const responce = await axios.patch("/api/v1/users/update",{...data});
+            const responce = await axios.patch("https://codeweb.onrender.com/api/v1/users/update",{...data});
 
             if (responce.data.status>=400) return {status:responce.data.status,message:responce.data.message,data:null};
 
@@ -181,7 +181,7 @@ export class AuthServices {
         try {
             if (!oldPassword || !newPassword) throw new Error("oldPassword or newPassword is null");
 
-            const responce = await axios.post("/api/v1/users/change-password",{oldPassword,newPassword});
+            const responce = await axios.post("https://codeweb.onrender.com/api/v1/users/change-password",{oldPassword,newPassword});
 
             if (responce.data.status>=400) return {status:responce.data.status,message:responce.data.message,data:null};
 
@@ -196,7 +196,7 @@ export class AuthServices {
         try {
             if(!email || !password) throw new Error("email or password is null");
 
-            const responce = await axios.post("/api/v1/users/change-email",{email,password,verificationURL});
+            const responce = await axios.post("https://codeweb.onrender.com/api/v1/users/change-email",{email,password,verificationURL});
 
             if (responce.data.status>=400) return {status:responce.data.status,message:responce.data.message,data:null};
 
@@ -211,7 +211,7 @@ export class AuthServices {
         try {
             if (!password) throw new Error("password is null");
 
-            const responce = await axios.delete(`/api/v1/users/delete/${password}`);
+            const responce = await axios.delete(`https://codeweb.onrender.com/api/v1/users/delete/${password}`);
 
             if (responce.data.status>=400) return {status:responce.data.status,message:responce.data.message,data:false};
 
@@ -226,7 +226,7 @@ export class AuthServices {
         try {
             if(!image || !public_id) throw new Error("image or public_id is null");
 
-            const responce = await axios.patch("/api/v1/users/update-avatar",{image,public_id});
+            const responce = await axios.patch("https://codeweb.onrender.com/api/v1/users/update-avatar",{image,public_id});
 
             if (responce.data.status>=400) return {status:responce.data.status,message:responce.data.message,data:null};
 
@@ -241,7 +241,7 @@ export class AuthServices {
         try {
             if(!image || !public_id) throw new Error("image or public_id is null");
 
-            const responce = await axios.patch("/api/v1/users/update-cover-image",{image,public_id});
+            const responce = await axios.patch("https://codeweb.onrender.com/api/v1/users/update-cover-image",{image,public_id});
 
             if (responce.data.status>=400) return {status:responce.data.status,message:responce.data.message,data:null};
 
@@ -256,7 +256,7 @@ export class AuthServices {
         try {
             if(!username) throw new Error("username is null");
 
-            const responce = await axios.get(`/api/v1/users/profile/${username}`);
+            const responce = await axios.get(`https://codeweb.onrender.com/api/v1/users/profile/${username}`);
 
             if (!responce) throw new Error("responce is null");
 
@@ -271,7 +271,7 @@ export class AuthServices {
         try {
             if(!username) throw new Error("username is null");
 
-            const responce = await axios.get(`/api/v1/users/showcase/${username}`);
+            const responce = await axios.get(`https://codeweb.onrender.com/api/v1/users/showcase/${username}`);
 
             if (!responce) throw new Error("responce is null");
 
@@ -284,7 +284,7 @@ export class AuthServices {
 
     async getPinedItems({page=1,limit=4}){
         try {
-            const responce = await axios.get(`/api/v1/users/pined?page=${page}&limit=${limit}`);
+            const responce = await axios.get(`https://codeweb.onrender.com/api/v1/users/pined?page=${page}&limit=${limit}`);
 
             if (!responce) throw new Error("responce is null");
 
@@ -299,7 +299,7 @@ export class AuthServices {
         try {
             if(!webId) throw new Error("webId is null");
 
-            const responce = await axios.patch(`/api/v1/users/add-to-pined/${webId}`);
+            const responce = await axios.patch(`https://codeweb.onrender.com/api/v1/users/add-to-pined/${webId}`);
 
             return responce.data;
         } catch (error) {
@@ -313,7 +313,7 @@ export class AuthServices {
         try {
             if(!webId) throw new Error("webId is null");
 
-            const responce = await axios.patch(`/api/v1/users/remove-pined/${webId}`);
+            const responce = await axios.patch(`https://codeweb.onrender.com/api/v1/users/remove-pined/${webId}`);
 
             return responce.data;
         } catch (error) {
@@ -326,7 +326,7 @@ export class AuthServices {
         try {
             if(!showcase) throw new Error("showcase is null");
 
-            const responce = await axios.patch("/api/v1/users/update-showcase",{showcase});
+            const responce = await axios.patch("https://codeweb.onrender.com/api/v1/users/update-showcase",{showcase});
 
             if (!responce) throw new Error("responce is null");
 
@@ -341,7 +341,7 @@ export class AuthServices {
         try {
             if(!username) throw new Error("username is null");
 
-            const responce = await axios.get(`/api/v1/users/check-username-availability/${username}`);
+            const responce = await axios.get(`https://codeweb.onrender.com/api/v1/users/check-username-availability/${username}`);
 
             if (responce.data.status>=400) return false;
 
@@ -356,7 +356,7 @@ export class AuthServices {
         try {
             if(!search) throw new Error("search is null");
 
-            const responce = await axios.get(`/api/v1/users/search?search=${search}&page=${page}&limit=${limit}`);
+            const responce = await axios.get(`https://codeweb.onrender.com/api/v1/users/search?search=${search}&page=${page}&limit=${limit}`);
 
             if (!responce) throw new Error("responce is null");
 
