@@ -12,9 +12,9 @@ import {setEditorOption} from "../store/editorOptionSlice.js";
 import { useParams } from 'react-router-dom';
 import WebFooter from '../components/webComponents/WebFooter.jsx';
 import Loader from '../components/backgrounds/Loader.jsx';
-import Indentation1 from '../components/webComponents/indentation1.jsx';
-import Indentation2 from '../components/webComponents/indentation2.jsx';
-import Indentation3 from '../components/webComponents/indentation3.jsx';
+import Indentation1 from '../components/webComponents/Indentation1.jsx';
+import Indentation2 from '../components/webComponents/Indentation2.jsx';
+import Indentation3 from '../components/webComponents/Indentation3.jsx';
 import {resetYourWorkWebs} from "../store/yourWorkSlice"
 
 export default function EditWeb() {
