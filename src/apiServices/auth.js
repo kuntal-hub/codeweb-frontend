@@ -45,11 +45,9 @@ export class AuthServices {
             expirationDate1 = expirationDate1.toUTCString();
             expirationDate2 = expirationDate2.toUTCString();
 
-            document.cookie = `refreshToken=${responce.data.data?.refreshToken}; path=/api; domain=onrender.com;
-            sameSite=None; secure; expires=${expirationDate1};`
+            document.cookie = `refreshToken=${responce.data.data?.refreshToken}; path=/api; expires=${expirationDate1};`
 
-            document.cookie = `accessToken=${responce.data.data?.accessToken}; path=/api; domain=onrender.com;
-            sameSite=None; secure; expires=${expirationDate2};`
+            document.cookie = `accessToken=${responce.data.data?.accessToken}; path=/api; expires=${expirationDate2};`
 
             if (responce.data.status>=400){
                 return {message:responce.data.message,status:responce.data.status,data:null};
@@ -78,9 +76,9 @@ export class AuthServices {
             expirationDate1 = expirationDate1.toUTCString();
             expirationDate2 = expirationDate2.toUTCString();
 
-            document.cookie = `refreshToken=; path=/api; domain=onrender.com; sameSite=None; secure; expires=${expirationDate1};`
+            document.cookie = `refreshToken=; path=/api; expires=${expirationDate1};`
 
-            document.cookie = `accessToken=; path=/api; domain=onrender.com; sameSite=None; secure; expires=${expirationDate2};`
+            document.cookie = `accessToken=; path=/api; expires=${expirationDate2};`
 
             return true;
         } catch (error) {
@@ -105,8 +103,7 @@ export class AuthServices {
             // Convert the expiration date to the UTC string format
             expirationDate2 = expirationDate2.toUTCString();
 
-            document.cookie = `accessToken=${responce.data.data?.accessToken}; path=/api; domain=onrender.com;
-            sameSite=None; secure; expires=${expirationDate2};`
+            document.cookie = `accessToken=${responce.data.data?.accessToken}; path=/api; expires=${expirationDate2};`
 
             return await this.getCurrentUser();
         } catch (error) {
