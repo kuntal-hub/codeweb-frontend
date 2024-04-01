@@ -35,20 +35,6 @@ export class AuthServices {
                 password
             });
 
-            let currentDate = new Date();
-
-            // Get the current date and time
-            let expirationDate1 = new Date(currentDate.getTime() + (30 * 24 * 60 * 60 * 1000)); // 30 days from now
-            let expirationDate2 = new Date(currentDate.getTime() + (24 * 60 * 60 * 1000)); // 24 hours from now
-
-            // Convert the expiration date to the UTC string format
-            expirationDate1 = expirationDate1.toUTCString();
-            expirationDate2 = expirationDate2.toUTCString();
-
-            document.cookie = `refreshToken=${responce.data.data?.refreshToken}; path=/api; expires=${expirationDate1};`
-
-            document.cookie = `accessToken=${responce.data.data?.accessToken}; path=/api; expires=${expirationDate2};`
-
             if (responce.data.status>=400){
                 return {message:responce.data.message,status:responce.data.status,data:null};
             }
@@ -66,20 +52,6 @@ export class AuthServices {
 
             if (responce.data.status>=400) return false;
 
-            let currentDate = new Date();
-
-            // Get the current date and time
-            let expirationDate1 = new Date(currentDate.getTime() + (30 * 24 * 60 * 60 * 1000)); // 30 days from now
-            let expirationDate2 = new Date(currentDate.getTime() + (24 * 60 * 60 * 1000)); // 24 hours from now
-
-            // Convert the expiration date to the UTC string format
-            expirationDate1 = expirationDate1.toUTCString();
-            expirationDate2 = expirationDate2.toUTCString();
-
-            document.cookie = `refreshToken=; path=/api; expires=${expirationDate1};`
-
-            document.cookie = `accessToken=; path=/api; expires=${expirationDate2};`
-
             return true;
         } catch (error) {
             console.log("authServices.logout error: ", error);
@@ -94,16 +66,6 @@ export class AuthServices {
             if (responce.data.status>=400){
                 return {status:responce.data.status,message:responce.data.message,data:null};
             }
-
-            let currentDate = new Date();
-
-            // Get the current date and time
-            let expirationDate2 = new Date(currentDate.getTime() + (24 * 60 * 60 * 1000)); // 24 hours from now
-
-            // Convert the expiration date to the UTC string format
-            expirationDate2 = expirationDate2.toUTCString();
-
-            document.cookie = `accessToken=${responce.data.data?.accessToken}; path=/api; expires=${expirationDate2};`
 
             return await this.getCurrentUser();
         } catch (error) {
