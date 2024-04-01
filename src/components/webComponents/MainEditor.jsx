@@ -11,9 +11,9 @@ import { useNavigate } from 'react-router-dom';
 import { addNotification } from '../../store/notificationSlice.js';
 import WebFooter from './WebFooter.jsx';
 import Loader from '../backgrounds/Loader.jsx';
-import Indentation1 from './indentation1.jsx';
-import Indentation2 from './indentation2.jsx';
-import Indentation3 from './indentation3.jsx';
+import Indentation1 from './Indentation1.jsx';
+import Indentation2 from './Indentation2.jsx';
+import Indentation3 from './Indentation3.jsx';
 import {resetYourWorkWebs} from "../../store/yourWorkSlice"
 
 export default function MainEditor() {
