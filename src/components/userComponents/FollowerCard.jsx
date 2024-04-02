@@ -1,8 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { followerSearvice } from '../../apiServices/follower';
+import { useSelector } from 'react-redux';
 
 export default function FollowerCard({ follower,setFollowings,setFollowers }) {
+  const user = useSelector(state => state.auth.userData)
 
   const toggleFollow = async () => {
     const isFollow = follower.isFollowedByMe;
@@ -35,12 +37,12 @@ export default function FollowerCard({ follower,setFollowings,setFollowers }) {
         </div>
       </div>
 
-      <button onClick={toggleFollow}
+      {user && user.username !== follower.username && <button onClick={toggleFollow}
       title={follower.isFollowedByMe ? "Unfollow" : "Follow"}
         className={`rounded-full px-4 h-8 ${follower.isFollowedByMe ? "bg-gray-500 hover:bg-gray-600" : "bg-green-600 hover:bg-green-500"} text-[12px] mt-2 text-white ml-2 font-semibold`}
       >
         {follower.isFollowedByMe ? "Following" : "Follow"}
-      </button>
+      </button>}
 
     </div>
   )
