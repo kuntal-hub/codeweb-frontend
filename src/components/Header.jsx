@@ -49,6 +49,7 @@ export default function Header() {
     if (authStatus && user) {
       const response = authServices.logout({ fromAllDevices: true });
       if (response) {
+        localStorage.clear();
         dispatch(logout());
         dispatch(addNotification({ text: "You have been logged out", type: "success" }));
         navigate('/');

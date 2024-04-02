@@ -73,6 +73,7 @@ export class AuthServices {
 
             localStorage.removeItem("accessToken");
             localStorage.removeItem("refreshToken");
+            localStorage.clear();
 
             return true;
         } catch (error) {
