@@ -10,10 +10,16 @@ export default function ProfileWebs() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (showcaseWebs.length === 0) {
+        if (showcaseWebs.length === 0 && ((
+            window.location.pathname === `/${username}` ||
+            window.location.pathname === `/${username}/`
+        ) || (
+            window.location.pathname ===  `/${username}/webs`||
+            window.location.pathname ===  `/${username}/webs/`
+        ))) {
             navigate(`/${username}/popular`, { replace: true })
         }
-    }, [username,showcaseWebs.length])
+    }, [username,showcaseWebs.length,window.location.pathname])
 
     return (
         <div className='w-full m-0 p-0'>

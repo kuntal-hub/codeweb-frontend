@@ -88,7 +88,7 @@ export default function ProfilePublicCollections() {
                     </div>
                 
             </InfiniteScroll> : 
-            <h1 className='text-center font-bold text-2xl text-white mt-32'>{username} Have Not Create Any Collection</h1> :
+            <h1 className='text-center font-bold text-2xl text-white mt-20'>{username} Have Not Create Any Collection</h1> :
             <div className='flex flex-wrap justify-start lg:px-3 py-5 xl:px-6'>
             <div className='w-[96%] mx-auto lg:w-[48%] xl:w-[32%]'>
               <ClollectionLoadingCard />

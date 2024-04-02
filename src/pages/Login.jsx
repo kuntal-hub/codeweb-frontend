@@ -33,6 +33,7 @@ export default function Login() {
             dispatch(addNotification({ text: "You have been logged in", type: "success" }));
             setLoading(false);
             navigate('/');
+            window.location.reload();
         } else {
             dispatch(addNotification({ text: response.message, type: "error" }));
             setLoading(false);

@@ -17,10 +17,12 @@ const initialState = {
     publicCollections: [],
     popularCollections: [],
     likedCollections: [],
+    savedCollections: [],
     privateCollectionResData: null,
     publicCollectionResData: null,
     popularCollectionResData: null,
     likedCollectionResData: null,
+    savedCollectionResData: null
 }
 
 export const profileSlice = createSlice({
@@ -75,6 +77,9 @@ export const profileSlice = createSlice({
         setLikedCollections(state, action) {
             state.likedCollections = action.payload;
         },
+        setSavedCollections(state, action) {
+            state.savedCollections = action.payload;
+        },
         setPrivateCollectionsResData(state, action) {
             state.privateCollectionResData = action.payload;
         },
@@ -86,6 +91,9 @@ export const profileSlice = createSlice({
         },
         setLikedCollectionsResData(state, action) {
             state.likedCollectionResData = action.payload;
+        },
+        setSavedCollectionsResData(state, action) {
+            state.savedCollectionResData = action.payload;
         },
 
         resetAll(state,action) {
@@ -105,10 +113,12 @@ export const profileSlice = createSlice({
             state.publicCollections = [];
             state.popularCollections = [];
             state.likedCollections = [];
+            state.savedCollections = [];
             state.privateCollectionResData = null;
             state.publicCollectionResData = null;
             state.popularCollectionResData = null;
             state.likedCollectionResData = null;
+            state.savedCollectionResData = null;
         }
     }
 });
@@ -130,10 +140,12 @@ export const {
     setPublicCollections, 
     setPopularCollections, 
     setLikedCollections,
+    setSavedCollections,
     setPrivateCollectionsResData,
     setPublicCollectionsResData,
     setPopularCollectionsResData,
     setLikedCollectionsResData,
+    setSavedCollectionsResData,
     resetAll
  } = profileSlice.actions;
 

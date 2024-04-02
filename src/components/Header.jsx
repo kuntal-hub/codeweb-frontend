@@ -53,6 +53,7 @@ export default function Header() {
         dispatch(logout());
         dispatch(addNotification({ text: "You have been logged out", type: "success" }));
         navigate('/');
+        window.location.reload();
       } else {
         dispatch(addNotification({ text: "An error occurred", type: "error" }));
       }

@@ -48,6 +48,7 @@ import {
   ProfilePublicCollections,
   ProfilePrivateCollections,
   ProfileLikedColection,
+  ProfileSavedCollection,
   OrganizeShowcase,
 } from "./index.js";
 
@@ -225,11 +226,13 @@ const routes = createBrowserRouter(
 
             <Route path='popular' element={<ProfilepopularCollection />} />
 
-            <Route path='public/' element={<ProfilePublicCollections />} />
+            <Route path='public' element={<ProfilePublicCollections />} />
 
-            <Route path='private/' element={<ProfilePrivateCollections />} />
+            <Route path='private' element={<ProfilePrivateCollections />} />
 
-            <Route path='liked/' element={<ProfileLikedColection />} />
+            <Route path='liked' element={<ProfileLikedColection />} />
+
+            <Route path='saved' element={<ProfileSavedCollection />} />
 
         </Route>
 

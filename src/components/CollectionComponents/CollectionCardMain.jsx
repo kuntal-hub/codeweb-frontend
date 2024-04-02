@@ -5,9 +5,11 @@ import { likeSearvice } from '../../apiServices/like'
 import { followerSearvice } from '../../apiServices/follower'
 import { savedCollectionService } from '../../apiServices/savedCollection'
 import {addNotification} from "../../store/notificationSlice"
+import { setSavedCollections } from "../../store/profileSlice"
 
 export default memo(function CollectionCardMain({ collection }) {
     const user = useSelector(state => state.auth.userData);
+    const savedCollections = useSelector(state => state.profile.savedCollections)
     const [isFollowedByMe, setIsFollowedByMe] = useState(false);
     const [isLikedByMe, setIsLikedByMe] = useState(false);
     const [likesCount, setLikesCount] = useState(0);
@@ -50,6 +52,11 @@ export default memo(function CollectionCardMain({ collection }) {
         if (response.status < 400 && response.data) {
             dispatch(addNotification({type:"success", text:isSaved ? "Collection Unsaved" : "Collection Saved"}));
             setIsSaved(!isSaved);
+            if(!isSaved){
+                dispatch(setSavedCollections([...savedCollections, {...collection, isSaved:true}]));
+            } else {
+                dispatch(setSavedCollections(savedCollections.filter(item => item._id !== collection._id)));
+            }
         } else {
             dispatch(addNotification({type:"error", text:response.message}));
         }

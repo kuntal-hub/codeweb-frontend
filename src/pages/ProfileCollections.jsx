@@ -38,7 +38,12 @@ export default function ProfileCollections() {
                 <NavLink to='liked' className={`${({ isActive, isPending }) => {
                     return isPending ? "pending" : isActive ? "active" : ""
                 }}
-                 text-[16px] text-gray-500 font-semibold block px-3 py-[6px]`}>Liked</NavLink>
+                text-[16px] text-gray-500 font-semibold block px-3 py-[6px]`}>Liked</NavLink>
+                
+                {user && user.username === username && <NavLink to='saved' className={`${({ isActive, isPending }) => {
+                    return isPending ? "pending" : isActive ? "active" : ""
+                }}
+                 text-[16px] text-gray-500 font-semibold block px-3 py-[6px]`}>Saved</NavLink>}
             </div>
             <Outlet />
         </div>

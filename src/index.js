@@ -39,6 +39,7 @@ import ProfilepopularCollection from "./pages/ProfilepopularCollection.jsx";
 import ProfilePublicCollections from "./pages/ProfilePublicCollections.jsx";
 import ProfilePrivateCollections from "./pages/ProfilePrivateCollections.jsx";
 import ProfileLikedColection from "./pages/ProfileLikedColection.jsx";
+import ProfileSavedCollection from "./pages/ProfileSavedCollection.jsx";
 import OrganizeShowcase from "./pages/OrganizeShowcase.jsx";
 
 export {
@@ -83,5 +84,6 @@ export {
     ProfilePublicCollections,
     ProfilePrivateCollections,
     ProfileLikedColection,
+    ProfileSavedCollection,
     OrganizeShowcase,
 };
