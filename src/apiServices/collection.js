@@ -1,4 +1,5 @@
 import axios from "axios";
+const accessToken = localStorage.getItem("accessToken");
 
 export class CollectionService {
 
@@ -6,7 +7,12 @@ export class CollectionService {
         try {
             if(!name) throw new Error("Name is undefined");
 
-            const response = await axios.post("https://codeweb.onrender.com/api/v1/collections/create",{name,description,isPublic});
+            const response = await axios.post("https://codeweb.onrender.com/api/v1/collections/create",{name,description,isPublic},
+            {
+                headers:{
+                    "Authorization":`Bearer ${accessToken}`,
+                }
+            });
 
             return response.data;
         } catch (error) {
@@ -21,7 +27,12 @@ export class CollectionService {
 
             if(!name && !description) throw new Error("Name and description both are undefined");
 
-            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/collections/update/${collectionId}`,{name,description,isPublic});
+            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/collections/update/${collectionId}`,{name,description,isPublic},
+            {
+                headers:{
+                    "Authorization":`Bearer ${accessToken}`,
+                }
+            });
 
             return response.data;
         } catch (error) {
@@ -35,7 +46,12 @@ export class CollectionService {
         try {
             if(!collectionId) throw new Error("CollectionId is undefined");
 
-            const response = await axios.delete(`https://codeweb.onrender.com/api/v1/collections/delete/${collectionId}`);
+            const response = await axios.delete(`https://codeweb.onrender.com/api/v1/collections/delete/${collectionId}`,{},
+            {
+                headers:{
+                    "Authorization":`Bearer ${accessToken}`,
+                }
+            });
 
             return response.data;
         } catch (error) {
@@ -48,7 +64,12 @@ export class CollectionService {
         try {
             if(!collectionId || !webId) throw new Error("CollectionId or webId is undefined");
 
-            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/collections/add-web/${collectionId}/${webId}`);
+            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/collections/add-web/${collectionId}/${webId}`,{},
+            {
+                headers:{
+                    "Authorization":`Bearer ${accessToken}`,
+                }
+            });
 
             return response.data;
         } catch (error) {
@@ -61,7 +82,12 @@ export class CollectionService {
         try {
             if(!collectionId || !webId) throw new Error("CollectionId or webId is undefined");
 
-            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/collections/remove-web/${collectionId}/${webId}`);
+            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/collections/remove-web/${collectionId}/${webId}`,{},
+            {
+                headers:{
+                    "Authorization":`Bearer ${accessToken}`,
+                }
+            });
 
             return response.data;
         } catch (error) {
@@ -74,7 +100,12 @@ export class CollectionService {
         try {
             if(!collectionId) throw new Error("CollectionId is undefined");
 
-            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/collections/toggle-publish-status/${collectionId}`);
+            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/collections/toggle-publish-status/${collectionId}`,{},
+            {
+                headers:{
+                    "Authorization":`Bearer ${accessToken}`,
+                }
+            });
 
             return response.data;
         } catch (error) {
@@ -88,7 +119,12 @@ export class CollectionService {
         try {
             if(!collectionId) throw new Error("CollectionId is undefined");
 
-            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/collections/inc-view/${collectionId}`);
+            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/collections/inc-view/${collectionId}`,{},
+            {
+                headers:{
+                    "Authorization":`Bearer ${accessToken}`,
+                }
+            });
 
             return response.data;
         } catch (error) {
@@ -102,7 +138,12 @@ export class CollectionService {
         try {
             if(!collectionId) throw new Error("CollectionId is undefined");
 
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/collections/get/${collectionId}`);
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/collections/get/${collectionId}`,{},
+            {
+                headers:{
+                    "Authorization":`Bearer ${accessToken}`,
+                }
+            });
 
             return response.data;
         } catch (error) {
@@ -116,7 +157,12 @@ export class CollectionService {
         try {
             if(!collectionId) throw new Error("CollectionId is undefined");
 
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/collections/get-webs/${collectionId}?page=${page}&limit=${limit}`);
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/collections/get-webs/${collectionId}?page=${page}&limit=${limit}`,{},
+            {
+                headers:{
+                    "Authorization":`Bearer ${accessToken}`,
+                }
+            });
 
             return response.data;
         } catch (error) {
@@ -133,7 +179,12 @@ export class CollectionService {
             // collectionType can be public, private
             if(!username) throw new Error("UserId is undefined");
 
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/collections/user-collection/${username}?page=${page}&limit=${limit}&sortBy=${sortBy}&sortOrder=${sortOrder}`);
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/collections/user-collection/${username}?page=${page}&limit=${limit}&sortBy=${sortBy}&sortOrder=${sortOrder}`,{},
+            {
+                headers:{
+                    "Authorization":`Bearer ${accessToken}`,
+                }
+            });
 
             return response.data;
         } catch (error) {
@@ -148,7 +199,12 @@ export class CollectionService {
             // queryParameters = string contains all querys of url
             // valid querys are page, limit , sortBy, sortOrder;
             // sortBy = views,likesCount,websCount,createdAt;
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/collections/my-collections?page=${page}&limit=${limit}&sortBy=${sortBy}&sortOrder=${sortOrder}&type=${type}`);
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/collections/my-collections?page=${page}&limit=${limit}&sortBy=${sortBy}&sortOrder=${sortOrder}&type=${type}`,{},
+            {
+                headers:{
+                    "Authorization":`Bearer ${accessToken}`,
+                }
+            });
 
             return response.data;
         } catch (error) {
@@ -164,7 +220,12 @@ export class CollectionService {
             // sortBy = views,likesCount,websCount,createdAt;
             if(!username) throw new Error("UserId is undefined");
 
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/collections/liked/${username}?page=${page}&limit=${limit}`);
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/collections/liked/${username}?page=${page}&limit=${limit}`,{},
+            {
+                headers:{
+                    "Authorization":`Bearer ${accessToken}`,
+                }
+            });
 
             return response.data;
         } catch (error) {
@@ -177,7 +238,12 @@ export class CollectionService {
         try {
             if(!search) throw new Error("Search is undefined");
 
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/collections/search/all-collections?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}`);
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/collections/search/all-collections?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}`,{},
+            {
+                headers:{
+                    "Authorization":`Bearer ${accessToken}`,
+                }
+            });
 
             return response.data;
         } catch (error) {
@@ -191,7 +257,12 @@ export class CollectionService {
         try {
             if(!search) throw new Error("Search is undefined");
 
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/collections/search/my-collections?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}&type=${type}`);
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/collections/search/my-collections?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}&type=${type}`,{},
+            {
+                headers:{
+                    "Authorization":`Bearer ${accessToken}`,
+                }
+            });
 
             return response.data;
         } catch (error) {
@@ -205,7 +276,12 @@ export class CollectionService {
         try {
             if(!name) throw new Error("Name is undefined");
 
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/collections/check-name-availability/${name.trim().replaceAll(" ","-")}`);
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/collections/check-name-availability/${name.trim().replaceAll(" ","-")}`,{},
+            {
+                headers:{
+                    "Authorization":`Bearer ${accessToken}`,
+                }
+            });
 
             return response.data;
         } catch (error) {

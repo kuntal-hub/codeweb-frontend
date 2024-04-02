@@ -1,8 +1,10 @@
 import axios from "axios";
+const accessToken = localStorage.getItem("accessToken");
+const refreshToken = localStorage.getItem("refreshToken");
 
 export class AuthServices {
 
-    async createUser ({username,email,password,fullName,verificationURL="http://localhost:5173/verify-email"}) {
+    async createUser ({username,email,password,fullName,verificationURL="https://codeweb-woad.vercel.app/verify-email"}) {
         try {
             if (!username || !email || !password || !fullName) throw new Error("username or email or password or fullName is null");
 
@@ -12,6 +14,10 @@ export class AuthServices {
                 password,
                 fullName,
                 verificationURL
+            },{
+                headers:{
+                    "Authorization":`Bearer ${accessToken}`,
+                }
             });
 
             if (responce.data.status>=400){
@@ -35,9 +41,12 @@ export class AuthServices {
                 password
             });
 
-            if (responce.data.status>=400){
+            if (responce.data.status>=400 || !responce.data.data){
                 return {message:responce.data.message,status:responce.data.status,data:null};
             }
+
+            localStorage.setItem("accessToken",responce.data.data.accessToken);
+            localStorage.setItem("refreshToken",responce.data.data.refreshToken);
 
             return {status:responce.data.status,data:responce.data.data.user,message:responce.data.message};
         } catch (error) {
@@ -48,9 +57,17 @@ export class AuthServices {
 
     async logout ({fromAllDevices=true}) {
         try {
-            const responce = await axios.post(`https://codeweb.onrender.com/api/v1/users/logout?fromAllDevices=${fromAllDevices}`);
+            const responce = await axios.post(`https://codeweb.onrender.com/api/v1/users/logout?fromAllDevices=${fromAllDevices}`,{},
+            {
+                headers:{
+                    "Authorization":`Bearer ${accessToken}`,
+                }
+            });
 
             if (responce.data.status>=400) return false;
+
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
 
             return true;
         } catch (error) {
@@ -61,11 +78,18 @@ export class AuthServices {
 
     async refreshAccessToken () {
         try {
-            const responce = await axios.post("https://codeweb.onrender.com/api/v1/users/refresh-token");
+            const responce = await axios.post("https://codeweb.onrender.com/api/v1/users/refresh-token",{},
+            {
+                headers:{
+                    "Authorization":`Bearer ${refreshToken}`,
+                }
+            });
 
             if (responce.data.status>=400){
                 return {status:responce.data.status,message:responce.data.message,data:null};
             }
+
+            localStorage.setItem("accessToken",responce.data.data.accessToken);
 
             return await this.getCurrentUser();
         } catch (error) {
@@ -76,7 +100,13 @@ export class AuthServices {
 
     async getCurrentUser () {
         try {
-            const responce = await axios.get("https://codeweb.onrender.com/api/v1/users/me");
+            const responce = await axios.get("https://codeweb.onrender.com/api/v1/users/me",{},
+            {
+                headers:{
+                    "Authorization":`Bearer ${accessToken}`,
+                }
+            });
+
             if (responce.data.status>=400){
                 return {status:responce.data.status,message:responce.data.message,data:null};
             }
@@ -89,10 +119,15 @@ export class AuthServices {
     
     }
 
-    async requestVeryficationEmail ({verificationURL="http://localhost:5173/verify-email"}) {
+    async requestVeryficationEmail ({verificationURL="https://codeweb-woad.vercel.app/verify-email"}) {
         try {
             const responce = await axios.post("https://codeweb.onrender.com/api/v1/users/request-verify-email", {
                 verificationURL
+            },
+            {
+                headers:{
+                    "Authorization":`Bearer ${accessToken}`,
+                }
             });
 
             if (responce.data.status>=400) return {status:responce.data.status,message:responce.data.message,data:false};
@@ -111,6 +146,10 @@ export class AuthServices {
 
             const responce = await axios.post("https://codeweb.onrender.com/api/v1/users/verify-email", {
                 token
+            },{
+                headers:{
+                    "Authorization":`Bearer ${accessToken}`,
+                }
             });
 
             if (responce.data.status>=400) return {status:responce.data.status,message:responce.data.message,data:null};
@@ -123,7 +162,7 @@ export class AuthServices {
     
     }
 
-    async requestForgotPasswordEmail ({email,resetPasswordURL="http://localhost:5173/reset-password"}) {
+    async requestForgotPasswordEmail ({email,resetPasswordURL="https://codeweb-woad.vercel.app/reset-password"}) {
         try {
             if (!email) throw new Error("email is null");
 
@@ -166,7 +205,12 @@ export class AuthServices {
         try {
             if (!data) throw new Error("data is null");
 
-            const responce = await axios.patch("https://codeweb.onrender.com/api/v1/users/update",{...data});
+            const responce = await axios.patch("https://codeweb.onrender.com/api/v1/users/update",{...data},
+            {
+                headers:{
+                    "Authorization":`Bearer ${accessToken}`,
+                }
+            });
 
             if (responce.data.status>=400) return {status:responce.data.status,message:responce.data.message,data:null};
 
@@ -181,7 +225,12 @@ export class AuthServices {
         try {
             if (!oldPassword || !newPassword) throw new Error("oldPassword or newPassword is null");
 
-            const responce = await axios.post("https://codeweb.onrender.com/api/v1/users/change-password",{oldPassword,newPassword});
+            const responce = await axios.post("https://codeweb.onrender.com/api/v1/users/change-password",{oldPassword,newPassword},
+            {
+                headers:{
+                    "Authorization":`Bearer ${accessToken}`,
+                }
+            });
 
             if (responce.data.status>=400) return {status:responce.data.status,message:responce.data.message,data:null};
 
@@ -192,11 +241,16 @@ export class AuthServices {
         }
     }
 
-    async chengeEmail({email,password,verificationURL="http://localhost:5173/verify-email"}){
+    async chengeEmail({email,password,verificationURL="https://codeweb-woad.vercel.app/verify-email"}){
         try {
             if(!email || !password) throw new Error("email or password is null");
 
-            const responce = await axios.post("https://codeweb.onrender.com/api/v1/users/change-email",{email,password,verificationURL});
+            const responce = await axios.post("https://codeweb.onrender.com/api/v1/users/change-email",{email,password,verificationURL},
+            {
+                headers:{
+                    "Authorization":`Bearer ${accessToken}`,
+                }
+            });
 
             if (responce.data.status>=400) return {status:responce.data.status,message:responce.data.message,data:null};
 
@@ -211,7 +265,12 @@ export class AuthServices {
         try {
             if (!password) throw new Error("password is null");
 
-            const responce = await axios.delete(`https://codeweb.onrender.com/api/v1/users/delete/${password}`);
+            const responce = await axios.delete(`https://codeweb.onrender.com/api/v1/users/delete/${password}`,{},
+            {
+                headers:{
+                    "Authorization":`Bearer ${accessToken}`,
+                }
+            });
 
             if (responce.data.status>=400) return {status:responce.data.status,message:responce.data.message,data:false};
 
@@ -226,7 +285,12 @@ export class AuthServices {
         try {
             if(!image || !public_id) throw new Error("image or public_id is null");
 
-            const responce = await axios.patch("https://codeweb.onrender.com/api/v1/users/update-avatar",{image,public_id});
+            const responce = await axios.patch("https://codeweb.onrender.com/api/v1/users/update-avatar",{image,public_id},
+            {
+                headers:{
+                    "Authorization":`Bearer ${accessToken}`,
+                }
+            });
 
             if (responce.data.status>=400) return {status:responce.data.status,message:responce.data.message,data:null};
 
@@ -241,7 +305,12 @@ export class AuthServices {
         try {
             if(!image || !public_id) throw new Error("image or public_id is null");
 
-            const responce = await axios.patch("https://codeweb.onrender.com/api/v1/users/update-cover-image",{image,public_id});
+            const responce = await axios.patch("https://codeweb.onrender.com/api/v1/users/update-cover-image",{image,public_id},
+            {
+                headers:{
+                    "Authorization":`Bearer ${accessToken}`,
+                }
+            });
 
             if (responce.data.status>=400) return {status:responce.data.status,message:responce.data.message,data:null};
 
@@ -256,7 +325,12 @@ export class AuthServices {
         try {
             if(!username) throw new Error("username is null");
 
-            const responce = await axios.get(`https://codeweb.onrender.com/api/v1/users/profile/${username}`);
+            const responce = await axios.get(`https://codeweb.onrender.com/api/v1/users/profile/${username}`,{},
+            {
+                headers:{
+                    "Authorization":`Bearer ${accessToken}`,
+                }
+            });
 
             if (!responce) throw new Error("responce is null");
 
@@ -271,7 +345,12 @@ export class AuthServices {
         try {
             if(!username) throw new Error("username is null");
 
-            const responce = await axios.get(`https://codeweb.onrender.com/api/v1/users/showcase/${username}`);
+            const responce = await axios.get(`https://codeweb.onrender.com/api/v1/users/showcase/${username}`,{},
+            {
+                headers:{
+                    "Authorization":`Bearer ${accessToken}`,
+                }
+            });
 
             if (!responce) throw new Error("responce is null");
 
@@ -284,7 +363,12 @@ export class AuthServices {
 
     async getPinedItems({page=1,limit=4}){
         try {
-            const responce = await axios.get(`https://codeweb.onrender.com/api/v1/users/pined?page=${page}&limit=${limit}`);
+            const responce = await axios.get(`https://codeweb.onrender.com/api/v1/users/pined?page=${page}&limit=${limit}`,{},
+            {
+                headers:{
+                    "Authorization":`Bearer ${accessToken}`,
+                }
+            });
 
             if (!responce) throw new Error("responce is null");
 
@@ -299,7 +383,12 @@ export class AuthServices {
         try {
             if(!webId) throw new Error("webId is null");
 
-            const responce = await axios.patch(`https://codeweb.onrender.com/api/v1/users/add-to-pined/${webId}`);
+            const responce = await axios.patch(`https://codeweb.onrender.com/api/v1/users/add-to-pined/${webId}`,{},
+            {
+                headers:{
+                    "Authorization":`Bearer ${accessToken}`,
+                }
+            });
 
             return responce.data;
         } catch (error) {
@@ -313,7 +402,12 @@ export class AuthServices {
         try {
             if(!webId) throw new Error("webId is null");
 
-            const responce = await axios.patch(`https://codeweb.onrender.com/api/v1/users/remove-pined/${webId}`);
+            const responce = await axios.patch(`https://codeweb.onrender.com/api/v1/users/remove-pined/${webId}`,{},
+            {
+                headers:{
+                    "Authorization":`Bearer ${accessToken}`,
+                }
+            });
 
             return responce.data;
         } catch (error) {
@@ -326,7 +420,12 @@ export class AuthServices {
         try {
             if(!showcase) throw new Error("showcase is null");
 
-            const responce = await axios.patch("https://codeweb.onrender.com/api/v1/users/update-showcase",{showcase});
+            const responce = await axios.patch("https://codeweb.onrender.com/api/v1/users/update-showcase",{showcase},
+            {
+                headers:{
+                    "Authorization":`Bearer ${accessToken}`,
+                }
+            });
 
             if (!responce) throw new Error("responce is null");
 
@@ -341,7 +440,12 @@ export class AuthServices {
         try {
             if(!username) throw new Error("username is null");
 
-            const responce = await axios.get(`https://codeweb.onrender.com/api/v1/users/check-username-availability/${username}`);
+            const responce = await axios.get(`https://codeweb.onrender.com/api/v1/users/check-username-availability/${username}`,{},
+            {
+                headers:{
+                    "Authorization":`Bearer ${accessToken}`,
+                }
+            });
 
             if (responce.data.status>=400) return false;
 
@@ -356,7 +460,12 @@ export class AuthServices {
         try {
             if(!search) throw new Error("search is null");
 
-            const responce = await axios.get(`https://codeweb.onrender.com/api/v1/users/search?search=${search}&page=${page}&limit=${limit}`);
+            const responce = await axios.get(`https://codeweb.onrender.com/api/v1/users/search?search=${search}&page=${page}&limit=${limit}`,{},
+            {
+                headers:{
+                    "Authorization":`Bearer ${accessToken}`,
+                }
+            });
 
             if (!responce) throw new Error("responce is null");
 
