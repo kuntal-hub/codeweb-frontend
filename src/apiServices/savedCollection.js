@@ -6,7 +6,7 @@ class SavedCollectionService {
         try {
             if(!collectionId) throw new Error("CollectionId is undefined");
 
-            const response = await axios.post(`https://codeweb.onrender.com/api/v1/savedCollections/create/${collectionId}`,
+            const response = await axios.post(`https://codeweb.onrender.com/api/v1/savedCollections/create/${collectionId}`,{},
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -61,7 +61,7 @@ class SavedCollectionService {
         try {
             if(!collectionId) throw new Error("CollectionId is undefined");
 
-            const response = await axios.post(`https://codeweb.onrender.com/api/v1/savedCollections/toggle/${collectionId}`,
+            const response = await axios.post(`https://codeweb.onrender.com/api/v1/savedCollections/toggle/${collectionId}`,{},
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,

@@ -47,7 +47,7 @@ export default function Header() {
 
   const logoutUser = async () => {
     if (authStatus && user) {
-      const response = authServices.logout({ fromAllDevices: true });
+      const response = await authServices.logout({ fromAllDevices: true });
       if (response) {
         localStorage.clear();
         dispatch(logout());

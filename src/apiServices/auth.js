@@ -62,7 +62,7 @@ export class AuthServices {
     async logout ({fromAllDevices=true}) {
         const accessToken = localStorage.getItem("accessToken");
         try {
-            const responce = await axios.post(`https://codeweb.onrender.com/api/v1/users/logout?fromAllDevices=${fromAllDevices}`,
+            const responce = await axios.post(`https://codeweb.onrender.com/api/v1/users/logout?fromAllDevices=${fromAllDevices}`,{},
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -86,7 +86,7 @@ export class AuthServices {
         const accessToken = localStorage.getItem("accessToken");
         const refreshToken = localStorage.getItem("refreshToken");
         try {
-            const responce = await axios.post("https://codeweb.onrender.com/api/v1/users/refresh-token",
+            const responce = await axios.post("https://codeweb.onrender.com/api/v1/users/refresh-token",{},
             {
                 headers:{
                     "Authorization":`Bearer ${refreshToken}`,
@@ -413,7 +413,7 @@ export class AuthServices {
         try {
             if(!webId) throw new Error("webId is null");
 
-            const responce = await axios.patch(`https://codeweb.onrender.com/api/v1/users/add-to-pined/${webId}`,
+            const responce = await axios.patch(`https://codeweb.onrender.com/api/v1/users/add-to-pined/${webId}`,{},
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -433,7 +433,7 @@ export class AuthServices {
         try {
             if(!webId) throw new Error("webId is null");
 
-            const responce = await axios.patch(`https://codeweb.onrender.com/api/v1/users/remove-pined/${webId}`,
+            const responce = await axios.patch(`https://codeweb.onrender.com/api/v1/users/remove-pined/${webId}`,{},
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,

@@ -67,7 +67,7 @@ export class CollectionService {
         try {
             if(!collectionId || !webId) throw new Error("CollectionId or webId is undefined");
 
-            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/collections/add-web/${collectionId}/${webId}`,
+            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/collections/add-web/${collectionId}/${webId}`,{},
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -86,7 +86,7 @@ export class CollectionService {
         try {
             if(!collectionId || !webId) throw new Error("CollectionId or webId is undefined");
 
-            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/collections/remove-web/${collectionId}/${webId}`,
+            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/collections/remove-web/${collectionId}/${webId}`,{},
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -105,7 +105,7 @@ export class CollectionService {
         try {
             if(!collectionId) throw new Error("CollectionId is undefined");
 
-            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/collections/toggle-publish-status/${collectionId}`,
+            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/collections/toggle-publish-status/${collectionId}`,{},
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -125,7 +125,7 @@ export class CollectionService {
         try {
             if(!collectionId) throw new Error("CollectionId is undefined");
 
-            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/collections/inc-view/${collectionId}`,
+            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/collections/inc-view/${collectionId}`,{},
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,

@@ -281,7 +281,7 @@ export class WebService {
         try {
             if (!webId) throw new Error("webId is null");
 
-            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/webs/toggle-publish-status/${webId}`,
+            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/webs/toggle-publish-status/${webId}`,{},
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -421,7 +421,7 @@ export class WebService {
         try {
             if (!webId) throw new Error("webId is null");
 
-            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/webs/inc-view/${webId}`,
+            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/webs/inc-view/${webId}`,{},
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,

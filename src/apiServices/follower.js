@@ -7,7 +7,7 @@ export class FollowerSearvice {
         try {
             if(!username) throw new Error("username is missing");
 
-            const response = await axios.post(`https://codeweb.onrender.com/api/v1/followers/toggle/${username}`,
+            const response = await axios.post(`https://codeweb.onrender.com/api/v1/followers/toggle/${username}`,{},
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
