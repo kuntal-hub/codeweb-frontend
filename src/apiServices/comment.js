@@ -1,9 +1,9 @@
 import axios from "axios";
-const accessToken = localStorage.getItem("accessToken");
 
 export class CommentService {
 
     async createComment({web,text}) {
+        const accessToken = localStorage.getItem("accessToken");
         try {
             if (!web || !text) {
                 throw new Error("web or text missing");
@@ -24,6 +24,7 @@ export class CommentService {
     }
 
     async updateComment({commentId,text}){
+        const accessToken = localStorage.getItem("accessToken");
         try {
             if (!commentId || !text) {
                 throw new Error("commentId or text missing");
@@ -44,12 +45,13 @@ export class CommentService {
     }
 
     async deleteComment({commentId}){
+        const accessToken = localStorage.getItem("accessToken");
         try {
             if (!commentId) {
                 throw new Error("commentId missing");
             }
 
-            const response = await axios.delete(`https://codeweb.onrender.com/api/v1/comments/delete/${commentId}`,{},
+            const response = await axios.delete(`https://codeweb.onrender.com/api/v1/comments/delete/${commentId}`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -64,10 +66,11 @@ export class CommentService {
     }
 
     async getAllCommentsByWebId({webId,page=1,limit=20}){
+        const accessToken = localStorage.getItem("accessToken");
         try {
             if(!webId) throw new Error("webId is missing");
 
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/comments/get-comments/${webId}?page=${page}&limit=${limit}`,{},
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/comments/get-comments/${webId}?page=${page}&limit=${limit}`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -82,10 +85,11 @@ export class CommentService {
     }
 
     async getCommentById({commentId}){
+        const accessToken = localStorage.getItem("accessToken");
         try {
             if(!commentId) throw new Error("CommentId Is missing");
 
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/comments/get/${commentId}`,{},
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/comments/get/${commentId}`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,

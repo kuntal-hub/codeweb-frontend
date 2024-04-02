@@ -1,9 +1,9 @@
 import axios from "axios";
-const accessToken = localStorage.getItem("accessToken");
 
 export class AssetService {
 
     async createNewAsset({title,assetType,assetURL,assetPublicId,isPublic=true}) {
+        const accessToken = localStorage.getItem("accessToken");
         try {
             if (!title || !assetType || !assetURL || !assetPublicId) {
                 throw new Error("Missing required fields");
@@ -30,8 +30,9 @@ export class AssetService {
     }
 
     async getMyAssets({page=1, limit=20 , assetType="image"}) {
+        const accessToken = localStorage.getItem("accessToken");
         try {
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/assets/my-assets?page=${page}&limit=${limit}&assetType=${assetType}`,{},
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/assets/my-assets?page=${page}&limit=${limit}&assetType=${assetType}`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -46,8 +47,9 @@ export class AssetService {
     }
 
     async getAllPublicAssets({page=1, limit=20 , assetType="image"}) {
+        const accessToken = localStorage.getItem("accessToken");
         try {
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/assets/get?page=${page}&limit=${limit}&assetType=${assetType}`,{},
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/assets/get?page=${page}&limit=${limit}&assetType=${assetType}`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -63,10 +65,11 @@ export class AssetService {
     }
 
     async searchFromPublicAssets({search, page=1, limit=20 , assetType="image"}) {
+        const accessToken = localStorage.getItem("accessToken");
         try {
             if (!search) throw new Error("Missing search text");
 
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/assets/search/all-assets?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}&assetType=${assetType}`,{},
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/assets/search/all-assets?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}&assetType=${assetType}`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -81,10 +84,11 @@ export class AssetService {
     }
 
     async getAssetById({assetId}) {
+        const accessToken = localStorage.getItem("accessToken");
         try {
             if (!assetId) throw new Error("Missing assetId");
 
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/assets/get/${assetId}`,{},
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/assets/get/${assetId}`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -99,10 +103,11 @@ export class AssetService {
     }
 
     async deleteAssetById({assetId}) {
+        const accessToken = localStorage.getItem("accessToken");
         try {
             if (!assetId) throw new Error("Missing assetId");
 
-            const response = await axios.delete(`https://codeweb.onrender.com/api/v1/assets/delete/${assetId}`,{},
+            const response = await axios.delete(`https://codeweb.onrender.com/api/v1/assets/delete/${assetId}`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -117,6 +122,7 @@ export class AssetService {
     }
 
     async updateAssetById({assetId, title, isPublic}) {
+        const accessToken = localStorage.getItem("accessToken");
         try {
             if (!assetId) throw new Error("Missing assetId");
 
@@ -138,8 +144,9 @@ export class AssetService {
     }
 
     async getLikedAssets({page=1, limit=20 , assetType="image"}) {
+        const accessToken = localStorage.getItem("accessToken");
         try {
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/assets/liked?page=${page}&limit=${limit}&assetType=${assetType}`,{},
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/assets/liked?page=${page}&limit=${limit}&assetType=${assetType}`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,

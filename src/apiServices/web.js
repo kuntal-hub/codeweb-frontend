@@ -1,9 +1,9 @@
 import axios from "axios";
-const accessToken = localStorage.getItem("accessToken");
 
 export class WebService {
 
     async createWeb({title,description,html,css,js,isPublic=true,image,cssLinks=[],jsLinks=[],htmlLinks=[]}) {
+        const accessToken = localStorage.getItem("accessToken");
         try {
             if (!title || !description || !image || !(html || css || js)) {
                 throw new Error("title, description, image and at least one of html, css or js are required");
@@ -37,6 +37,7 @@ export class WebService {
     }
 
     async createForkWeb({webId,title,description,isPublic}) {
+        const accessToken = localStorage.getItem("accessToken");
         try {
             if (!webId) throw new Error("webId is null");
 
@@ -55,10 +56,11 @@ export class WebService {
     }
 
     async getWebWithoutDteailsById({webId}) {
+        const accessToken = localStorage.getItem("accessToken");
         try {
             if (!webId) throw new Error("webId is null");
 
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/webs/get-without-details/${webId}`,{},
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/webs/get-without-details/${webId}`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -73,10 +75,11 @@ export class WebService {
     }
 
     async getWebById({webId}) {
+        const accessToken = localStorage.getItem("accessToken");
         try {
             if (!webId) throw new Error("webId is null");
 
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/webs/get/${webId}`,{},
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/webs/get/${webId}`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -91,6 +94,7 @@ export class WebService {
     }
 
     async getWebsByUsername({username,webType = "public", sortBy="views", sortOrder="desc", page=1, limit=4}) {
+        const accessToken = localStorage.getItem("accessToken");
         try {
         // queryParameters = string contains all querys of url
         // valid querys are  webType , sortBy, sortOrder, page, limit;
@@ -98,7 +102,7 @@ export class WebService {
         // webType = public, private, forked
             if (!username) throw new Error("username is null");
 
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/webs/user/${username}?webType=${webType}&sortBy=${sortBy}&sortOrder=${sortOrder}&page=${page}&limit=${limit}`,{},{
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/webs/user/${username}?webType=${webType}&sortBy=${sortBy}&sortOrder=${sortOrder}&page=${page}&limit=${limit}`,{
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
                 }
@@ -112,13 +116,14 @@ export class WebService {
     }
 
     async getLikedWebsByUsername({username,page=1,limit=4}) {
+        const accessToken = localStorage.getItem("accessToken");
         try {
             // queryParameters = string contains all querys of url
             // valid querys are sortBy, sortOrder, page, limit;
             // sortBy = views, createdAt, likesCount, commentsCount
             if (!username) throw new Error("username is null");
 
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/webs/liked/${username}?page=${page}&limit=${limit}`,{},
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/webs/liked/${username}?page=${page}&limit=${limit}`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -133,11 +138,12 @@ export class WebService {
     }
 
     async getFollowingUsersWebs({queryParameters="page=1&limit=4"}){
+        const accessToken = localStorage.getItem("accessToken");
         try {
             // queryParameters = string contains all querys of url
             // valid querys are sortBy, sortOrder, page, limit;
             // sortBy = views, createdAt, likesCount, commentsCount
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/webs/following?${queryParameters}`,{},
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/webs/following?${queryParameters}`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -152,8 +158,9 @@ export class WebService {
     }
 
     async getTrendingWebs({page=1,limit=4}){
+        const accessToken = localStorage.getItem("accessToken");
         try {
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/webs/trending?page=${page}&limit=${limit}`,{},
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/webs/trending?page=${page}&limit=${limit}`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -168,10 +175,11 @@ export class WebService {
     }
 
     async getYourWorkWebs({queryParameters="page=1&limit=4"}){
+        const accessToken = localStorage.getItem("accessToken");
         try {
             // queryParameters = string contains all querys of url
             // valid querys are sortBy, sortOrder, page, limit;
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/webs/your-work?${queryParameters}`,{},
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/webs/your-work?${queryParameters}`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -186,10 +194,11 @@ export class WebService {
     }
 
     async searchFromMyWebs({page=1,limit=4,search,webType="all"}){
+        const accessToken = localStorage.getItem("accessToken");
         try {
             if (!search) throw new Error("search is null");
 
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/webs/search/my-webs?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}&webType=${webType}`,{},{
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/webs/search/my-webs?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}&webType=${webType}`,{
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
                 }
@@ -203,8 +212,9 @@ export class WebService {
     }
 
     async showRecomendedPeople({page=1,limit=10}){
+        const accessToken = localStorage.getItem("accessToken");
         try {
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/webs/recomended-people?page=${page}&limit=${limit}`,{},
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/webs/recomended-people?page=${page}&limit=${limit}`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -219,6 +229,7 @@ export class WebService {
     }
 
     async updateWeb({webId,title,description,html,css,js,image,isPublic}){
+        const accessToken = localStorage.getItem("accessToken");
         try {
             if (!webId) throw new Error("webId is null");
             if (!title && !description && !isPublic && html===undefined && css===undefined && js===undefined) throw new Error("No data to update");
@@ -247,10 +258,11 @@ export class WebService {
     }
 
     async deleteWeb({webId}){
+        const accessToken = localStorage.getItem("accessToken");
         try {
             if (!webId) throw new Error("webId is null");
 
-            const response = await axios.delete(`https://codeweb.onrender.com/api/v1/webs/delete/${webId}`,{},
+            const response = await axios.delete(`https://codeweb.onrender.com/api/v1/webs/delete/${webId}`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -265,10 +277,11 @@ export class WebService {
     }
 
     async togglePublishStatusOfWeb({webId}){
+        const accessToken = localStorage.getItem("accessToken");
         try {
             if (!webId) throw new Error("webId is null");
 
-            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/webs/toggle-publish-status/${webId}`,{},
+            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/webs/toggle-publish-status/${webId}`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -284,6 +297,7 @@ export class WebService {
     }
 
     async addNewCssLink({webId,cssLink}) {
+        const accessToken = localStorage.getItem("accessToken");
         try {
             if (!webId || !cssLink) throw new Error("webId or cssLink is null");
 
@@ -303,6 +317,7 @@ export class WebService {
     }
 
     async removeCssLink({webId,cssLink}) {
+        const accessToken = localStorage.getItem("accessToken");
         try {
             if (!webId || !cssLink) throw new Error("webId or cssLink is null");
 
@@ -322,6 +337,7 @@ export class WebService {
     }
 
     async addNewJsLink({webId,jsLink}) {
+        const accessToken = localStorage.getItem("accessToken");
         try {
             if (!webId || !jsLink) throw new Error("webId or jsLink is null");
 
@@ -341,6 +357,7 @@ export class WebService {
     }
 
     async removeJsLink({webId,jsLink}) {
+        const accessToken = localStorage.getItem("accessToken");
         try {
             if (!webId || !jsLink) throw new Error("webId or jsLink is null");
 
@@ -360,6 +377,7 @@ export class WebService {
     }
 
     async addNewHtmlTag({webId,htmlLink}) {
+        const accessToken = localStorage.getItem("accessToken");
         try {
             if (!webId || !htmlLink) throw new Error("webId or html Tag is null");
 
@@ -379,6 +397,7 @@ export class WebService {
     }
 
     async removeHtmlTag({webId,htmlLink}) {
+        const accessToken = localStorage.getItem("accessToken");
         try {
             if (!webId || !htmlLink) throw new Error("webId or html Tag is null");
 
@@ -398,10 +417,11 @@ export class WebService {
     }
 
     async increaseViewsOfWeb({webId}){
+        const accessToken = localStorage.getItem("accessToken");
         try {
             if (!webId) throw new Error("webId is null");
 
-            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/webs/inc-view/${webId}`,{},
+            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/webs/inc-view/${webId}`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -418,10 +438,11 @@ export class WebService {
 
 
     async searchFromAllWebs({page=1,limit=4,search}){
+        const accessToken = localStorage.getItem("accessToken");
         try {
             if (!search) throw new Error("search is null");
 
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/webs/search/all-webs?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}`,{},{
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/webs/search/all-webs?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}`,{
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
                 }
@@ -436,8 +457,9 @@ export class WebService {
     }
 
     async getEditorPreferences(){
+        const accessToken = localStorage.getItem("accessToken");
         try {
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/webs/editor-preferences`,{},
+            const response = await axios.get(`https://codeweb.onrender.com/api/v1/webs/editor-preferences`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -483,6 +505,7 @@ export class WebService {
     }
 
     async updateEditorPreferences({theme,fontSize,fontWeight,formatOnType,lineHeight,mouseWheelZoom,wordWrap}){
+        const accessToken = localStorage.getItem("accessToken");
         try {
             const response = await axios.patch(`https://codeweb.onrender.com/api/v1/webs/update-editor-preferences`,{
                 theme:theme||"vs-dark",
@@ -508,6 +531,7 @@ export class WebService {
 
 
     async chengeEditorView({indentation}){
+        const accessToken = localStorage.getItem("accessToken");
         try {
             if(!indentation) throw new Error("indentation is null");
             const response = await axios.patch(`https://codeweb.onrender.com/api/v1/webs/chenge-editor-view`,{
