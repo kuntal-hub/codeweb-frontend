@@ -56,7 +56,7 @@ export default function PinedItems({ setShowPinedItems, showPinedItems }) {
 
     
     return (
-        <div className='w-screen h-screen fixed top-0 z-40 left-0 half_transparent pt-16 text-white'>
+        <div className='w-screen h-screen fixed top-0 z-30 left-0 half_transparent pt-16 text-white'>
             <div className='mx-auto h-screen-72 menu-container GB-cointainer p-1 w-[94%] block sm:w-[80%] md:w-[75%] lg:w-[70%]'>
                 <div className='h-full w-full bg-gray-950 rounded-md text-white'>
                     <div className='flex flex-nowrap justify-between w-full border-b-[1px] border-b-gray-600'>
