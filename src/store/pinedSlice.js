@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
     pinedItems: [],
     resData: null,
-    isNewItemAdded: false
+    isNewItemAdded: false,
+    showPinedItems: false
 }
 
 export const PinedSlice = createSlice({
@@ -16,12 +17,15 @@ export const PinedSlice = createSlice({
         setResData(state, action) {
             state.resData = action.payload;
         },
+        setShowPinedItems(state, action) {
+            state.showPinedItems = action.payload;
+        },
         setIsNewItemAdded(state, action) {
             state.isNewItemAdded = action.payload;
         }
     }
 });
 
-export const { setPinedItems, setResData, setIsNewItemAdded } = PinedSlice.actions;
+export const { setPinedItems, setResData, setIsNewItemAdded, setShowPinedItems } = PinedSlice.actions;
 
 export default PinedSlice.reducer;

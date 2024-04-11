@@ -6,17 +6,19 @@ import {setPinedItems,setResData,setIsNewItemAdded} from "../../store/pinedSlice
 import WebCard from "./WebCard"
 import InfiniteScroll from 'react-infinite-scroll-component'
 import WebLoadingCard from './WebLoadingCard';
+import { setShowPinedItems } from '../../store/pinedSlice';
 
-export default function PinedItems({ setShowPinedItems, showPinedItems }) {
+export default function PinedItems() {
     const pinedItems = useSelector(state => state.pinedItems.pinedItems);
     const resData = useSelector(state => state.pinedItems.resData);
     const isNewItemAdded = useSelector(state => state.pinedItems.isNewItemAdded);
+    const showPinedItems = useSelector(state => state.pinedItems.showPinedItems);
     const [page, setPage] = useState(1);
     const dispatch = useDispatch()
 
     const handleOutsideClick = (event) => {
         if (showPinedItems && !event.target.closest('.menu-container')) {
-            setShowPinedItems(false);
+            dispatch(setShowPinedItems(false));
         }
     };
 
@@ -56,14 +58,14 @@ export default function PinedItems({ setShowPinedItems, showPinedItems }) {
 
     
     return (
-        <div className='w-screen h-screen fixed top-0 z-30 left-0 half_transparent pt-16 text-white'>
+        <div className='w-screen h-screen fixed top-0 z-40 left-0 half_transparent pt-16 text-white'>
             <div className='mx-auto h-screen-72 menu-container GB-cointainer p-1 w-[94%] block sm:w-[80%] md:w-[75%] lg:w-[70%]'>
                 <div className='h-full w-full bg-gray-950 rounded-md text-white'>
                     <div className='flex flex-nowrap justify-between w-full border-b-[1px] border-b-gray-600'>
                         <h1 className='text-center font-bold text-xl mt-4 border-b-[2px] border-b-green-500 px-3'>
                             Pined Items
                         </h1>
-                        <button onClick={() => setShowPinedItems(false)}
+                        <button onClick={() => dispatch(setShowPinedItems(false))}
                         className='material-symbols-outlined text-white bg-slate-800 rounded-md border m-3 border-white'>
                             close
                         </button>

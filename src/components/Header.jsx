@@ -8,12 +8,13 @@ import { addNotification } from '../store/notificationSlice.js';
 import { useForm } from 'react-hook-form';
 import CreateCollection from './CollectionComponents/CreateCollection.jsx';
 import PinedItems from './webComponents/PinedItems.jsx';
+import { setShowPinedItems } from '../store/pinedSlice.js';
 
 export default function Header() {
   const [showLeftMenu, setShowLeftMenu] = useState(false);
   const [showRightMenu, setShowRightMenu] = useState(false);
   const [showCreateCollection, setShowCreateCollection] = useState(false);
-  const [showPinedItems, setShowPinedItems] = useState(false);
+  const showPinedItems = useSelector(state => state.pinedItems.showPinedItems);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const authStatus = useSelector(state => state.auth.status);
@@ -112,7 +113,7 @@ export default function Header() {
           </div>
           :
           <div className='flex flex-nowrap py-[6px] justify-between mx-1'>
-            <button onClick={() => setShowPinedItems(true)}
+            <button onClick={() => dispatch(setShowPinedItems(true))}
             className='h-[48px] rounded-lg'>
               <img src="https://res.cloudinary.com/dvrpvl53d/image/upload/q_30/v1707463164/istockphoto-1219927783-612x612_fgnzjx.jpg" alt="img" className='w-full h-full rounded-lg' />
             </button>
@@ -162,7 +163,7 @@ export default function Header() {
               <Link to={"/"} className=' text-white font-semibold text-[16px] block py-2 px-3 hover:bg-gray-900'>Trending</Link>
               <Link to={"/assets"} className=' text-white font-semibold text-[16px] block py-2 px-3 hover:bg-gray-900'>Assets</Link>
               <Link to={"/explore-profiles"} className=' text-white font-semibold text-[16px] block py-2 px-3 hover:bg-gray-900'>Explore Profiles</Link>
-              <button onClick={() => setShowPinedItems(true)}
+              <button onClick={() => dispatch(setShowPinedItems(true))}
               className=' text-white font-semibold w-full text-[16px] block mb-5 px-3 py-2 hover:bg-gray-900 text-left'>
                 Pined Items</button>
             </div>}
@@ -230,7 +231,7 @@ export default function Header() {
         <Link to={"/assets"} className=' text-white font-semibold text-[16px] block py-2 px-6 hover:bg-gray-900'>Assets</Link>
         <Link to={"/explore-profiles"} className=' text-white font-semibold text-[16px] block py-2 px-6 hover:bg-gray-900'>
         Explore Profiles</Link>
-        <button onClick={()=>setShowPinedItems(true)}
+        <button onClick={()=>dispatch(setShowPinedItems(true))}
         className=' text-white font-semibold text-[16px] block mb-5 px-6 py-2 hover:bg-gray-900 w-full text-left'
         >Pined Items</button>
         </>
@@ -254,10 +255,7 @@ export default function Header() {
       showCreateCollection={showCreateCollection}
       setShowCreateCollection={setShowCreateCollection} />}
       {showPinedItems &&
-      <PinedItems
-      showPinedItems={showPinedItems}
-      setShowPinedItems={setShowPinedItems}
-      />}
+      <PinedItems />}
     </>
   )
 }

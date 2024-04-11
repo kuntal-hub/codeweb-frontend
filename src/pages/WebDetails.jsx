@@ -127,7 +127,7 @@ const file = files[fileName];
 
   }, [webId])
   return (
-    <div className='w-screen one3_transparent h-screen overflow-y-auto text-white text-3xl fixed top-0 z-50 left-0'>
+    <div className='w-screen one3_transparent h-screen overflow-y-auto text-white text-3xl fixed top-0 left-0'>
       <div className='GB-cointainer p-1 menu-container block mx-auto w-[94vw]  md:w-[80vw] lg:w-[70vw] my-24'>
         {webDetails ?
           <div className=' bg-gray-700 rounded-lg max-h-screen'>
