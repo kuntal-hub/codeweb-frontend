@@ -45,6 +45,7 @@ export default function ShowMyAudioAssets({getAudioAssets,audios,audioResData,au
         {
             audioResData ? audios.length > 0 ?
             <InfiniteScroll
+            scrollableTarget='scrollableDiv'
             dataLength={audios.length}
             next={()=>getAudioAssets(audioCurrentPage+1)}
             height={window.innerWidth<1024 ? window.innerHeight-166 : window.innerHeight-112}

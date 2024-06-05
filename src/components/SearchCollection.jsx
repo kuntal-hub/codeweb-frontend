@@ -43,6 +43,7 @@ export default function SearchCollection() {
                     {
             collectionResData ? collections.length > 0 ?
             <InfiniteScroll
+            scrollableTarget="scrollableDiv"
             dataLength={collections.length}
             next={()=>getCollections(page+1)}
             height={window.innerHeight-108}

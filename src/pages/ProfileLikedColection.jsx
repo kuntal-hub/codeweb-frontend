@@ -45,6 +45,7 @@ export default function ProfileLikedColection() {
                 {
             likedCollectionResData ? likedCollections.length > 0 ?
             <InfiniteScroll
+            scrollableTarget="scrollableDiv"
             dataLength={likedCollections.length}
             next={()=>getlikedCollections(page+1)}
             height={window.innerHeight-110}

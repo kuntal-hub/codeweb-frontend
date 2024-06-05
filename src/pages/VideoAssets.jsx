@@ -90,6 +90,7 @@ export default function VideoAssets() {
         {
             resData ? videos.length > 0 ?
             <InfiniteScroll
+            scrollableTarget="scrollableDiv"
             dataLength={videos.length}
             next={()=>getPublicAssets(page+1)}
             height={window.innerWidth<1024 ? window.innerHeight-166 : window.innerHeight-112}

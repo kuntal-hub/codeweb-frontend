@@ -42,6 +42,7 @@ export default function SearchUser() {
          {
         userResData ? profiles.length > 0 ?
           <InfiniteScroll
+            scrollableTarget="scrollableDiv"
             dataLength={profiles.length}
             next={() => getUsers(page + 1)}
             height={window.innerHeight - 110}

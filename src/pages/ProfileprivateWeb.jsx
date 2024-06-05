@@ -51,6 +51,7 @@ export default function ProfilePrivateWeb() {
         {
             privateWebResData ? privateWebs.length > 0 ?
             <InfiniteScroll
+            scrollableTarget="scrollableDiv"
             dataLength={privateWebs.length}
             next={()=>getPrivateWebs(page+1)}
             height={window.innerHeight-110}

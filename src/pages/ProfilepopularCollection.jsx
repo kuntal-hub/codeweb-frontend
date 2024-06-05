@@ -45,6 +45,7 @@ export default function ProfilepopularCollection() {
                 {
             popularCollectionResData ? popularCollections.length > 0 ?
             <InfiniteScroll
+            scrollableTarget="scrollableDiv"
             dataLength={popularCollections.length}
             next={()=>getPopularCollections(page+1)}
             height={window.innerHeight-110}

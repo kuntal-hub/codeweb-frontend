@@ -91,6 +91,7 @@ export default function ShowFollower({ username, setShowFollowerOrFollowing, sho
             {
                 followerResData ? followers.length > 0 ?
                     <InfiniteScroll
+                        scrollableTarget="scrollableDiv"
                         dataLength={followers.length}
                         next={() => getFollowers(followerPage + 1)}
                         height={455}
@@ -121,6 +122,7 @@ export default function ShowFollower({ username, setShowFollowerOrFollowing, sho
             {
                 followingresData ? followings.length > 0 ?
                     <InfiniteScroll
+                        scrollableTarget="scrollableDiv"
                         dataLength={followings.length}
                         next={() => getFollowings(followingPage + 1)}
                         height={455}

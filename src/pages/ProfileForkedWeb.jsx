@@ -46,6 +46,7 @@ export default function ProfileForkedWeb() {
         {
             forkedWebResData ? forkedWebs.length > 0 ?
             <InfiniteScroll
+            scrollableTarget="scrollableDiv"
             dataLength={forkedWebs.length}
             next={()=>getForkedWebs(page+1)}
             height={window.innerHeight-110}

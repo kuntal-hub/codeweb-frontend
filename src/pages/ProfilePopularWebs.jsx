@@ -46,6 +46,7 @@ export default function ProfilePopularWebs() {
         {
             popularWebsResData ? popularWebs.length > 0 ?
             <InfiniteScroll
+            scrollableTarget="scrollableDiv"
             dataLength={popularWebs.length}
             next={()=>getPopularWebs(page+1)}
             height={window.innerHeight-110}

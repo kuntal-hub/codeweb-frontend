@@ -205,6 +205,7 @@ export default function ViewCollection() {
                                 dataLength={webs.length}
                                 next={() => getCollectionWebs(page + 1)}
                                 height={window.innerHeight - 130}
+                                scrollableTarget="scrollableDiv"
                                 hasMore={resData.hasNextPage}
                                 loader={
                                     <div className='flex flex-wrap justify-start lg:px-3 py-5 xl:px-6'>

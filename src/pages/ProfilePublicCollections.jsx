@@ -45,6 +45,7 @@ export default function ProfilePublicCollections() {
                 {
             publicCollectionResData ? publicCollections.length > 0 ?
             <InfiniteScroll
+            scrollableTarget="scrollableDiv"
             dataLength={publicCollections.length}
             next={()=>getPublicCollections(page+1)}
             height={window.innerHeight-110}

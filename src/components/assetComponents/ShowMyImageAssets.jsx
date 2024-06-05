@@ -19,6 +19,7 @@ export default function ShowMyImageAssets({
         {
             imageResData ? (imgCol1.length + imgCol2.length + imgCol3.length + imgCol4.length) > 0 ?
             <InfiniteScroll
+              scrollableTarget='scrollableDiv'
               dataLength={imgCol1.length + imgCol2.length + imgCol3.length + imgCol4.length}
               next={() => getImageAssets(imgCurrentPage + 1)}
               height={height ? height : infiniteScrollHeight}

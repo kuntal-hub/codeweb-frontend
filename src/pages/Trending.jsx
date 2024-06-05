@@ -45,6 +45,7 @@ export default function Trending() {
             trendingResData ? trendings.length > 0 ?
             <InfiniteScroll
             dataLength={trendings.length}
+            scrollableTarget="scrollableDiv"
             next={()=>getTrendingWebs(page+1)}
             height={window.innerHeight-110}
             hasMore={trendingResData.hasNextPage}

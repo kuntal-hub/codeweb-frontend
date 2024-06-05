@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { collectionService } from '../apiServices/collection'
 import { useDispatch, useSelector } from 'react-redux'
 import { setYourWorkCollections, setYourWorkCollectionsResData, setYourWorkCollectionsENV } from "../store/yourWorkSlice"
@@ -163,6 +163,7 @@ export default function YourWorkCollections() {
             dataLength={yourWorkCollections.length}
             next={()=>getCollections(page+1)}
             height={window.innerHeight-108}
+            scrollableTarget="scrollableDiv"
             hasMore={yourWorkCollectionsResData.hasNextPage}
             loader={
                 <div className='flex flex-wrap justify-start lg:px-3 py-5 xl:px-6'>

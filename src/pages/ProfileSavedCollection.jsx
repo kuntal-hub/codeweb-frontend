@@ -50,6 +50,7 @@ export default function ProfileSavedCollection() {
                 {
             savedCollectionResData ? savedCollections.length > 0 ?
             <InfiniteScroll
+            scrollableTarget="scrollableDiv"
             dataLength={savedCollections.length}
             next={()=>getsavedCollections(page+1)}
             height={window.innerHeight-110}

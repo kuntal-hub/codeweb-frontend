@@ -46,6 +46,7 @@ export default function PrifileLikedWeb() {
         {
             likedWebResData ? likedWebs.length > 0 ?
             <InfiniteScroll
+            scrollableTarget="scrollableDiv"
             dataLength={likedWebs.length}
             next={()=>getLikedWebs(page+1)}
             height={window.innerHeight-110}

@@ -75,6 +75,7 @@ export default function PinedItems() {
                 {
             resData ? pinedItems.length > 0 ?
             <InfiniteScroll
+            scrollableTarget="scrollableDiv"
             dataLength={pinedItems.length}
             next={()=>getPinedItems(page+1)}
             height={window.innerHeight-140}

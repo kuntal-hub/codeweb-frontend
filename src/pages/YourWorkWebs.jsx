@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { webService } from '../apiServices/web'
 import WebCard from '../components/webComponents/WebCard'
 import { useDispatch, useSelector } from 'react-redux'
@@ -166,6 +166,7 @@ export default function YourWorkWebs() {
             dataLength={yourWorkWebs.length}
             next={()=>getWebs(page+1)}
             height={window.innerHeight-108}
+            scrollableTarget="scrollableDiv"
             hasMore={yourWorkWebsResData.hasNextPage}
             loader={
                 <div className='flex flex-wrap justify-start lg:px-3 py-5 xl:px-6'>

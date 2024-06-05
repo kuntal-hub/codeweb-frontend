@@ -43,6 +43,7 @@ export default function SearchWeb() {
                 {
             webResData ? webs.length > 0 ?
             <InfiniteScroll
+            scrollableTarget="scrollableDiv"
             dataLength={webs.length}
             next={()=>getWebs(page+1)}
             height={window.innerHeight-110}

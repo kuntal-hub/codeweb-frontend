@@ -44,6 +44,7 @@ export default function Trending() {
       {
         followingResData ? followings.length > 0 ?
           <InfiniteScroll
+            scrollableTarget='scrollableDiv'
             dataLength={followings.length}
             next={() => getFollowingWebs(page + 1)}
             height={window.innerHeight - 110}

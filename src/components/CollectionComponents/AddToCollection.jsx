@@ -108,6 +108,7 @@ export default function AddToCollection({showAddToCollection,setShowAddToCollect
                 {
                 resData ? collections.length > 0 ?
                     <InfiniteScroll
+                        scrollableTarget="scrollableDiv"
                         dataLength={collections.length}
                         next={() => search.trim() ? searchCollections(page + 1) : getCollections(page + 1)}
                         height={window.innerHeight*(2.8/5)}

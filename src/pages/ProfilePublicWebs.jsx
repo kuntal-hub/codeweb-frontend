@@ -46,6 +46,7 @@ export default function ProfilePublicWebs() {
         {
             publicWebresData ? publicWebs.length > 0 ?
             <InfiniteScroll
+            scrollableTarget="scrollableDiv"
             dataLength={publicWebs.length}
             next={()=>getPublicWebs(page+1)}
             height={window.innerHeight-110}

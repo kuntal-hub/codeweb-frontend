@@ -50,6 +50,7 @@ export default function ProfilePrivateCollections() {
                 {
             privateCollectionResData ? privateCollections.length > 0 ?
             <InfiniteScroll
+            scrollableTarget="scrollableDiv"
             dataLength={privateCollections.length}
             next={()=>getPrivateCollections(page+1)}
             height={window.innerHeight-110}

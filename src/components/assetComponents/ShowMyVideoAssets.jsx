@@ -16,6 +16,7 @@ export default function ShowMyVideoAssets({
             {
                 videoResData ? videos.length > 0 ?
                     <InfiniteScroll
+                        scrollableTarget='scrollableDiv'
                         dataLength={videos.length}
                         next={() => getVideoAssets(videoCurrentPage + 1)}
                         height={height ? height : infiniteScrollHeight}

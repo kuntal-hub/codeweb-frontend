@@ -159,6 +159,7 @@ export default function WebDEtails({web}) {
         {
             resData ? comments.length > 0 ?
             <InfiniteScroll
+            scrollableTarget="scrollableDiv"
             dataLength={comments.length}
             next={()=>getComments(page+1)}
             height={600}

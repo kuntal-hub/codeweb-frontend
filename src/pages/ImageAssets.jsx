@@ -191,6 +191,7 @@ export default function ImageAssets() {
         {
             resData ? (colum1.length + colum2.length + colum3.length + colum4.length) > 0 ?
             <InfiniteScroll
+            scrollableTarget="scrollableDiv"
             dataLength={colum1.length + colum2.length + colum3.length + colum4.length}
             next={()=>getPublicAssets(page+1)}
             height={window.innerWidth<1024 ? window.innerHeight-166 : window.innerHeight-112}

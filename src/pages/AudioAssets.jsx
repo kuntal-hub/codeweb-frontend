@@ -126,6 +126,7 @@ export default function AudioAssets() {
         {
             resData ? audios.length > 0 ?
             <InfiniteScroll
+            scrollableTarget="scrollableDiv"
             dataLength={audios.length}
             next={()=>getPublicAssets(page+1)}
             height={window.innerWidth<1024 ? window.innerHeight-166 : window.innerHeight-112}
