@@ -27,6 +27,10 @@ export default memo(function WebHeader({setIndentationNo,hendleSaveWeb,web}) {
   }
 
   const ToggLelikeWeb = async ()=>{
+    if (!user) {
+      dispatch(addNotification({type:"error",text:"Please login to like this web"}))
+      return;
+    }
     setIsLikedByMe(!isLikedByMe);
     await likeSearvice.toggleLikeWeb({webId:web._id});
   }
