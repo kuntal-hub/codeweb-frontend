@@ -8,7 +8,7 @@ import { addNotification } from "../../store/notificationSlice"
 import AddToCollection from '../CollectionComponents/AddToCollection'
 import { setPinedItems, setIsNewItemAdded, setShowPinedItems } from "../../store/pinedSlice"
 
-export default memo(function WebCard({ web, addPined = true, collectionId = null }) {
+export default memo(function WebCard({ web, addPined = true, removeWebFromCollection = null }) {
     const user = useSelector(state => state.auth.userData);
     const showPinedItems = useSelector(state => state.pinedItems.showPinedItems);
     const [isFollowedByMe, setIsFollowedByMe] = useState(false);
@@ -160,10 +160,17 @@ export default memo(function WebCard({ web, addPined = true, collectionId = null
                             <button className='material-symbols-outlined'>more_vert</button>
                             <div className='showingEle right-5 bottom-0 rounded-md bg-gray-700'>
                                 {addPined &&
-                                    <button onClick={() => setShowAddToCollection(true)}
+                                    <button onClick={() => {
+                                        if (!removeWebFromCollection) {
+                                            setShowAddToCollection(true);
+                                        } else if (removeWebFromCollection) {
+                                            if (window.confirm("Are you sure to remove this web from collection?")) {
+                                                removeWebFromCollection(web._id);
+                                        }}
+                                    }}
                                         className='flex flex-nowrap justify-center text-[11px] font-semibold py-1 px-1 text-white hover:bg-gray-600 rounded-t-md w-full hover:rounded-md'>
-                                        <span className="material-symbols-outlined scale-75">{!collectionId ? "playlist_add" : "remove_circle"}</span>
-                                        <span className='block mt-[2px] '>{!collectionId ? "Add To Collection" : "Remove From Collection"}</span>
+                                        <span className="material-symbols-outlined scale-75">{!removeWebFromCollection ? "playlist_add" : "remove_circle"}</span>
+                                        <span className='block mt-[2px] '>{!removeWebFromCollection ? "Add To Collection" : "Remove From Collection"}</span>
                                     </button>}
                                 <button onClick={togglePined}
                                     className='flex flex-nowrap justify-center text-[11px] font-semibold py-1 px-1 text-white hover:bg-gray-600 rounded-b-md w-[160px] hover:rounded-md'>

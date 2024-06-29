@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { Outlet, useParams, Link, useNavigate } from 'react-router-dom'
 import MainContainer from '../components/MainContainer'
 import { collectionService } from '../apiServices/collection';
@@ -42,6 +42,18 @@ export default function ViewCollection() {
             dispatch(addNotification({ text: response.message, type: 'error' }));
         }
     }
+
+    const removeWebFromCollection = useCallback(async (webId)=>{
+        const response = await collectionService.removeWebFromCollection({collectionId:collectionId,webId});
+        if (response.status<400 && response.data) {
+            dispatch(addNotification({type:"success",text:"Web Removed from Collection"}))
+            setWebs((prev)=>{
+                return prev.filter((web)=>web._id!==webId)
+            })
+        } else {
+            dispatch(addNotification({type:"error",text:response.message}))
+        }
+    },[collectionId,webs])
 
 
     const toggleFollow = async () => {
@@ -239,7 +251,7 @@ export default function ViewCollection() {
                                             return (
                                                 <div className='w-[96%] mx-auto lg:w-[48%] xl:w-[32%]'
                                                     key={web._id}>
-                                                    <WebCard web={web} />
+                                                    <WebCard web={web} removeWebFromCollection={removeWebFromCollection} />
                                                 </div>)
                                         })
                                     }

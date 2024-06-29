@@ -30,7 +30,7 @@ export default function AddToCollection({showAddToCollection,setShowAddToCollect
   }, []);
 
   const getCollections = async (page)=>{
-    const limit = 8;
+    const limit = 20;
     const response = await collectionService.getCollectionsCreatedByMe({page,limit});
     if (response.status<400 && response.data) {
         setResData(response.data);
@@ -46,7 +46,7 @@ export default function AddToCollection({showAddToCollection,setShowAddToCollect
   }
 
   const searchCollections = async (page)=>{
-    const limit = 8;
+    const limit = 20;
     const response = await collectionService.searchFromMyCollections({page,limit,search:search.trim()});
     if (response.status<400 && response.data) {
         setResData(response.data);
