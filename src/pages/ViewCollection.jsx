@@ -251,7 +251,13 @@ export default function ViewCollection() {
                                             return (
                                                 <div className='w-[96%] mx-auto lg:w-[48%] xl:w-[32%]'
                                                     key={web._id}>
-                                                    <WebCard web={web} removeWebFromCollection={removeWebFromCollection} />
+                                                    <WebCard web={web} removeWebFromCollection={(()=>{
+                                                        if (user && collection.owner._id===user._id) {
+                                                            return removeWebFromCollection;
+                                                        } else{
+                                                            return null;
+                                                        }
+                                                    })()} />
                                                 </div>)
                                         })
                                     }
