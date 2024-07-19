@@ -1,4 +1,5 @@
 import axios from "axios";
+import { conf } from "../conf/conf";
 
 export class AssetService {
 
@@ -9,7 +10,7 @@ export class AssetService {
                 throw new Error("Missing required fields");
             }
 
-            const response = await axios.post("https://codeweb.onrender.com/api/v1/assets/create", {
+            const response = await axios.post(`${conf.backendUrl}/api/v1/assets/create`, {
                 title,
                 assetType,
                 assetURL,
@@ -32,7 +33,7 @@ export class AssetService {
     async getMyAssets({page=1, limit=20 , assetType="image"}) {
         const accessToken = localStorage.getItem("accessToken");
         try {
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/assets/my-assets?page=${page}&limit=${limit}&assetType=${assetType}`,
+            const response = await axios.get(`${conf.backendUrl}/api/v1/assets/my-assets?page=${page}&limit=${limit}&assetType=${assetType}`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -49,7 +50,7 @@ export class AssetService {
     async getAllPublicAssets({page=1, limit=20 , assetType="image"}) {
         const accessToken = localStorage.getItem("accessToken");
         try {
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/assets/get?page=${page}&limit=${limit}&assetType=${assetType}`,
+            const response = await axios.get(`${conf.backendUrl}/api/v1/assets/get?page=${page}&limit=${limit}&assetType=${assetType}`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -69,7 +70,7 @@ export class AssetService {
         try {
             if (!search) throw new Error("Missing search text");
 
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/assets/search/all-assets?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}&assetType=${assetType}`,
+            const response = await axios.get(`${conf.backendUrl}/api/v1/assets/search/all-assets?search=${search.trim().replaceAll(" ","+")}&page=${page}&limit=${limit}&assetType=${assetType}`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -88,7 +89,7 @@ export class AssetService {
         try {
             if (!assetId) throw new Error("Missing assetId");
 
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/assets/get/${assetId}`,
+            const response = await axios.get(`${conf.backendUrl}/api/v1/assets/get/${assetId}`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -107,7 +108,7 @@ export class AssetService {
         try {
             if (!assetId) throw new Error("Missing assetId");
 
-            const response = await axios.delete(`https://codeweb.onrender.com/api/v1/assets/delete/${assetId}`,
+            const response = await axios.delete(`${conf.backendUrl}/api/v1/assets/delete/${assetId}`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -126,7 +127,7 @@ export class AssetService {
         try {
             if (!assetId) throw new Error("Missing assetId");
 
-            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/assets/update/${assetId}`, {
+            const response = await axios.patch(`${conf.backendUrl}/api/v1/assets/update/${assetId}`, {
                 title,
                 isPublic
             },
@@ -146,7 +147,7 @@ export class AssetService {
     async getLikedAssets({page=1, limit=20 , assetType="image"}) {
         const accessToken = localStorage.getItem("accessToken");
         try {
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/assets/liked?page=${page}&limit=${limit}&assetType=${assetType}`,
+            const response = await axios.get(`${conf.backendUrl}/api/v1/assets/liked?page=${page}&limit=${limit}&assetType=${assetType}`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,

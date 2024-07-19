@@ -1,4 +1,5 @@
 import axios from "axios";
+import { conf } from "../conf/conf";
 
 export class FollowerSearvice {
 
@@ -7,7 +8,7 @@ export class FollowerSearvice {
         try {
             if(!username) throw new Error("username is missing");
 
-            const response = await axios.post(`https://codeweb.onrender.com/api/v1/followers/toggle/${username}`,{},
+            const response = await axios.post(`${conf.backendUrl}/api/v1/followers/toggle/${username}`,{},
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -26,7 +27,7 @@ export class FollowerSearvice {
         try {
             if(!username) throw new Error("username is missing");
 
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/followers/get-followers/${username}?page=${page}&limit=${limit}`,
+            const response = await axios.get(`${conf.backendUrl}/api/v1/followers/get-followers/${username}?page=${page}&limit=${limit}`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -47,7 +48,7 @@ export class FollowerSearvice {
         try {
             if(!username) throw new Error("username is missing");
 
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/followers/get-followings/${username}?page=${page}&limit=${limit}`,
+            const response = await axios.get(`${conf.backendUrl}/api/v1/followers/get-followings/${username}?page=${page}&limit=${limit}`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,

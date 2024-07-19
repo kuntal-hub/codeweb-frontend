@@ -1,4 +1,5 @@
 import axios from "axios";
+import { conf } from "../conf/conf";
 
 export class ReplySearvice {
 
@@ -7,7 +8,7 @@ export class ReplySearvice {
         try {
             if(!commentId || !text) throw new Error("commentId or Text is Missing");
 
-            const response = await axios.post("https://codeweb.onrender.com/api/v1/replays/create",{commentId,text},
+            const response = await axios.post(`${conf.backendUrl}/api/v1/replays/create`,{commentId,text},
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -26,7 +27,7 @@ export class ReplySearvice {
         try {
             if(!replyId || !text) throw new Error("replyId or Text is Missing");
 
-            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/replays/update/${replyId}`,{text},
+            const response = await axios.patch(`${conf.backendUrl}/api/v1/replays/update/${replyId}`,{text},
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -45,7 +46,7 @@ export class ReplySearvice {
         try {
             if(!replyId) throw new Error("replyId is Missing");
 
-            const response = await axios.delete(`https://codeweb.onrender.com/api/v1/replays/delete/${replyId}`,
+            const response = await axios.delete(`${conf.backendUrl}/api/v1/replays/delete/${replyId}`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -64,7 +65,7 @@ export class ReplySearvice {
         try {
             if(!commentId) throw new Error("commentId is Missing");
 
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/replays/${commentId}?page=${page}&limit=${limit}`,
+            const response = await axios.get(`${conf.backendUrl}/api/v1/replays/${commentId}?page=${page}&limit=${limit}`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,

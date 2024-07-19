@@ -19,6 +19,7 @@ export default function ViewFullWeb() {
         .then(res => {
             if (res.status<400 && res.data) {
                 setWeb(res.data)
+                webService.increaseViewsOfWeb({webId})
             } else {
                 navigate('/404')
             }

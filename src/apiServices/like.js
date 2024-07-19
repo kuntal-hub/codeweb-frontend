@@ -1,4 +1,5 @@
 import axios from "axios";
+import { conf } from "../conf/conf";
 
 export class LikeSearvice {
 
@@ -7,7 +8,7 @@ export class LikeSearvice {
         try {
             if(!webId) throw new Error("webId is missing")
 
-            const response = await axios.post(`https://codeweb.onrender.com/api/v1/likes/web/${webId}`,{},
+            const response = await axios.post(`${conf.backendUrl}/api/v1/likes/web/${webId}`,{},
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -26,7 +27,7 @@ export class LikeSearvice {
         try {
             if(!assetId) throw new Error("assetId is missing")
 
-            const response = await axios.post(`https://codeweb.onrender.com/api/v1/likes/asset/${assetId}`,{},
+            const response = await axios.post(`${conf.backendUrl}/api/v1/likes/asset/${assetId}`,{},
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -45,7 +46,7 @@ export class LikeSearvice {
         try {
             if(!collectionId) throw new Error("collectionId is missing")
 
-            const response = await axios.post(`https://codeweb.onrender.com/api/v1/likes/collection/${collectionId}`,{},
+            const response = await axios.post(`${conf.backendUrl}/api/v1/likes/collection/${collectionId}`,{},
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -64,7 +65,7 @@ export class LikeSearvice {
         try {
             if(!commentId) throw new Error("commentId is missing")
 
-            const response = await axios.post(`https://codeweb.onrender.com/api/v1/likes/comment/${commentId}`,{},
+            const response = await axios.post(`${conf.backendUrl}/api/v1/likes/comment/${commentId}`,{},
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -83,7 +84,7 @@ export class LikeSearvice {
         try {
             if(!replyId) throw new Error("replyId is missing")
 
-            const response = await axios.post(`https://codeweb.onrender.com/api/v1/likes/replay/${replyId}`,{},
+            const response = await axios.post(`${conf.backendUrl}/api/v1/likes/replay/${replyId}`,{},
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,

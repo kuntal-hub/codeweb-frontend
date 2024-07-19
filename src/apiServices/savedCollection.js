@@ -1,4 +1,5 @@
 import axios from "axios";
+import { conf } from "../conf/conf";
 
 class SavedCollectionService {
     async saveCollection({collectionId}) {
@@ -6,7 +7,7 @@ class SavedCollectionService {
         try {
             if(!collectionId) throw new Error("CollectionId is undefined");
 
-            const response = await axios.post(`https://codeweb.onrender.com/api/v1/savedCollections/create/${collectionId}`,{},
+            const response = await axios.post(`${conf.backendUrl}/api/v1/savedCollections/create/${collectionId}`,{},
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -25,7 +26,7 @@ class SavedCollectionService {
         try {
             if(!collectionId) throw new Error("CollectionId is undefined");
 
-            const response = await axios.delete(`https://codeweb.onrender.com/api/v1/savedCollections/delete/${collectionId}`,
+            const response = await axios.delete(`${conf.backendUrl}/api/v1/savedCollections/delete/${collectionId}`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -42,7 +43,7 @@ class SavedCollectionService {
     async getSavedCollections({page=1,limit=10}) {
         const accessToken = localStorage.getItem("accessToken");
         try {
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/savedCollections/get?page=${page}&limit=${limit}`,
+            const response = await axios.get(`${conf.backendUrl}/api/v1/savedCollections/get?page=${page}&limit=${limit}`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -61,7 +62,7 @@ class SavedCollectionService {
         try {
             if(!collectionId) throw new Error("CollectionId is undefined");
 
-            const response = await axios.post(`https://codeweb.onrender.com/api/v1/savedCollections/toggle/${collectionId}`,{},
+            const response = await axios.post(`${conf.backendUrl}/api/v1/savedCollections/toggle/${collectionId}`,{},
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,

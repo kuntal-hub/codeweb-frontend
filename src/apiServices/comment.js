@@ -1,4 +1,5 @@
 import axios from "axios";
+import { conf } from "../conf/conf";
 
 export class CommentService {
 
@@ -9,7 +10,7 @@ export class CommentService {
                 throw new Error("web or text missing");
             }
 
-            const response = await axios.post("https://codeweb.onrender.com/api/v1/comments/create", {text,web},
+            const response = await axios.post(`${conf.backendUrl}/api/v1/comments/create`, {text,web},
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -30,7 +31,7 @@ export class CommentService {
                 throw new Error("commentId or text missing");
             }
 
-            const response = await axios.patch(`https://codeweb.onrender.com/api/v1/comments/update/${commentId}`, {text},
+            const response = await axios.patch(`${conf.backendUrl}/api/v1/comments/update/${commentId}`, {text},
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -51,7 +52,7 @@ export class CommentService {
                 throw new Error("commentId missing");
             }
 
-            const response = await axios.delete(`https://codeweb.onrender.com/api/v1/comments/delete/${commentId}`,
+            const response = await axios.delete(`${conf.backendUrl}/api/v1/comments/delete/${commentId}`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -70,7 +71,7 @@ export class CommentService {
         try {
             if(!webId) throw new Error("webId is missing");
 
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/comments/get-comments/${webId}?page=${page}&limit=${limit}`,
+            const response = await axios.get(`${conf.backendUrl}/api/v1/comments/get-comments/${webId}?page=${page}&limit=${limit}`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
@@ -89,7 +90,7 @@ export class CommentService {
         try {
             if(!commentId) throw new Error("CommentId Is missing");
 
-            const response = await axios.get(`https://codeweb.onrender.com/api/v1/comments/get/${commentId}`,
+            const response = await axios.get(`${conf.backendUrl}/api/v1/comments/get/${commentId}`,
             {
                 headers:{
                     "Authorization":`Bearer ${accessToken}`,
