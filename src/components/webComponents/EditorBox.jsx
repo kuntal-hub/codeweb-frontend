@@ -104,7 +104,7 @@ export default memo(function EditorBox() {
                     minimap: { enabled: window.innerWidth >= 1024 ? true : false },
                     copyWithSyntaxHighlighting: false,
                     formatOnPaste: true,
-                    // inlayHints: { enabled: true, padding: true },
+                    inlayHints: { enabled: true, padding: true },
                     lineHeight: options.lineHeight || 20,
                     mouseWheelZoom: options.mouseWheelZoom || true,
                     multiCursorLimit: 8,
