@@ -2,7 +2,7 @@ import React, { useEffect, memo, useState } from 'react'
 import { useSelector, useDispatch } from "react-redux"
 import Editor from "@monaco-editor/react"
 import "../../cssFiles/editor.css";
-import { chengeHtml,chengeCss,chengeJs } from "../../store/webSlice.js";
+import { chengeHtml, chengeCss, chengeJs } from "../../store/webSlice.js";
 
 
 
@@ -59,28 +59,28 @@ export default memo(function EditorBox() {
             dispatch(chengeCss(cssContent));
         }, 1500);
         return () => clearTimeout(timeout);
-    },[cssContent])
+    }, [cssContent])
 
     useEffect(() => {
         const timeout = setTimeout(() => {
             dispatch(chengeJs(javascriptContent));
         }, 1500);
         return () => clearTimeout(timeout);
-    },[javascriptContent])
+    }, [javascriptContent])
 
 
     return (
         <div className='h-full w-full'>
-            <button className={`py-1 px-5 mx-[1px] ${fileName==="index.html"? "bg-gray-800":"bg-gray-700"} text-white text-sm`}
-             disabled={fileName === 'index.html'} onClick={() => setFileName('index.html')}>
+            <button className={`py-1 px-5 mx-[1px] ${fileName === "index.html" ? "bg-gray-800" : "bg-gray-700"} text-white text-sm`}
+                disabled={fileName === 'index.html'} onClick={() => setFileName('index.html')}>
                 html
             </button>
-            <button className={`py-1 px-5 mx-[1px] ${fileName==="style.css"? "bg-gray-800":"bg-gray-700"} text-white text-sm`}
-             disabled={fileName === 'style.css'} onClick={() => setFileName('style.css')}>
+            <button className={`py-1 px-5 mx-[1px] ${fileName === "style.css" ? "bg-gray-800" : "bg-gray-700"} text-white text-sm`}
+                disabled={fileName === 'style.css'} onClick={() => setFileName('style.css')}>
                 css
             </button>
-            <button className={`py-1 px-5 mx-[1px] ${fileName==="script.js"? "bg-gray-800":"bg-gray-700"} text-white text-sm`}
-             disabled={fileName === 'script.js'} onClick={() => setFileName('script.js')}>
+            <button className={`py-1 px-5 mx-[1px] ${fileName === "script.js" ? "bg-gray-800" : "bg-gray-700"} text-white text-sm`}
+                disabled={fileName === 'script.js'} onClick={() => setFileName('script.js')}>
                 javascript
             </button>
             {/* <button className={`py-1 px-3 mx-[1px] ${showResult? "bg-gray-600":"bg-gray-700"} text-white text-sm`}
@@ -99,9 +99,9 @@ export default memo(function EditorBox() {
                     fontFamily: "Source Code Pro, monospace",
                     fontWeight: options.fontWeight || "500",
                     fontSize: options.fontSize || "14px",
-                    formatOnType: options.formatOnType || true,
+                    formatOnType: options.formatOnType || false,
                     autoClosingBrackets: true,
-                    minimap: { enabled: window.innerWidth >= 1024? true:false },
+                    minimap: { enabled: window.innerWidth >= 1024 ? true : false },
                     copyWithSyntaxHighlighting: false,
                     formatOnPaste: true,
                     inlayHints: { enabled: true, padding: true },
