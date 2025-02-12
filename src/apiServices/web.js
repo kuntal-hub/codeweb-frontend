@@ -147,7 +147,8 @@ export class WebService {
             const response = await axios.get(`${conf.backendUrl}/api/v1/webs/following?${queryParameters}`,
                 {
                     headers: {
-                        "Authorization": `Bearer ${accessToken}`,
+                        withCredentials: true,
+                        // "Authorization": `Bearer ${accessToken}`,
                     }
                 })
 
@@ -164,7 +165,8 @@ export class WebService {
             const response = await axios.get(`${conf.backendUrl}/api/v1/webs/trending?page=${page}&limit=${limit}`,
                 {
                     headers: {
-                        "Authorization": `Bearer ${accessToken}`,
+                        withCredentials: true,
+                        // "Authorization": `Bearer ${accessToken}`,
                     }
                 })
 
@@ -183,7 +185,8 @@ export class WebService {
             const response = await axios.get(`${conf.backendUrl}/api/v1/webs/your-work?${queryParameters}`,
                 {
                     headers: {
-                        "Authorization": `Bearer ${accessToken}`,
+                        withCredentials: true,
+                        // "Authorization": `Bearer ${accessToken}`,
                     }
                 })
 
